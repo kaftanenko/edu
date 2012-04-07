@@ -1,6 +1,7 @@
 
----
- Educational themes:
----
+-- Educational Projects --
 
 	- edu.java.junit
+		- Kata - Java - Tests - JUnit4
+	- edu.java.rmi
+		- self-explaining (hopefully) educational example: Java-RMI. 
