@@ -1,7 +1,9 @@
 
--- Educational Projects --
+---
+ Java: ... educational examples.
+--
 
 	- edu.java.junit
 		- Kata - Java - Tests - JUnit4
 	- edu.java.rmi
-		- self-explaining (hopefully) educational example: Java-RMI. 
+		- self-explaining (hopefully) example: Java-RMI. 
