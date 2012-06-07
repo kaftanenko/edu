@@ -3,7 +3,9 @@
  Java: ... educational examples.
 --
 
+	- edu.java.bdd
+		- a set of sample projects for different Behavior Driven Development (BDD) frameworks. 
 	- edu.java.junit
-		- Kata - Java - Tests - JUnit4
+		- supporting project for the "Kata - Java - Tests - JUnit4"-Presentation.
 	- edu.java.rmi
-		- self-explaining (hopefully) example: Java-RMI. 
+		- self-explaining (hopefully) example: Java-RMI.
