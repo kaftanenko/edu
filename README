@@ -5,6 +5,8 @@
 
 	- edu.java.bdd
 		- a set of sample projects for different Behavior Driven Development (BDD) frameworks. 
+	- edu.java.osgi.calculator
+		- OSGi technology demonstrator based on the idea of a calculator functionality (as service)
 	- edu.java.junit
 		- supporting project for the "Kata - Java - Tests - JUnit4"-Presentation.
 	- edu.java.rmi
