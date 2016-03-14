@@ -1,0 +1,157 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>edu.java.frameworks.osgi</groupId>
+	<artifactId>osgi.calculator</artifactId>
+	<name>${project.artifactId}</name>
+	<packaging>pom</packaging>
+	<version>0.0.1.SNAPSHOT</version>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		
+		<osgi.version>4.2.0</osgi.version>
+		
+		<osgi.repo.url>file:///D:/warehouse/osgi/repo_2/releases</osgi.repo.url>
+		<deployment.repository.path>d:/software/servers/app/eclipse-virgo/virgo-tomcat-server-3.0.2.RELEASE/repository/usr</deployment.repository.path>
+	</properties>
+
+	<distributionManagement>
+		<repository>
+			<id>repo-rel</id>
+			<url>${osgi.repo.url}</url>
+		</repository>
+	</distributionManagement>
+
+	<modules>
+		<module>access</module>
+		<module>common</module>
+		<module>service</module>
+	</modules>
+
+	<dependencyManagement>
+
+		<dependencies>
+
+			<!-- project modules -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>osgi.calculator.access.http</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>osgi.calculator.access.shell</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>osgi.calculator.common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>osgi.calculator.service.api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>osgi.calculator.service.impl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- OSGi framework dependencies -->
+			<dependency>
+				<groupId>org.osgi</groupId>
+				<artifactId>org.osgi.core</artifactId>
+				<version>${osgi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.osgi</groupId>
+				<artifactId>org.osgi.compendium</artifactId>
+				<version>${osgi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.osgi</groupId>
+				<artifactId>org.osgi.enterprise</artifactId>
+				<version>${osgi.version}</version>
+			</dependency>
+
+			<!-- Web framework dependencies -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>2.5</version>
+			</dependency>
+
+			<!-- Test dependencies -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.8.1</version>
+			</dependency>
+
+		</dependencies>
+
+	</dependencyManagement>
+
+	<dependencies>
+
+		<!-- OSGi framework dependencies -->
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.compendium</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.enterprise</artifactId>
+		</dependency>
+
+		<!-- Test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+	
+		<pluginManagement>
+			<plugins>
+				
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<inherited>true</inherited>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>2.1.0</version>
+					<extensions>true</extensions>
+					<configuration>
+						<instructions>
+							<Bundle-Category>edu.java.osgi</Bundle-Category>
+						</instructions>
+						<remoteOBR>repo-rel</remoteOBR>
+						<prefixUrl>${osgi.repo.url}</prefixUrl>
+					</configuration>
+				</plugin>
+				
+			</plugins>
+		</pluginManagement>
+		
+	</build>
+
+</project>
