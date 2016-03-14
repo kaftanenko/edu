@@ -8,7 +8,7 @@
 	<packaging>bundle</packaging>
 
 	<parent>
-		<groupId>edu.java.frameworks.osgi</groupId>
+		<groupId>edu.java.fws.osgi</groupId>
 		<artifactId>osgi.calculator.access</artifactId>
 		<version>0.0.1.SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
