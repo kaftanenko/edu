@@ -3,34 +3,28 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>osgi.calculator.access.shell</artifactId>
+	<artifactId>osgi-standard.calculator.service.impl</artifactId>
 	<name>${project.artifactId}</name>
 	<packaging>bundle</packaging>
 
 	<parent>
-		<groupId>edu.java.fws.osgi</groupId>
-		<artifactId>osgi.calculator.access</artifactId>
+		<groupId>edu.java.fws.osgi-standard</groupId>
+		<artifactId>osgi-standard.calculator.service</artifactId>
 		<version>0.0.1.SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<dependencies>
-
+	
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>osgi.calculator.common</artifactId>
+			<artifactId>osgi-standard.calculator.common</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>osgi.calculator.service.api</artifactId>
+			<artifactId>osgi-standard.calculator.service.api</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.apache.felix</groupId>
-			<artifactId>org.apache.felix.gogo.runtime</artifactId>
-			<version>0.6.0</version>
-		</dependency>
-
+		
 	</dependencies>
 
 	<build>
@@ -63,7 +57,7 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<configuration>
 					<instructions>
-						<Bundle-Activator>osgi.calculator.access.shell.internal.ShellBundleActivator</Bundle-Activator>
+						<Bundle-Activator>osgi.calculator.service.impl.internal.ServiceImplBundleActivator</Bundle-Activator>
 					</instructions>
 				</configuration>
 			</plugin>

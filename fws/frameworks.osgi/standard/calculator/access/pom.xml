@@ -3,13 +3,13 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>osgi.calculator.access</artifactId>
+	<artifactId>osgi-standard.calculator.access</artifactId>
 	<name>${project.artifactId}</name>
 	<packaging>pom</packaging>
 
 	<parent>
-		<groupId>edu.java.fws.osgi</groupId>
-		<artifactId>osgi.calculator</artifactId>
+		<groupId>edu.java.fws.osgi-standard</groupId>
+		<artifactId>osgi-standard.calculator</artifactId>
 		<version>0.0.1.SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>

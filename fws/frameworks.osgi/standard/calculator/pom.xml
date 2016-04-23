@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>edu.java.fws.osgi</groupId>
-	<artifactId>osgi.calculator</artifactId>
+	<groupId>edu.java.fws.osgi-standard</groupId>
+	<artifactId>osgi-standard.calculator</artifactId>
 	<name>${project.artifactId}</name>
 	<packaging>pom</packaging>
 	<version>0.0.1.SNAPSHOT</version>
@@ -13,16 +13,18 @@
 		
 		<osgi.version>4.2.0</osgi.version>
 		
-		<osgi.repo.url>file:///D:/warehouse/osgi/repo_2/releases</osgi.repo.url>
-		<deployment.repository.path>d:/software/servers/app/eclipse-virgo/virgo-tomcat-server-3.0.2.RELEASE/repository/usr</deployment.repository.path>
+		<osgi.repo.url>file:///d:/temp/osgi-repository</osgi.repo.url>
+		<deployment.repository.path>d:/temp/osgi-deploy</deployment.repository.path>
 	</properties>
 
+	<!--
 	<distributionManagement>
 		<repository>
 			<id>repo-rel</id>
 			<url>${osgi.repo.url}</url>
 		</repository>
 	</distributionManagement>
+	-->
 
 	<modules>
 		<module>access</module>
@@ -37,27 +39,27 @@
 			<!-- project modules -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>osgi.calculator.access.http</artifactId>
+				<artifactId>osgi-standard.calculator.access.http</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>osgi.calculator.access.shell</artifactId>
+				<artifactId>osgi-standard.calculator.access.shell</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>osgi.calculator.common</artifactId>
+				<artifactId>osgi-standard.calculator.common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>osgi.calculator.service.api</artifactId>
+				<artifactId>osgi-standard.calculator.service.api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>osgi.calculator.service.impl</artifactId>
+				<artifactId>osgi-standard.calculator.service.impl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 

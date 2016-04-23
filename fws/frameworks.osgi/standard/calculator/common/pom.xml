@@ -3,24 +3,20 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>osgi.calculator.service.api</artifactId>
+	<artifactId>osgi-standard.calculator.common</artifactId>
 	<name>${project.artifactId}</name>
 	<packaging>bundle</packaging>
 
 	<parent>
-		<groupId>edu.java.fws.osgi</groupId>
-		<artifactId>osgi.calculator.service</artifactId>
+		<groupId>edu.java.fws.osgi-standard</groupId>
+		<artifactId>osgi-standard.calculator</artifactId>
 		<version>0.0.1.SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<properties>
-		<export.package>osgi.calculator.service.api</export.package>
-	</properties>
-
 	<build>
 		<plugins>
-
+		
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
@@ -42,17 +38,12 @@
 					</execution>
 				</executions>
 			</plugin>
-
+			
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<configuration>
-					<instructions>
-						<Export-Package>${export.package}</Export-Package>
-					</instructions>
-				</configuration>
 			</plugin>
-
+			
 		</plugins>
 	</build>
 

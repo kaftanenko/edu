@@ -3,37 +3,24 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>osgi.calculator.access.http</artifactId>
+	<artifactId>osgi-standard.calculator.service.api</artifactId>
 	<name>${project.artifactId}</name>
 	<packaging>bundle</packaging>
 
 	<parent>
-		<groupId>edu.java.fws.osgi</groupId>
-		<artifactId>osgi.calculator.access</artifactId>
+		<groupId>edu.java.fws.osgi-standard</groupId>
+		<artifactId>osgi-standard.calculator.service</artifactId>
 		<version>0.0.1.SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<dependencies>
-
-		<!-- project modules -->
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>osgi.calculator.common</artifactId>
-		</dependency>
-
-		<!-- Web framework dependencies -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-		</dependency>
-
-	</dependencies>
+	<properties>
+		<export.package>osgi.calculator.service.api</export.package>
+	</properties>
 
 	<build>
-	
 		<plugins>
-		
+
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
@@ -55,19 +42,18 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
 				<configuration>
 					<instructions>
-						<Bundle-Activator>osgi.calculator.access.http.internal.HttpBundleActivator</Bundle-Activator>
+						<Export-Package>${export.package}</Export-Package>
 					</instructions>
 				</configuration>
 			</plugin>
-			
-		</plugins>
 
+		</plugins>
 	</build>
 
 </project>
