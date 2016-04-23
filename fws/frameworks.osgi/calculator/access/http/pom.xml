@@ -61,7 +61,7 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<configuration>
 					<instructions>
-						<Bundle-Activator>osgi.calculator.access.http.HttpBundleActivator</Bundle-Activator>
+						<Bundle-Activator>osgi.calculator.access.http.internal.HttpBundleActivator</Bundle-Activator>
 					</instructions>
 				</configuration>
 			</plugin>

@@ -1,5 +1,6 @@
 package osgi.calculator.access.http.internal;
 
+import java.util.Dictionary;
 import java.util.Hashtable;
 
 import javax.servlet.ServletException;
@@ -41,7 +42,7 @@ public class HttpBundleActivator extends OsgiBundleActivator {
 					log("... HttpService couldn't be weaved!");
 				}
 
-				final Hashtable<String, Object> initparams = new Hashtable<String, Object>();
+				final Dictionary<String, Object> initparams = new Hashtable<String, Object>();
 				final HttpContext httpContext = httpService.createDefaultHttpContext();
 
 				try {
