@@ -14,10 +14,6 @@ Java SE:
 	- edu.java.jse.jna
 		- technology demonstrator: JNA (Java Native Access).
 		
-	- edu.java.jse.junit
-		- technology demonstrator: JUnit.
-		- NOTE: supporting project for the "Kata - Java - Tests - JUnit4"-Presentation.
-		
 	- edu.java.jse.rmi
 		- technology demonstrator: RMI (Remote Method Invocation)
 
@@ -27,10 +23,18 @@ Java SE:
 Third-party frameworks:
 
 	- edu.java.fws.bdd
-		- technology demonstrator for different BDD (Behavior Driven Development) frameworks.
+		- technology demonstrator: BDD (Behavior Driven Development) frameworks.
 		 
+	- edu.java.fws.junit
+		- technology demonstrator: JUnit.
+		- NOTE: supporting project for the "Kata - Java - Tests - JUnit4"-Presentation.
+		
 	- edu.java.fws.log4j
 		- technology demonstrator: Log4J.
 		 
-	- edu.java.fws.osgi.calculator
-		- technology demonstrator: OSGi based on the idea of a calculator functionality (as service).
+	- edu.java.fws.osgi
+		- technology demonstrator: OSGi.
+
+	- edu.java.fws.spring
+
+		- technology demonstrator: Spring frameworks family.
