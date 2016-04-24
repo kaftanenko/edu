@@ -1,8 +1,8 @@
 package osgi.calculator.service.impl;
 
-import osgi.calculator.service.api.ISimpleCalculationService;
+import osgi.calculator.service.api.ISimpleCalculatorService;
 
-public class SimpleCalculatorService implements ISimpleCalculationService {
+public class SimpleCalculatorService implements ISimpleCalculatorService {
 
 	// ...
 

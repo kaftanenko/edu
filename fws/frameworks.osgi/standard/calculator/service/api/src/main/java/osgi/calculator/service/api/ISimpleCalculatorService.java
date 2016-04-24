@@ -1,6 +1,6 @@
 package osgi.calculator.service.api;
 
-public interface ISimpleCalculationService {
+public interface ISimpleCalculatorService {
 
 	// ... business methods
 

@@ -7,7 +7,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
 import osgi.calculator.common.OsgiBundleActivator;
-import osgi.calculator.service.api.ISimpleCalculationService;
+import osgi.calculator.service.api.ISimpleCalculatorService;
 import osgi.calculator.service.impl.SimpleCalculatorService;
 
 public class ServiceImplBundleActivator extends OsgiBundleActivator {
@@ -28,7 +28,7 @@ public class ServiceImplBundleActivator extends OsgiBundleActivator {
 
 				final Dictionary<String, Object> properties = new Hashtable<String, Object>();
 				final ServiceRegistration calcServiceReg = bc.registerService(
-						ISimpleCalculationService.class.getName(), calcService, properties);
+						ISimpleCalculatorService.class.getName(), calcService, properties);
 
 				if (calcServiceReg == null) {
 					log("... ISimpleCalculationService couldn't be registered!");

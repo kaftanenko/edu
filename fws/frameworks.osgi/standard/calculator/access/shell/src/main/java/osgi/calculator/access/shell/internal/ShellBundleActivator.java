@@ -7,7 +7,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 import osgi.calculator.common.OsgiBundleActivator;
-import osgi.calculator.service.api.ISimpleCalculationService;
+import osgi.calculator.service.api.ISimpleCalculatorService;
 
 public class ShellBundleActivator extends OsgiBundleActivator {
 
@@ -30,7 +30,7 @@ public class ShellBundleActivator extends OsgiBundleActivator {
 			@Override
 			public void run() {
 
-				final ServiceReference calcServiceRef = bc.getServiceReference(ISimpleCalculationService.class
+				final ServiceReference calcServiceRef = bc.getServiceReference(ISimpleCalculatorService.class
 						.getName());
 				if (calcServiceRef != null) {
 
