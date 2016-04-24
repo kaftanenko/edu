@@ -19,11 +19,17 @@
 #-verbose:              false
 #project:               ${basedir}
 #src:                   src
+src:                   src/main/java
 #bin:                   bin
+bin:                   target/classes
 #testsrc:               test
+testsrc:               src/test/java
 #testbin:               bin_test
+testbin:               target/test-classes
 #test-reports:          test-reports
+test-reports:          target/test-reports
 #target-dir:            generated
+#target-dir:            target/generated
 #target:                ${project}/${target-dir}
 #build:                 ${workspace}/cnf
 #p:                     ${basename;${project}}
@@ -40,7 +46,9 @@
 
 ## Bnd Options
 #-sources:              true
+-sources:              true
 #-sourcepath:           ${project}/src
+-sourcepath:           ${project}/src/main/java
 
 
 ## Properties from ext/*.bnd can be referenced in order to extend them. For
