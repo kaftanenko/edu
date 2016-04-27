@@ -1,0 +1,19 @@
+-buildpath: \
+	osgi.annotation;version=6.0.1,\
+	osgi.core;version=6.0,\
+	osgi.cmpn;version=6.0,\
+	biz.aQute.bnd.annotation,\
+	osgi_bndtools.calculator.service.api;version=latest,\
+	javax.ws.rs.jsr311-api,\
+	com.sun.jersey.core
+
+-testpath: \
+	junit; version=4,\
+	hamcrest-core; version=1.3
+
+Service-Component: *
+Private-Package: osgi_bndtools.calculator.access.rest
+
+Module-Type: Web
+Webapp-Context: rest
+Web-ContextPath: rest
