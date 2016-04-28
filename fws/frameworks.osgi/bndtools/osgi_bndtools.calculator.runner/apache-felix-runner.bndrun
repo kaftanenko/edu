@@ -13,12 +13,15 @@
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.http.jetty)',\
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.webconsole)',\
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.configadmin)',\
-	osgi.identity;filter:='(osgi.identity=osgi_bndtools.calculator.access.rest)',\
-	osgi.identity;filter:='(osgi.identity=osgi_bndtools.calculator.access.shell)',\
+	osgi.identity;filter:='(osgi.identity=com.sun.jersey.core)',\
+	osgi.identity;filter:='(osgi.identity=osgi_bndtools.calculator.service.api)',\
 	osgi.identity;filter:='(osgi.identity=osgi_bndtools.calculator.service.impl)',\
+	osgi.identity;filter:='(osgi.identity=osgi_bndtools.calculator.access.shell)',\
+	osgi.identity;filter:='(osgi.identity=osgi_bndtools.calculator.access.rest)',\
 	osgi.identity;filter:='(osgi.identity=osgi_bndtools.calculator.access.web)'
 -resolve: auto
 -runbundles: \
+	com.sun.jersey.core;version='[1.19.1,1.19.2)',\
 	javax.ws.rs.jsr311-api;version='[1.1.1,1.1.2)',\
 	org.apache.felix.configadmin;version='[1.8.8,1.8.9)',\
 	org.apache.felix.gogo.command;version='[0.14.0,0.14.1)',\

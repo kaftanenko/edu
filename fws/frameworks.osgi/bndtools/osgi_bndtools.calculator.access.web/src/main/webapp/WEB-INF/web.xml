@@ -4,8 +4,10 @@
 	id="WebApp_ID" version="3.0">
 
 	<display-name>Welcome Page</display-name>
+
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
 	<servlet>

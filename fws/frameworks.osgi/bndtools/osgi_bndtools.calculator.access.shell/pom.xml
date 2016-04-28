@@ -13,10 +13,11 @@
 
 	<dependencies>
 
+		<!-- Project modules -->
 		<dependency>
-			<groupId>edu.java.fws.osgi_bndtools</groupId>
-			<artifactId>osgi_bndtools.calculator.api</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>osgi_bndtools.calculator.service.api</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- OSGI dependencies -->

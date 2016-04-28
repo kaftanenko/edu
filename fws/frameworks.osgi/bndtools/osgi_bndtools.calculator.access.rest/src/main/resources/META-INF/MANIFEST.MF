@@ -1,0 +1,5 @@
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: osgi_bndtools.calculator.access.web
+Module-Type: Web
+Webapp-Context: rest
+Web-ContextPath: rest
