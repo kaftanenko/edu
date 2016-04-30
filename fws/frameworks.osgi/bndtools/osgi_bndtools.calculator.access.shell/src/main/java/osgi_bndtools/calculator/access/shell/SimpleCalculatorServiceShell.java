@@ -5,7 +5,7 @@ import aQute.bnd.annotation.component.Reference;
 import osgi_bndtools.calculator.service.api.ISimpleCalculatorService_LongType;
 
 @Component(properties = { "osgi.command.scope:String=calc",
-		"osgi.command.function:String=add|div|mul|sub" }, provide = Object.class)
+		"osgi.command.function:String=neg|add|div|mul|sub" }, provide = Object.class)
 public class SimpleCalculatorServiceShell implements ISimpleCalculatorService_LongType {
 
 	// ... properties
@@ -21,6 +21,14 @@ public class SimpleCalculatorServiceShell implements ISimpleCalculatorService_Lo
 	}
 
 	// ... command handling methods
+
+	@Override
+	public Long neg(Long arg) {
+
+		return calculationService.neg(arg);
+	}
+	
+	// ...
 
 	@Override
 	public Long add(Long arg1, Long arg2) {
