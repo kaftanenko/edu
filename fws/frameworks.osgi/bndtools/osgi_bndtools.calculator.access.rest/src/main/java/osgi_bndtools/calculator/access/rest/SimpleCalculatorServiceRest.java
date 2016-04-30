@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Reference;
-import osgi_bndtools.calculator.service.api.ISimpleCalculatorService;
+import osgi_bndtools.calculator.service.api.ISimpleCalculatorService_LongType;
 
 @Path("rest")
 @Component(provide=Object.class)
@@ -18,12 +18,12 @@ public class SimpleCalculatorServiceRest {
 	
 	// ... properties
 
-	private ISimpleCalculatorService calculationService;
+	private ISimpleCalculatorService_LongType calculationService;
 
 	// ... dependency injection methods
 
 	@Reference
-	public void setCalculationService(ISimpleCalculatorService calculationService) {
+	public void setCalculationService(ISimpleCalculatorService_LongType calculationService) {
 
 		this.calculationService = calculationService;
 	}

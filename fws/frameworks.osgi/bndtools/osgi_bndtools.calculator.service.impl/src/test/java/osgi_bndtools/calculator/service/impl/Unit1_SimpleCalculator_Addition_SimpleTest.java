@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import osgi_bndtools.calculator.service.api.ISimpleCalculatorService;
-import osgi_bndtools.calculator.service.impl.SimpleCalculatorService;
 
 /**
  * <b>Unit 1</b>: ... JUnit simple JUnit Test.
@@ -17,14 +16,14 @@ public class Unit1_SimpleCalculator_Addition_SimpleTest {
 
 	// ... properties
 
-	private ISimpleCalculatorService calculatorUnderTest;
+	private ISimpleCalculatorService<Long> calculatorUnderTest;
 
 	// ... setUp/tearDown
 
 	@Before
 	public void setUp() {
 
-		calculatorUnderTest = new SimpleCalculatorService();
+		calculatorUnderTest = new SimpleCalculatorService_LongType();
 	}
 
 	// ... test methods

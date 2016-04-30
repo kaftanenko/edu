@@ -9,7 +9,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import osgi_bndtools.calculator.service.api.ISimpleCalculatorService;
-import osgi_bndtools.calculator.service.impl.SimpleCalculatorService;
 
 /**
  * <b>Unit 3</b>: ... demonstrates some further JUnit annotations and
@@ -27,14 +26,14 @@ public class Unit3_SimpleCalculator_Division_FurtherAnnotationsTest {
 
 	// ... properties
 
-	private ISimpleCalculatorService calculatorUnderTest;
+	private ISimpleCalculatorService<Long> calculatorUnderTest;
 
 	// ... setUp/tearDown
 
 	@Before
 	public void setUp() {
 
-		calculatorUnderTest = new SimpleCalculatorService();
+		calculatorUnderTest = new SimpleCalculatorService_LongType();
 	}
 
 	// ... test methods

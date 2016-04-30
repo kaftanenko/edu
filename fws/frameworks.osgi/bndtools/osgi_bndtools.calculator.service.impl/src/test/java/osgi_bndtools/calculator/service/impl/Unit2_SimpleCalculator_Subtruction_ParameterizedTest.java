@@ -10,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import osgi_bndtools.calculator.service.api.ISimpleCalculatorService;
-import osgi_bndtools.calculator.service.impl.SimpleCalculatorService;
 
 /**
  * <b>Unit 2</b>: ... demonstrates parameterized JUnit tests.
@@ -22,7 +21,7 @@ public class Unit2_SimpleCalculator_Subtruction_ParameterizedTest {
 
 	// ... properties
 
-	private ISimpleCalculatorService calculatorUnderTest;
+	private ISimpleCalculatorService<Long> calculatorUnderTest;
 
 	// ... setUp/tearDown
 
@@ -36,7 +35,7 @@ public class Unit2_SimpleCalculator_Subtruction_ParameterizedTest {
 
 	public Unit2_SimpleCalculator_Subtruction_ParameterizedTest(long arg1, long arg2, long expectedResult) {
 
-		calculatorUnderTest = new SimpleCalculatorService();
+		calculatorUnderTest = new SimpleCalculatorService_LongType();
 
 		this.arg1 = arg1;
 		this.arg2 = arg2;

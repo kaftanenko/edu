@@ -1,27 +1,15 @@
 package osgi_bndtools.calculator.service.api;
 
-public interface ISimpleCalculatorService {
+public interface ISimpleCalculatorService<DATA_TYPE> {
 
 	// ... business methods
 
-	// ... arguments of a long type
+	public DATA_TYPE add(DATA_TYPE arg1, DATA_TYPE arg2);
 
-	public long add(long arg1, long arg2);
+	public DATA_TYPE div(DATA_TYPE arg1, DATA_TYPE arg2);
 
-	public long div(long arg1, long arg2);
+	public DATA_TYPE mul(DATA_TYPE arg1, DATA_TYPE arg2);
 
-	public long mul(long arg1, long arg2);
-
-	public long sub(long arg1, long arg2);
-
-	// ... arguments of a double type
-
-	public double add(double arg1, double arg2);
-
-	public double div(double arg1, double arg2);
-
-	public double mul(double arg1, double arg2);
-
-	public double sub(double arg1, double arg2);
+	public DATA_TYPE sub(DATA_TYPE arg1, DATA_TYPE arg2);
 
 }

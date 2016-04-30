@@ -2,20 +2,20 @@ package osgi_bndtools.calculator.access.shell;
 
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Reference;
-import osgi_bndtools.calculator.service.api.ISimpleCalculatorService;
+import osgi_bndtools.calculator.service.api.ISimpleCalculatorService_LongType;
 
 @Component(properties = { "osgi.command.scope:String=calc",
 		"osgi.command.function:String=add|div|mul|sub" }, provide = Object.class)
-public class SimpleCalculatorServiceShell implements ISimpleCalculatorService {
+public class SimpleCalculatorServiceShell implements ISimpleCalculatorService_LongType {
 
 	// ... properties
 
-	private ISimpleCalculatorService calculationService;
+	private ISimpleCalculatorService_LongType calculationService;
 
 	// ... dependency injection methods
 
 	@Reference
-	public void setCalculationService(ISimpleCalculatorService calculationService) {
+	public void setCalculationService(ISimpleCalculatorService_LongType calculationService) {
 
 		this.calculationService = calculationService;
 	}
@@ -23,49 +23,25 @@ public class SimpleCalculatorServiceShell implements ISimpleCalculatorService {
 	// ... command handling methods
 
 	@Override
-	public long add(long arg1, long arg2) {
+	public Long add(Long arg1, Long arg2) {
 
 		return calculationService.add(arg1, arg2);
 	}
 
 	@Override
-	public double add(double arg1, double arg2) {
-
-		return calculationService.add(arg1, arg2);
-	}
-
-	@Override
-	public long div(long arg1, long arg2) {
+	public Long div(Long arg1, Long arg2) {
 
 		return calculationService.div(arg1, arg2);
 	}
 
 	@Override
-	public double div(double arg1, double arg2) {
-
-		return calculationService.div(arg1, arg2);
-	}
-
-	@Override
-	public long mul(long arg1, long arg2) {
+	public Long mul(Long arg1, Long arg2) {
 
 		return calculationService.mul(arg1, arg2);
 	}
 
 	@Override
-	public double mul(double arg1, double arg2) {
-
-		return calculationService.mul(arg1, arg2);
-	}
-
-	@Override
-	public long sub(long arg1, long arg2) {
-
-		return calculationService.sub(arg1, arg2);
-	}
-
-	@Override
-	public double sub(double arg1, double arg2) {
+	public Long sub(Long arg1, Long arg2) {
 
 		return calculationService.sub(arg1, arg2);
 	}
