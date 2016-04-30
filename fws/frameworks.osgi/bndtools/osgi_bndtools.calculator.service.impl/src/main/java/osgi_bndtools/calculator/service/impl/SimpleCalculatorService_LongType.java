@@ -10,6 +10,14 @@ public class SimpleCalculatorService_LongType implements ISimpleCalculatorServic
 	// ... business methods
 
 	@Override
+	public Long neg(Long arg) {
+
+		return - arg;
+	}
+
+	// ...
+	
+	@Override
 	public Long add(Long arg1, Long arg2) {
 
 		return arg1 + arg2;

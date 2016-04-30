@@ -11,4 +11,3 @@
 -sourcepath src/main/java
 
 -dsannotations: *
-Private-Package: osgi_bndtools.calculator.service.impl
