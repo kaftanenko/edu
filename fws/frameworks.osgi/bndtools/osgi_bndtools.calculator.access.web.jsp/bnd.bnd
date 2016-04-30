@@ -13,4 +13,3 @@ Module-Type: Web
 Webapp-Context: web-jsp
 Web-ContextPath: web-jsp
 
-Private-Package: osgi_bndtools.calculator.access.web.jsp

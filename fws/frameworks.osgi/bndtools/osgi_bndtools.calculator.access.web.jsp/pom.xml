@@ -22,9 +22,24 @@
 	<dependencies>
 
 		<!-- Project modules -->
-		<!-- <dependency> <groupId>${project.groupId}</groupId> <artifactId>osgi_bndtools.calculator.service.api</artifactId> <version>${project.version}</version> 
-			</dependency> <dependency> <groupId>${project.groupId}</groupId> <artifactId>osgi_bndtools.calculator.service.impl</artifactId> 
-			<version>${project.version}</version> </dependency> -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>osgi_bndtools.calculator.service.api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>osgi_bndtools.calculator.service.impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- Apache Commons -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
+
 
 		<!-- Tomcat provided depenencies -->
 		<!-- <dependency> <groupId>org.apache.tomcat.embed</groupId> <artifactId>tomcat-embed-core</artifactId> <version>7.0.69</version> 
@@ -75,10 +90,7 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
-				<groupId>biz.aQute.bnd</groupId>
-				<artifactId>bnd-maven-plugin</artifactId>
-			</plugin>
+			<!-- <plugin> <groupId>biz.aQute.bnd</groupId> <artifactId>bnd-maven-plugin</artifactId> </plugin> -->
 		</plugins>
 	</build>
 

@@ -3,6 +3,8 @@
 	<name>osgi_bndtools.calculator.access.web.jsp</name>
 	<comment></comment>
 	<projects>
+		<project>osgi_bndtools.calculator.service.api</project>
+		<project>osgi_bndtools.calculator.service.impl</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
