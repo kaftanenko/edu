@@ -18,9 +18,7 @@
 		<module>osgi_bndtools.calculator.access.shell</module>
 
 		<module>osgi_bndtools.calculator.access.ui.common</module>
-		<!--
 		<module>osgi_bndtools.calculator.access.ui.web.jsf</module>
-		-->
 		<module>osgi_bndtools.calculator.access.ui.web.jsp</module>
 		
 		<module>osgi_bndtools.calculator.runner</module>
