@@ -1,0 +1,4 @@
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: osgi_bndtools.calculator.access.web-jsp
+Webapp-Context: web-jsp
+Web-ContextPath: web-jsp
