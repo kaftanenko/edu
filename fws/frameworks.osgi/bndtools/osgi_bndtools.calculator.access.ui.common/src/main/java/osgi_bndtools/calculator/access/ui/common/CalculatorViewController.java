@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import osgi_bndtools.calculator.access.ui.common.type.EMathOperation;
 import osgi_bndtools.calculator.access.ui.common.util.BigDecimalUtils;
+import osgi_bndtools.calculator.access.ui.common.util.SimpleCalculatorFacade;
 
 public class CalculatorViewController {
 
@@ -150,7 +151,7 @@ public class CalculatorViewController {
 		}
 	}
 
-	public void selectMathOperation(EMathOperation mathOperation) {
+	public void selectMathOperation(final EMathOperation mathOperation) {
 
 		selectedOperation = mathOperation;
 

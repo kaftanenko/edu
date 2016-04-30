@@ -1,4 +1,4 @@
-package osgi_bndtools.calculator.access.ui.common;
+package osgi_bndtools.calculator.access.ui.common.util;
 
 import java.math.BigDecimal;
 

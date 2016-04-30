@@ -1,0 +1,38 @@
+.calculator-grid * {
+	font-family: Arial, Verdana, "Times New Roman", Times, serif;
+}
+
+.calculator-grid {
+	border: 0px;
+	border-spacing: 1px;
+	border-collapse: separate;
+}
+
+.calculator-grid .numbers-column {
+	width: 40px;
+}
+
+.calculator-grid .key-button-row {
+}
+
+.calculator-grid .math-op-column {
+	width: 40px;
+}
+
+.calculator-grid .last-op-column {
+	width: 50px;
+}
+
+.calculator-grid .display-line {
+	box-sizing: border-box;
+	height: 100%;
+	width: 100%;
+	text-align: right;
+	font-weight: normal;
+}
+
+.calculator-grid .key-button {
+	box-sizing: border-box;
+	height: 100%;
+	width: 100%;
+}
