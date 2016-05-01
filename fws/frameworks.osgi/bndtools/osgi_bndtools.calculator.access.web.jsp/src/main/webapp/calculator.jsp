@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>osgi_bndtools.calculator.access.web.jsp</title>
+<link rel="stylesheet" type="text/css" href="style/calculator.css">
+<title>Simple Calculator (JSP)</title>
 </head>
 <body>
 
@@ -98,42 +99,60 @@
 
 	<form action="">
 
-		<input type="text" value="<%=calculatorController.getDisplayValue()%>" />
 
-		<table>
+		<table class="calculator-grid">
+			<colgroup>
+				<col class="numbers-column" span="3" />
+				<col class="math-op-column" />
+				<col class="last-op-column" />
+			</colgroup>
 			<tr>
-				<td><button type="submit" name="num" value="7">7</button></td>
-				<td><button type="submit" name="num" value="8">8</button></td>
-				<td><button type="submit" name="num" value="9">9</button></td>
-				<td><button type="submit" name="op"
+				<th colspan="5"><input type="text" class="display-line"
+					value="<%=calculatorController.getDisplayValue()%>" /></td>
+			</tr>
+			<tr class="key-button-row">
+				<td><button class="key-button" type="submit" name="num"
+						value="7">7</button></td>
+				<td><button class="key-button" type="submit" name="num"
+						value="8">8</button></td>
+				<td><button class="key-button" type="submit" name="num"
+						value="9">9</button></td>
+				<td><button class="key-button" type="submit" name="op"
 						value="<%=PARAM_VALUE_OPERATION_DIV%>">/</button></td>
-				<td><button type="submit" name="op"
+				<td><button class="key-button" type="submit" name="op"
 						value="<%=PARAM_VALUE_OPERATION_CANCEL%>">C</button></td>
 			</tr>
-			<tr>
-				<td><button type="submit" name="num" value="4">4</button></td>
-				<td><button type="submit" name="num" value="5">5</button></td>
-				<td><button type="submit" name="num" value="6">6</button></td>
-				<td><button type="submit" name="op"
+			<tr class="key-button-row">
+				<td><button class="key-button" class="key-button" type="submit"
+						name="num" value="4">4</button></td>
+				<td><button class="key-button" type="submit" name="num"
+						value="5">5</button></td>
+				<td><button class="key-button" type="submit" name="num"
+						value="6">6</button></td>
+				<td><button class="key-button" type="submit" name="op"
 						value="<%=PARAM_VALUE_OPERATION_MUL%>">*</button></td>
-				<td><button type="submit" name="op"
-						value="<%=PARAM_VALUE_OPERATION_DELETE%>">&lt;=</button></td>
+				<td><button class="key-button" type="submit" name="op"
+						value="<%=PARAM_VALUE_OPERATION_DELETE%>">&#x21D0;</button></td>
 			</tr>
-			<tr>
-				<td><button type="submit" name="num" value="1">1</button></td>
-				<td><button type="submit" name="num" value="2">2</button></td>
-				<td><button type="submit" name="num" value="3">3</button></td>
-				<td><button type="submit" name="op"
+			<tr class="key-button-row">
+				<td><button class="key-button" type="submit" name="num"
+						value="1">1</button></td>
+				<td><button class="key-button" type="submit" name="num"
+						value="2">2</button></td>
+				<td><button class="key-button" type="submit" name="num"
+						value="3">3</button></td>
+				<td><button class="key-button" type="submit" name="op"
 						value="<%=PARAM_VALUE_OPERATION_SUB%>">-</button></td>
-				<td rowspan="2"><button type="submit" name="op"
-						value="<%=PARAM_VALUE_OPERATION_CALCULATE%>">=</button></td>
+				<td rowspan="2"><button class="key-button" type="submit"
+						name="op" value="<%=PARAM_VALUE_OPERATION_CALCULATE%>">=</button></td>
 			</tr>
-			<tr>
-				<td><button type="submit" name="num" value="0">0</button></td>
-				<td><button type="submit" name="comma"><%=calculatorController.getDecimalSeparator()%></button></td>
-				<td><button type="submit" name="op"
+			<tr class="key-button-row">
+				<td><button class="key-button" type="submit" name="num"
+						value="0">0</button></td>
+				<td><button class="key-button" type="submit" name="comma"><%=calculatorController.getDecimalSeparator()%></button></td>
+				<td><button class="key-button" type="submit" name="op"
 						value="<%=PARAM_VALUE_OPERATION_NEG%>">&plusmn;</button></td>
-				<td><button type="submit" name="op"
+				<td><button class="key-button" type="submit" name="op"
 						value="<%=PARAM_VALUE_OPERATION_ADD%>">+</button></td>
 			</tr>
 		</table>
