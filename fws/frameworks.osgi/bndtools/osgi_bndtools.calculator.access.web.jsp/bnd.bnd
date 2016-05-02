@@ -1,9 +1,11 @@
 -buildpath: \
-	osgi.annotation;version=6.0.1,\
 	osgi.core;version=6.0,\
 	osgi.cmpn;version=6.0,\
 	javax.servlet,\
-	javax.servlet.jsp
+	javax.servlet.jsp,\
+	osgi.annotation,\
+	biz.aQute.bnd.annotation,\
+	osgi_bndtools.calculator.service.api;version=latest
 
 -testpath: \
 	junit; version=4,\
@@ -13,3 +15,8 @@ Module-Type: Web
 Webapp-Context: web-jsp
 Web-ContextPath: web-jsp
 
+Private-Package: \
+	osgi_bndtools.calculator.access.web,\
+	osgi_bndtools.calculator.access.web.type,\
+	osgi_bndtools.calculator.access.web.util
+-dsannotations: *
