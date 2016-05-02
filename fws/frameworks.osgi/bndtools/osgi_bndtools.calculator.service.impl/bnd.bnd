@@ -2,6 +2,7 @@
 	osgi.core;version=6.0,\
 	osgi.cmpn;version=6.0,\
 	osgi.annotation,\
+	biz.aQute.bnd.annotation,\
 	osgi_bndtools.calculator.service.api;version=latest
 
 -testpath: \
@@ -10,4 +11,5 @@
 
 -sourcepath src/main/java
 
--dsannotations: *
+Private-Package: osgi_bndtools.calculator.service.impl
+Service-Component: *

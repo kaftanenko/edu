@@ -1,7 +1,6 @@
 package osgi_bndtools.calculator.service.impl;
 
-import org.osgi.service.component.annotations.Component;
-
+import aQute.bnd.annotation.component.Component;
 import osgi_bndtools.calculator.service.api.ISimpleCalculatorService_LongType;
 
 @Component

@@ -1,7 +1,6 @@
 package osgi_bndtools.calculator.service.impl;
 
-import org.osgi.service.component.annotations.Component;
-
+import aQute.bnd.annotation.component.Component;
 import osgi_bndtools.calculator.service.api.ISimpleCalculatorService_DoubleType;
 
 @Component
@@ -12,11 +11,11 @@ public class SimpleCalculatorService_DoubleType implements ISimpleCalculatorServ
 	@Override
 	public Double neg(Double arg) {
 
-		return - arg;
+		return -arg;
 	}
 
 	// ...
-	
+
 	@Override
 	public Double add(Double arg1, Double arg2) {
 

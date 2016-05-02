@@ -4,8 +4,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-import org.osgi.service.component.annotations.Component;
-
+import aQute.bnd.annotation.component.Component;
 import osgi_bndtools.calculator.service.api.ISimpleCalculatorService_BigDecimalType;
 
 @Component
