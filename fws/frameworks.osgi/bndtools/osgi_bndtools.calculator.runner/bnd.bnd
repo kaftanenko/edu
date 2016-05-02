@@ -1,0 +1,5 @@
+-buildpath: \
+	osgi_bndtools.calculator.service.api;version=latest,\
+	osgi_bndtools.calculator.service.impl;version=latest,\
+	osgi_bndtools.calculator.access.shell;version=latest,\
+	osgi_bndtools.calculator.access.web.jsp;version=latest

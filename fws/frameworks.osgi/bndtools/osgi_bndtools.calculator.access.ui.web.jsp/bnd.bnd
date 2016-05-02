@@ -1,0 +1,18 @@
+-buildpath: \
+	osgi.core;version=6.0,\
+	osgi.cmpn;version=6.0,\
+	javax.servlet,\
+	javax.servlet.jsp,\
+	osgi.annotation,\
+	biz.aQute.bnd.annotation,\
+	osgi_bndtools.calculator.access.ui.web.jsp;version=latest
+
+-testpath: \
+	junit; version=4,\
+	hamcrest-core; version=1.3
+
+Module-Type: Web
+Webapp-Context: web-jsp
+Web-ContextPath: web-jsp
+
+-dsannotations: *

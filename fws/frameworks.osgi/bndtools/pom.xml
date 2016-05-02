@@ -17,8 +17,11 @@
 		<module>osgi_bndtools.calculator.access.rest</module>
 		<module>osgi_bndtools.calculator.access.shell</module>
 
-		<module>osgi_bndtools.calculator.access.web.jsf</module>
-		<module>osgi_bndtools.calculator.access.web.jsp</module>
+		<module>osgi_bndtools.calculator.access.ui.common</module>
+		<!--
+		<module>osgi_bndtools.calculator.access.ui.web.jsf</module>
+		-->
+		<module>osgi_bndtools.calculator.access.ui.web.jsp</module>
 		
 		<module>osgi_bndtools.calculator.runner</module>
 	</modules>
@@ -37,6 +40,26 @@
 				<artifactId>javax.inject</artifactId>
 				<version>1</version>
 			</dependency>
+
+			<!-- Apache Commons -->
+			<!-- 
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.4</version>
+			</dependency>
+			-->
+
+
+			<!-- Tomcat provided depenencies -->
+			<!-- <dependency> <groupId>org.apache.tomcat.embed</groupId> <artifactId>tomcat-embed-core</artifactId> <version>7.0.69</version> 
+				<scope>provided</scope> </dependency> -->
+
+			<!-- WS RS dependencies -->
+			<!-- <dependency> <groupId>javax.ws.rs</groupId> <artifactId>jsr311-api</artifactId> <version>1.1.1</version> <scope>${runtime.depended.scope}</scope> 
+				</dependency> <dependency> <groupId>com.sun.jersey</groupId> <artifactId>jersey-core</artifactId> <version>${jersey.stack.version}</version> 
+				<scope>${runtime.depended.scope}</scope> </dependency> -->
+
 
 			<!-- Spring dependencies -->
 			<dependency>
