@@ -1,4 +1,0 @@
-Bundle-ManifestVersion: 2
-Bundle-SymbolicName: osgi_bndtools.calculator.access.web-jsf
-Webapp-Context: web-jsf
-Web-ContextPath: web-jsf

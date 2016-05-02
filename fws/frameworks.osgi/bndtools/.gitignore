@@ -1,4 +1,4 @@
-!.*
-/.gradle/
-/reports/
-/generated/
+.*
+.gradle
+reports
+generated

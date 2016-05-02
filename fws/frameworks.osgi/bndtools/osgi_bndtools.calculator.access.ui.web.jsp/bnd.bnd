@@ -5,7 +5,7 @@
 	javax.servlet.jsp,\
 	osgi.annotation,\
 	biz.aQute.bnd.annotation,\
-	osgi_bndtools.calculator.access.ui.web.jsp;version=latest
+	osgi_bndtools.calculator.access.ui.common;version=latest
 
 -testpath: \
 	junit; version=4,\
