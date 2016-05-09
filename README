@@ -32,6 +32,9 @@ Third-party frameworks:
 	- edu.java.fws.log4j
 		- technology demonstrator: Log4J.
 		 
+	- edu.java.fws.nodejs
+		- technology demonstrator: Node.js.
+		 
 	- edu.java.fws.osgi
 		- technology demonstrator: OSGi.
 
