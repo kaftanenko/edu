@@ -40,7 +40,7 @@
 
 	// ...
 
-	private CalculatorViewController calculatorController = new CalculatorViewController();%>
+	private ISimpleCalculatorViewController calculatorViewController = new SimpleCalculatorViewController();%>
 
 	<%
 		final Set<String> parameterNames = request.getParameterMap().keySet();
@@ -55,26 +55,26 @@
 
 				// ... OPERATIONAL BUTTON CLICKED: CALCULATE
 
-				calculatorController.calculate();
+				calculatorViewController.calculate();
 
 			} else if (opParamValue.equals(PARAM_VALUE_OPERATION_CANCEL)) {
 
 				// ... OPERATIONAL BUTTON CLICKED: CANCEL
 
-				calculatorController.cancelInput();
+				calculatorViewController.cancelInput();
 
 			} else if (opParamValue.equals(PARAM_VALUE_OPERATION_DELETE)) {
 
 				// ... OPERATIONAL BUTTON CLICKED: CANCEL
 
-				calculatorController.deleteLastInputSign();
+				calculatorViewController.deleteLastInputSign();
 
 			} else {
 
 				// ... OPERATIONAL BUTTON CLICKED: MATH OPERATION
 
 				final EMathOperation mathOperation = EMathOperation.valueOf(opParamValue);
-				calculatorController.selectMathOperation(mathOperation);
+				calculatorViewController.selectMathOperation(mathOperation);
 			}
 		} else {
 
@@ -87,13 +87,13 @@
 				final String numParamValue = request.getParameter(PARAM_NAME_NUMBER_BUTTON);
 				final byte numberValue = Byte.valueOf(numParamValue);
 
-				calculatorController.putInDigitSign(numberValue);
+				calculatorViewController.putInDigitSign(numberValue);
 
 			} else if (parameterNames.contains(PARAM_NAME_COMMA_BUTTON)) {
 
 				// ... INPUT BUTTON CLICKED: COMMA
 
-				calculatorController.putInCommaSign();
+				calculatorViewController.putInCommaSign();
 			}
 		}
 	%>
@@ -109,7 +109,7 @@
 			</colgroup>
 			<tr>
 				<th colspan="5"><input type="text" class="display-line"
-					value="<%=calculatorController.getDisplayValue()%>" /></th>
+					value="<%=calculatorViewController.getDisplayValue()%>" /></th>
 			</tr>
 			<tr class="key-button-row">
 				<td><button class="key-button" type="submit" name="num"
@@ -150,7 +150,7 @@
 			<tr class="key-button-row">
 				<td><button class="key-button" type="submit" name="num"
 						value="0">0</button></td>
-				<td><button class="key-button" type="submit" name="comma"><%=calculatorController.getDecimalSeparator()%></button></td>
+				<td><button class="key-button" type="submit" name="comma"><%=calculatorViewController.getDecimalSeparator()%></button></td>
 				<td><button class="key-button" type="submit" name="op"
 						value="<%=PARAM_VALUE_OPERATION_NEG%>">&plusmn;</button></td>
 				<td><button class="key-button" type="submit" name="op"

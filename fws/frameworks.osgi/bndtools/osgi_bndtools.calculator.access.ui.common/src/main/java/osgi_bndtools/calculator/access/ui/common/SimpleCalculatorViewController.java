@@ -8,16 +8,12 @@ import osgi_bndtools.calculator.access.ui.common.type.EMathOperation;
 import osgi_bndtools.calculator.access.ui.common.util.BigDecimalUtils;
 import osgi_bndtools.calculator.access.ui.common.util.SimpleCalculatorFacade;
 
-public class CalculatorViewController {
+public class SimpleCalculatorViewController implements ISimpleCalculatorViewController {
 
 	// ... constants
 
 	private static final String MINUS = "-";
 	private static final String ZERO = BigDecimal.ZERO.toString();
-
-	// ... dependency properties
-
-	private SimpleCalculatorFacade calculator = new SimpleCalculatorFacade();
 
 	// ... configuration properties
 
@@ -37,7 +33,7 @@ public class CalculatorViewController {
 
 	// ... constructor
 
-	public CalculatorViewController() {
+	public SimpleCalculatorViewController() {
 
 		init();
 	}
@@ -49,13 +45,21 @@ public class CalculatorViewController {
 		selectedOperation = null;
 	}
 
+	public SimpleCalculatorFacade getSimpleCalculatorFacade() {
+
+		final SimpleCalculatorFacade simpleCalculatorFacade = new SimpleCalculatorFacade();
+		return simpleCalculatorFacade;
+	}
+
 	// ... view data access
 
+	@Override
 	public String getDisplayValue() {
 
 		return currentArgumentInput;
 	}
 
+	@Override
 	public String getDecimalSeparator() {
 
 		return decimalSeparator;
@@ -63,6 +67,7 @@ public class CalculatorViewController {
 
 	// ... business methods
 
+	@Override
 	public void calculate() {
 
 		if (selectedOperation == null) {
@@ -76,9 +81,9 @@ public class CalculatorViewController {
 
 			if (selectedOperation.isUnary()) {
 
-				result = calculator.calculate(arg2, selectedOperation);
+				result = getSimpleCalculatorFacade().calculate(arg2, selectedOperation);
 			} else {
-				result = calculator.calculate(arg1, arg2, selectedOperation);
+				result = getSimpleCalculatorFacade().calculate(arg1, arg2, selectedOperation);
 			}
 
 			selectedOperation = null;
@@ -88,11 +93,13 @@ public class CalculatorViewController {
 		}
 	}
 
+	@Override
 	public void cancelInput() {
 
 		resetCurrentArgumentInput();
 	}
 
+	@Override
 	public void deleteLastInputSign() {
 
 		resetCurrentArgumentInput_If_It_Was_Finished();
@@ -113,6 +120,7 @@ public class CalculatorViewController {
 		}
 	}
 
+	@Override
 	public void putInCommaSign() {
 
 		resetCurrentArgumentInput_If_It_Was_Finished();
@@ -125,6 +133,7 @@ public class CalculatorViewController {
 		}
 	}
 
+	@Override
 	public void putInDigitSign(final byte number) {
 
 		resetCurrentArgumentInput_If_It_Was_Finished();
@@ -151,6 +160,7 @@ public class CalculatorViewController {
 		}
 	}
 
+	@Override
 	public void selectMathOperation(final EMathOperation mathOperation) {
 
 		selectedOperation = mathOperation;
