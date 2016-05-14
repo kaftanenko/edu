@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<composite:interface>
+
+	<composite:attribute name="_id" default="25" />
+</composite:interface>
+
+<composite:implementation>
+
+	<h:outputStylesheet library="widget" name="simple-calculator.css" />
+
+	<h:form>
+
+		<table id="#{_id}" class="calculator-grid">
+			<colgroup>
+				<col class="numbers-column" span="3" />
+				<col class="math-op-column" />
+				<col class="last-op-column" />
+			</colgroup>
+			<tr>
+				<th colspan="5" class="display-line"><h:outputText
+						class="display-line" value="#{simpleCalculatorBean.displayValue}" /></th>
+			</tr>
+			<tr class="key-button-row">
+				<td><h:commandButton class="key-button" value="7"
+						action="#{simpleCalculatorBean.putInDigitSign(7)}" /></td>
+				<td><h:commandButton class="key-button" value="8"
+						action="#{simpleCalculatorBean.putInDigitSign(8)}" /></td>
+				<td><h:commandButton class="key-button" value="9"
+						action="#{simpleCalculatorBean.putInDigitSign(9)}" /></td>
+				<td><h:commandButton class="key-button" value="/"
+						action="#{simpleCalculatorBean.selectMathOperation('DIVIDE')}" /></td>
+				<td><h:commandButton class="key-button" value="C"
+						action="#{simpleCalculatorBean.cancelInput()}" /></td>
+			</tr>
+			<tr class="key-button-row">
+				<td><h:commandButton class="key-button" value="4"
+						action="#{simpleCalculatorBean.putInDigitSign(4)}" /></td>
+				<td><h:commandButton class="key-button" value="5"
+						action="#{simpleCalculatorBean.putInDigitSign(5)}" /></td>
+				<td><h:commandButton class="key-button" value="6"
+						action="#{simpleCalculatorBean.putInDigitSign(6)}" /></td>
+				<td><h:commandButton class="key-button" value="*"
+						action="#{simpleCalculatorBean.selectMathOperation('MULTIPLY')}" /></td>
+				<td><h:commandButton class="key-button" value="&#x21D0;"
+						action="#{simpleCalculatorBean.deleteLastInputSign()}" /></td>
+			</tr>
+			<tr class="key-button-row">
+				<td><h:commandButton class="key-button" value="1"
+						action="#{simpleCalculatorBean.putInDigitSign(1)}" /></td>
+				<td><h:commandButton class="key-button" value="2"
+						action="#{simpleCalculatorBean.putInDigitSign(2)}" /></td>
+				<td><h:commandButton class="key-button" value="3"
+						action="#{simpleCalculatorBean.putInDigitSign(3)}" /></td>
+				<td><h:commandButton class="key-button" value="-"
+						action="#{simpleCalculatorBean.selectMathOperation('SUBTRACT')}" /></td>
+				<td rowspan="2"><h:commandButton class="key-button" value="="
+						action="#{simpleCalculatorBean.calculate()}" /></td>
+			</tr>
+			<tr class="key-button-row">
+				<td><h:commandButton class="key-button" value="0"
+						action="#{simpleCalculatorBean.putInDigitSign(0)}" /></td>
+				<td><h:commandButton class="key-button"
+						value="#{simpleCalculatorBean.decimalSeparator}"
+						action="#{simpleCalculatorBean.putInCommaSign()}" /></td>
+				<td><h:commandButton class="key-button" value="&plusmn;"
+						action="#{simpleCalculatorBean.selectMathOperation('NEGATE')}" /></td>
+				<td><h:commandButton class="key-button" value="+"
+						action="#{simpleCalculatorBean.selectMathOperation('ADD')}" /></td>
+			</tr>
+		</table>
+	</h:form>
+</composite:implementation>
+</html>

@@ -8,11 +8,12 @@
 	border-collapse: separate;
 }
 
-.calculator-grid .numbers-column {
-	width: 40px;
+.calculator-grid .key-button-row {
+	
 }
 
-.calculator-grid .key-button-row {
+.calculator-grid .numbers-column {
+	width: 40px;
 }
 
 .calculator-grid .math-op-column {
