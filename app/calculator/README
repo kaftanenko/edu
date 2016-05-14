@@ -1,8 +1,9 @@
 
 Symbolic name:
 
-	edu.java.fws.osgi.bndtools]
+	edu.java.app.calculator
 
 Description:
 
-	... educational OSGi (sub-)project for studying of the "BND Tools" set.
+	... educational project around the "calculation service" subject for
+	studying different technologies.
