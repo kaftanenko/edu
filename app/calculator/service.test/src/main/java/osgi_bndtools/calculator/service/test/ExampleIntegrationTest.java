@@ -1,4 +1,4 @@
-package osgi_bndtools.calculator.service.test;
+package app.calculator.service.test;
 
 import org.junit.After;
 import org.junit.Before;

@@ -19,8 +19,8 @@
 
 	<%@ page import="java.text.DecimalFormatSymbols"%>
 
-	<%@ page import="osgi_bndtools.calculator.access.ui.common.*"%>
-	<%@ page import="osgi_bndtools.calculator.access.ui.common.type.*"%>
+	<%@ page import="app.calculator.access.ui.common.*"%>
+	<%@ page import="app.calculator.access.ui.common.type.*"%>
 
 	<%!;
 	private final static String PARAM_NAME_NUMBER_BUTTON = "num";

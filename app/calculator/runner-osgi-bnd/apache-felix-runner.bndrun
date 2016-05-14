@@ -14,10 +14,10 @@
 	osgi.identity;filter:='(osgi.identity=org.apache.felix.log)',\
 	osgi.identity;filter:='(osgi.identity=javax.servlet)',\
 	osgi.identity;filter:='(osgi.identity=javax.servlet.jsp)',\
-	osgi.identity;filter:='(osgi.identity=osgi_bndtools.calculator.service.api)',\
-	osgi.identity;filter:='(osgi.identity=osgi_bndtools.calculator.service.impl)',\
-	osgi.identity;filter:='(osgi.identity=osgi_bndtools.calculator.access.shell)',\
-	osgi.identity;filter:='(osgi.identity=osgi_bndtools.calculator.access.ui.web.jsp)'
+	osgi.identity;filter:='(osgi.identity=app.calculator.service.api)',\
+	osgi.identity;filter:='(osgi.identity=app.calculator.service.impl)',\
+	osgi.identity;filter:='(osgi.identity=app.calculator.access.shell)',\
+	osgi.identity;filter:='(osgi.identity=app.calculator.access.ui.web.jsp)'
 -resolve: auto
 -runbundles: \
 	javax.servlet;version='[3.1.0,3.1.1)',\
@@ -29,7 +29,7 @@
 	org.apache.felix.log;version='[1.0.1,1.0.2)',\
 	org.apache.felix.scr;version='[2.0.0,2.0.1)',\
 	osgi.cmpn;version='[5.0.0,5.0.1)',\
-	osgi_bndtools.calculator.access.shell;version=snapshot,\
-	osgi_bndtools.calculator.access.ui.web.jsp;version=snapshot,\
-	osgi_bndtools.calculator.service.api;version=snapshot,\
-	osgi_bndtools.calculator.service.impl;version=snapshot
+	app.calculator.access.shell;version=snapshot,\
+	app.calculator.access.ui.web.jsp;version=snapshot,\
+	app.calculator.service.api;version=snapshot,\
+	app.calculator.service.impl;version=snapshot
