@@ -1,0 +1,80 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>edu.java.app.calculator</groupId>
+		<artifactId>app.calculator</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>app.calculator.runner-osgi-bnd</artifactId>
+
+	<dependencies>
+
+		<!-- Project modules -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>app.calculator.service.api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>app.calculator.service.impl</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>app.calculator.access.shell</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- 
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>app.calculator.access.ui.web.jsf</artifactId>
+			<type>war</type>
+			<version>${project.version}</version>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>app.calculator.access.ui.web.jsp</artifactId>
+			<type>war</type>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>app.calculator.access.rest</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>biz.aQute.bnd</groupId>
+				<artifactId>bnd-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

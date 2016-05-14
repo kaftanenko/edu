@@ -1,0 +1,15 @@
+-buildpath: \
+	osgi.core;version=6.0,\
+	osgi.cmpn;version=6.0,\
+	osgi.annotation,\
+	biz.aQute.bnd.annotation,\
+	app.calculator.service.api;version=latest
+
+-testpath: \
+	junit; version=4,\
+	hamcrest-core; version=1.3
+
+-sourcepath src/main/java
+
+Private-Package: app.calculator.service.impl
+Service-Component: *

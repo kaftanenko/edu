@@ -1,0 +1,5 @@
+-buildpath: osgi.annotation; version=6.0.1
+-baseline: *
+
+
+Export-Package: app.calculator.service.api

@@ -1,0 +1,14 @@
+-buildpath: \
+	osgi.core;version=6.0,\
+	osgi.cmpn;version=6.0,\
+	app.calculator.service.api;version=latest,\
+	app.calculator.service.impl;version=latest
+
+-testpath: \
+	junit; version=4,\
+	hamcrest-core; version=1.3
+
+Export-Package: \
+	app.calculator.access.ui.common.type,\
+	app.calculator.access.ui.common.util,\
+	app.calculator.access.ui.common
