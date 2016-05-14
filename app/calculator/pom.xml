@@ -11,17 +11,9 @@
 
 	<modules>
 	
-		<module>service.api</module>
-		<module>service.impl</module>
-		
-		<module>access.rest</module>
-		<module>access.shell</module>
-
-		<module>access.ui.common</module>
-		<module>access.ui.web.jsf</module>
-		<module>access.ui.web.jsp</module>
-		
-		<module>runner-osgi-bnd</module>
+		<module>access</module>
+		<module>runner</module>
+		<module>service</module>
 	</modules>
 
 	<properties>

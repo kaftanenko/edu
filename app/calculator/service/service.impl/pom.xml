@@ -5,11 +5,11 @@
 
 	<parent>
 		<groupId>edu.java.app.calculator</groupId>
-		<artifactId>app.calculator</artifactId>
+		<artifactId>app.calculator.service</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>app.calculator.access.shell</artifactId>
+	<artifactId>app.calculator.service.impl</artifactId>
 
 	<dependencies>
 
@@ -30,10 +30,15 @@
 			<artifactId>org.osgi.annotation</artifactId>
 		</dependency>
 
+		<!-- BND Tools dependencies -->
+		<dependency>
+			<groupId>biz.aQute.bnd</groupId>
+			<artifactId>biz.aQute.bnd.annotation</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
