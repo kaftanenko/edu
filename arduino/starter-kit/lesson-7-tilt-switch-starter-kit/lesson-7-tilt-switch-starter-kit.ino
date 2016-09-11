@@ -1,0 +1,32 @@
+//tilt switch
+//tilt the switch, and the LED attached to pin 13 on SunFounder Uno board will light up.
+//tilt switch attach to pin2
+//Email: support@sunfounder.com
+//Website: www.sunfounder.com
+/*****************************************/
+
+const int ledPin = 13;//the led attach to
+const int sensorPin = 2;//the led attach to
+
+void setup()
+{
+  pinMode(ledPin, OUTPUT); //initialize the ledPin as an output
+  pinMode(sensorPin, INPUT); //set pin2 as INPUT
+  digitalWrite(sensorPin, HIGH);//set pin2 as HIGH
+}
+
+/******************************************/
+void loop()
+{
+  int digitalVal = digitalRead(sensorPin);//Read the value of pin2
+  if (HIGH == digitalVal) //if tilt switch is not breakover
+  {
+    digitalWrite(ledPin, LOW); //turn the led off
+  }
+  else ////if tilt switch breakover
+  {
+    digitalWrite(ledPin, HIGH); //turn the led on
+  }
+}
+
+/**********************************************/
