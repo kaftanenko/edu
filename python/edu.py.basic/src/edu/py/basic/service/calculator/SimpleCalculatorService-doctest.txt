@@ -1,0 +1,131 @@
+
+The SimpleCalculatorService represents a very profound implementation of a 
+calcualtor with just 4 basic operations: addition, subtraction, division and
+multiplication.
+
+This class is containing within the "edu.py.math.service.calculator" module 
+and can be bound into your code as follow:
+
+>>> from edu.py.basic.service.calculator.SimpleCalculatorService import *
+
+After class instantiation:
+
+>>> simpleCalculator = SimpleCalculatorService()
+
+you can call any operation invented bellowon on this instance.
+
+The contract for different arguments combination is :
+
+... for #add() operation.
+
+>>> simpleCalculator.add(0, 1)
+1
+
+>>> simpleCalculator.add(1, 2)
+3
+
+>>> simpleCalculator.add(-2, 3)
+1
+
+>>> simpleCalculator.add(-3, 2)
+-1
+
+>>> simpleCalculator.add(-3, -4)
+-7
+
+>>> simpleCalculator.add(4.5, 5)
+Traceback (most recent call last):
+ValueError: Wrong arguments type. Only initeger arguments are supported.
+
+>>> simpleCalculator.add(4, -5.6)
+Traceback (most recent call last):
+ValueError: Wrong arguments type. Only initeger arguments are supported.
+
+... for #subtract() operation.
+
+>>> simpleCalculator.subtract(1, 0)
+1
+
+>>> simpleCalculator.subtract(0, 1)
+-1
+
+>>> simpleCalculator.subtract(1, 2)
+-1
+
+>>> simpleCalculator.subtract(2, 1)
+1
+
+>>> simpleCalculator.subtract(-2, 3)
+-5
+
+>>> simpleCalculator.subtract(3, -2)
+5
+
+>>> simpleCalculator.subtract(-3, -4)
+1
+
+>>> simpleCalculator.subtract(-4, -3)
+-1
+
+>>> simpleCalculator.subtract(4.5, 5)
+Traceback (most recent call last):
+ValueError: Wrong arguments type. Only initeger arguments are supported.
+
+>>> simpleCalculator.subtract(4, -5.6)
+Traceback (most recent call last):
+ValueError: Wrong arguments type. Only initeger arguments are supported.
+
+... for #multiply() operation.
+
+>>> simpleCalculator.multiply(0, 1)
+0
+
+>>> simpleCalculator.multiply(1, 2)
+2
+
+>>> simpleCalculator.multiply(-2, 3)
+-6
+
+>>> simpleCalculator.multiply(-3, -4)
+12
+
+>>> simpleCalculator.multiply(4.5, 5)
+Traceback (most recent call last):
+ValueError: Wrong arguments type. Only initeger arguments are supported.
+
+>>> simpleCalculator.multiply(4, -5.6)
+Traceback (most recent call last):
+ValueError: Wrong arguments type. Only initeger arguments are supported.
+
+... for #divide() operation.
+
+>>> simpleCalculator.divide(1, 0)
+... # doctest: +ELLIPSIS
+Traceback (most recent call last):
+ZeroDivisionError: ...
+
+>>> simpleCalculator.divide(0, 1)
+0
+
+>>> simpleCalculator.divide(2, 1)
+2
+
+>>> simpleCalculator.divide(4, 2)
+2
+
+>>> simpleCalculator.divide(-9, 3)
+-3
+
+>>> simpleCalculator.divide(-16, -4)
+4
+
+>>> simpleCalculator.divide(4.5, 5)
+Traceback (most recent call last):
+ValueError: Wrong arguments type. Only initeger arguments are supported.
+
+>>> simpleCalculator.divide(4, -5.6)
+Traceback (most recent call last):
+ValueError: Wrong arguments type. Only initeger arguments are supported.
+
+>>> True
+False

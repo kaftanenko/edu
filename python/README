@@ -1,0 +1,18 @@
+
+---
+ Python: ... educational examples.
+---
+
+	- edu.py.basic
+	
+		- implements "edu.py.basic.service.calculator" package with:
+		
+			- SimpleCalculatorService.py
+			- SimpleCalculatorService-doctest.txt
+		
+	- edu.py.django
+	
+		- implements a simple contacts-book based on the "Django"-framework
+		
+			- uses admin GUI-console (http://127.0.0.1:8000/admin by default) for contacts management.
+		
