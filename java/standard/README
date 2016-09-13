@@ -1,0 +1,30 @@
+
+---
+ Java educational examples: standard technologies.
+--
+
+ Sub-Projects:
+
+	- edu.java.jse.8
+		- technology demonstrator: for Java 8 specialities.
+		
+	- edu.java.jse.cdi.weld
+		- technology demonstrator: CDI (Contexts and Dependency Injection) using JBoss' "Weld" framework.
+		
+	- edu.java.jse.concurrency
+		- technology demonstrator: Java standard concurrency.
+		
+	- edu.java.jse.jax-rs
+		- technology demonstrator: JAX-RS (Java API for RESTful Web Services).
+		
+	- edu.java.jse.jna
+		- technology demonstrator: JNA (Java Native Access).
+		
+	- edu.java.jse.nio
+		- technology demonstrator: Java NIO (Non-blocking I/O).
+		
+	- edu.java.jse.rmi
+		- technology demonstrator: Java RMI (Remote Method Invocation)
+
+	- edu.java.jse.validation
+		- technology demonstrator: Java Bean Validation.
