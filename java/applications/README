@@ -1,0 +1,10 @@
+
+---
+ Java educational examples: external frameworks.
+--
+
+ Sub-Projects:
+
+	edu.java.app.calculator
+		- educational project around the "calculator service" subject for
+		  studying different technologies including GUI some frameworks.
