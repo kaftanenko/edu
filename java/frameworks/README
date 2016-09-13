@@ -1,0 +1,25 @@
+
+---
+ Java educational examples: external frameworks.
+--
+
+ Sub-Projects:
+
+	- edu.java.frameworks.bdd
+		- technology demonstrator: BDD (Behavior Driven Development) frameworks.
+		 
+	- edu.java.frameworks.junit
+		- technology demonstrator: JUnit.
+		- NOTE: supporting project for the "Kata - Java - Tests - JUnit4"-Presentation.
+		
+	- edu.java.frameworks.log4j
+		- technology demonstrator: Log4J.
+		 
+	- edu.java.frameworks.nodejs
+		- technology demonstrator: Node.js.
+		 
+	- edu.java.frameworks.osgi
+		- technology demonstrator: OSGi.
+
+	- edu.java.frameworks.spring
+		- technology demonstrator: Spring frameworks family.
