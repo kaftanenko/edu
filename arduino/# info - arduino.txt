@@ -1,0 +1,34 @@
+
+---
+ Web links
+---
+
+ https://arduino-info.wikispaces.com
+ https://arduino-hannover.de
+ http://arduino.ru/
+ http://cxem.net/arduino
+
+ http://cxem.net
+ https://geektimes.ru
+ http://www.heise.de/developer
+ http://www.instructables.com/
+ https://mcuoneclipse.com
+ http://www.mikrocontroller.net/
+
+---
+ Libraries
+---
+
+ esp8266
+	http://bbs.espressif.com/
+	https://github.com/pfalcon/esp-open-sdk
+
+---
+Arduino IDE Plug-Ins
+---
+
+ ESP8266
+	http://arduino.esp8266.com/package_esp8266com_index.json 
+
+---
+ 
