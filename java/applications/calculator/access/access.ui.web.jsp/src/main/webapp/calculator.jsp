@@ -109,7 +109,7 @@
 			</colgroup>
 			<tr>
 				<th colspan="5"><input type="text" class="display-line"
-					value="<%=calculatorViewController.getDisplayValue()%>" /></th>
+					value="<%=calculatorViewController.getDisplayValue()%>" readonly="readonly" /></th>
 			</tr>
 			<tr class="key-button-row">
 				<td><button class="key-button" type="submit" name="num"
