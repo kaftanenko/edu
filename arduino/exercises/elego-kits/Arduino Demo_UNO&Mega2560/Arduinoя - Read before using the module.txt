@@ -1,0 +1,6 @@
+1. This module is configured with six Arduino display test code and six SD card test code.
+2. The test code is suitable for UNO and Mega2560. And it can be used to test into the corresponding location without wiring.
+3. Example01 - Simple test is the most Simple test, it do not need to install libraries and it can easily change from red to green, to blue so that you can test the quality of the module.
+4. Example02 ~ 6 need to intall libraries, please Install libraries before you compile the code.
+5. SDCard Exten Example and Example05 - ShowBMP need to use SD card, the program which relating to the SD card only supports UNO series, does not support Mega2560.
+6. The IDE Version we use must be newer than the arduino - 1.6.2 - Windows, if not, we may have a compiler error.
