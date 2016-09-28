@@ -1,42 +1,58 @@
 
+const bool isDebug = true;
+
 const int  sensorPin   = A2;
 const int  controlPin  =  3;
 
-const int min_time_between_sounds_in_ms =  200;
+const int min_time_between_sounds_in_ms =  300;
 const int max_time_between_sounds_in_ms = 1000;
 const int min_volume_of_switching_sound =  768;
 
 bool control_CurrentState_IsOn =  false;
+
 long lastSoundTimeStamp = 0;
+long lastSilenceTimeStamp = 0;
 
 void setup() {
 
   pinMode(controlPin, OUTPUT);
   switchControlOff();
 
-  Serial.begin(9600);
+  if (isDebug) {
+    Serial.begin(9600);
+  }
 }
 
 void loop() {
 
   int sensorValue =  analogRead(sensorPin);
 
+  long currentTimeInMs = millis();
+
   if (isSwitchingSoundVolume(sensorValue)) {
 
-    long currentTimeInMs = millis();
     long msSinceLastSwitchingSound = currentTimeInMs - lastSoundTimeStamp;
 
-    if ( min_time_between_sounds_in_ms < msSinceLastSwitchingSound && msSinceLastSwitchingSound < max_time_between_sounds_in_ms) {
+    int s1 = min_time_between_sounds_in_ms < msSinceLastSwitchingSound && msSinceLastSwitchingSound < max_time_between_sounds_in_ms;
+    if (s1) {
 
       toggleControl();
-    }
 
-    lastSoundTimeStamp = currentTimeInMs;
+      lastSoundTimeStamp = 0;
+      lastSilenceTimeStamp = 0;
+    } else {
+
+      lastSoundTimeStamp = currentTimeInMs;
+    }
+  } else {
+    lastSilenceTimeStamp = currentTimeInMs;
   }
 
-  if (sensorValue > 500) {
+  if (isDebug) {
     Serial.println(sensorValue,  DEC);
   }
+
+  delay(50);
 }
 
 bool isSwitchingSoundVolume(int soundVolume) {
