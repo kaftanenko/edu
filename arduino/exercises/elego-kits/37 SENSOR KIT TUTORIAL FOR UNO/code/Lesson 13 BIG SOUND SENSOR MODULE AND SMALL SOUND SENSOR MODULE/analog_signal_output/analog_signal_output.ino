@@ -9,14 +9,14 @@ void setup() {
 }
 
 void loop() {
-  
+
   sensorValue =  analogRead(sensorPin);
   //digitalWrite(ledPin,  HIGH);
   //delay(sensorValue);
   //digitalWrite(ledPin,  LOW);
   //delay(sensorValue);
-  
-  if (sensorValue > 500) {
+
+  if (sensorValue > 100) {
     Serial.println(sensorValue,  DEC);
   }
 }

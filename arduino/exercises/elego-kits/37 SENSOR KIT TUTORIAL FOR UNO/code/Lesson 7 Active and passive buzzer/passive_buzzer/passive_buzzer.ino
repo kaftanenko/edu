@@ -15,7 +15,18 @@ void loop() {
     tone(8, melody[thisNote], duration);
      
     // Output the voice after several minutes
-    delay(1000);
+    delay(500);
+  }
+   
+  // restart after two seconds 
+  delay(500);
+  
+  for (int thisNote = 7; thisNote >= 0; thisNote--) {
+    // pin8 output the voice, every scale is 0.5 sencond
+    tone(8, melody[thisNote], duration);
+     
+    // Output the voice after several minutes
+    delay(500);
   }
    
   // restart after two seconds 
