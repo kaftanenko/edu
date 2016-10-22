@@ -23,3 +23,8 @@
 
 	- edu.java.frameworks.spring
 		- technology demonstrator: Spring frameworks family.
+		
+	- edu.java.frameworks.web
+		- technology demonstrator: Java Web frameworks family.
+		
+		
