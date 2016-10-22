@@ -5,6 +5,9 @@
 
  Sub-Projects:
 
+	- edu.java.jee.web
+		- technology demonstrator: JEE Web project.
+		
 	- edu.java.jse.8
 		- technology demonstrator: for Java 8 specialities.
 		
