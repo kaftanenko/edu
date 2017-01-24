@@ -3,11 +3,11 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>fws-spring-rest-client</artifactId>
+	<artifactId>fws-spring-rest-stateless-client</artifactId>
 
 	<parent>
 		<groupId>edu.java.fws.spring</groupId>
-		<artifactId>fws-spring-rest</artifactId>
+		<artifactId>fws-spring-rest-stateless</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
@@ -16,12 +16,6 @@
 		<dependency>
 			<groupId>edu.java.jse.junit</groupId>
 			<artifactId>junit.calculator.api</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>edu.java.jse.junit</groupId>
-			<artifactId>junit.calculator.impl</artifactId>
-			<version>0.0.1</version>
 		</dependency>
 
 		<dependency>
