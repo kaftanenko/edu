@@ -20,7 +20,7 @@ public class GreetingRestServiceImpl {
 	@RequestMapping("/greeting")
 	public Greeting getGreetingFor(@RequestParam(value = "name", defaultValue = "World") String name) {
 
-		return greetingService.getGreetingFor(name);
+		return greetingService.findByName(name);
 	}
 
 }

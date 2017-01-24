@@ -3,18 +3,18 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>fws-spring-rest-access</artifactId>
+	<artifactId>fws-spring-rest-access-stateful</artifactId>
 	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>edu.java.fws.spring</groupId>
-		<artifactId>fws-spring-rest</artifactId>
+		<artifactId>fws-spring-rest-access</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
 	<modules>
-		<module>stateful</module>
-		<module>stateless</module>
+		<module>client</module>
+		<module>server</module>
 	</modules>
 
 </project>

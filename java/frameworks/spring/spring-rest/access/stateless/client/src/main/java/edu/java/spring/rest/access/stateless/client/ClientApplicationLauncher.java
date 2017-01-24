@@ -26,7 +26,7 @@ public class ClientApplicationLauncher implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		final Greeting greeting = greetingService.getGreetingFor("World");
+		final Greeting greeting = greetingService.findByName("World");
 
 		LOG.info(greeting.toString());
 	}
