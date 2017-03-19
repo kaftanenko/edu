@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+
+	<persistence-unit name="edu.java.jee.jpa"
+		transaction-type="RESOURCE_LOCAL">
+
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+		<class>edu.java.jee.jpa.model.dictionary.DictionaryEntryEntity</class>
+
+		<class>edu.java.jee.jpa.model.masterchild.MasterEntity</class>
+		<class>edu.java.jee.jpa.model.masterchild.ChildEntity</class>
+
+		<properties>
+
+			<property name="javax.persistence.jdbc.url" value="jdbc:h2:file:~/edu.java.jee.jpa.h2" />
+			<property name="javax.persistence.jdbc.user" value="sa" />
+			<property name="javax.persistence.jdbc.password" value="" />
+
+			<!-- property name="javax.persistence.validation.mode" value="ddl" / -->
+
+			<property name="hibernate.connection.autocommit" value="true" />
+			<property name="hibernate.default_schema" value="&quot;public&quot;" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+			<property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy" />
+			<property name="hibernate.show_sql" value="true" />
+		</properties>
+	</persistence-unit>
+
+</persistence>

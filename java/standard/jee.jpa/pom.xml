@@ -1,0 +1,187 @@
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>edu.java.jee.jpa</groupId>
+	<artifactId>jee-jpa</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+
+		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<lib.apache.commons.lang3.version>3.5</lib.apache.commons.lang3.version>
+		<lib.flyway.version>4.1.2</lib.flyway.version>
+		<lib.h2.version>1.4.191</lib.h2.version>
+		<lib.hibernate.version>3.6.9.Final</lib.hibernate.version>
+		<lib.hibernate.jpa.version>1.0.0.Final</lib.hibernate.jpa.version>
+		<lib.hibernate.validation.version>4.2.0.Final</lib.hibernate.validation.version>
+		<lib.openpojo.version>0.8.4</lib.openpojo.version>
+
+		<lib.test.assertj.version>3.6.2</lib.test.assertj.version>
+		<lib.test.testng.version>6.9.10</lib.test.testng.version>
+
+		<plugin.maven.compiler.version>3.6.1</plugin.maven.compiler.version>
+		<plugin.maven.flyway.version>${lib.flyway.version}</plugin.maven.flyway.version>
+	</properties>
+
+	<modules>
+		<module>model</module>
+		<module>service</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- ... -->
+			<dependency>
+				<groupId>edu.java.jee.jpa</groupId>
+				<artifactId>jee-jpa-model</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>edu.java.jee.jpa</groupId>
+				<artifactId>jee-jpa-service-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>edu.java.jee.jpa</groupId>
+				<artifactId>jee-jpa-service-impl-hibernate</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Apache Commons -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${lib.apache.commons.lang3.version}</version>
+			</dependency>
+
+			<!-- H2 (DB) -->
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>${lib.h2.version}</version>
+			</dependency>
+
+			<!-- Open POJO -->
+			<dependency>
+				<groupId>com.openpojo</groupId>
+				<artifactId>openpojo</artifactId>
+				<version>${lib.openpojo.version}</version>
+			</dependency>
+
+			<!-- Bean Validation -->
+			<dependency>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>1.1.0.Final</version>
+			</dependency>
+
+			<!-- AssertJ (Test) -->
+			<dependency>
+				<groupId>org.assertj</groupId>
+				<artifactId>assertj-core</artifactId>
+				<version>${lib.test.assertj.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- Flyway (DB) -->
+			<dependency>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-core</artifactId>
+				<version>${lib.flyway.version}</version>
+			</dependency>
+
+			<!-- Hibernate (DB) -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${lib.hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>${lib.hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${lib.hibernate.validation.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate.javax.persistence</groupId>
+				<artifactId>hibernate-jpa-2.1-api</artifactId>
+				<version>${lib.hibernate.jpa.version}</version>
+			</dependency>
+
+			<!-- Test NG -->
+			<dependency>
+				<groupId>org.testng</groupId>
+				<artifactId>testng</artifactId>
+				<version>${lib.test.testng.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- YAML -->
+			<dependency>
+				<groupId>org.yaml</groupId>
+				<artifactId>snakeyaml</artifactId>
+				<version>${lib.snakeyaml.version}</version>
+				<type>bundle</type>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+
+		<!-- AssertJ (Test) -->
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+		</dependency>
+
+		<!-- Test NG -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${plugin.maven.compiler.version}</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.flywaydb</groupId>
+					<artifactId>flyway-maven-plugin</artifactId>
+					<version>${plugin.maven.flyway.version}</version>
+					<configuration>
+						<configFile>classpath:flyway.properties</configFile>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>com.h2database</groupId>
+							<artifactId>h2</artifactId>
+							<version>${lib.h2.version}</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>
