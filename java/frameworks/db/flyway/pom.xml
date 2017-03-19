@@ -1,0 +1,86 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>edu.java.fws.db</groupId>
+	<artifactId>fws-db-flyway</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+
+		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<flyway.user>SA</flyway.user>
+		<flyway.password></flyway.password>
+		<flyway.schemas>public</flyway.schemas>
+		<flyway.placeholders.schemaSuffix>_feature_branch_1</flyway.placeholders.schemaSuffix>
+
+		<lib.h2.version>1.4.191</lib.h2.version>
+		<lib.flyway.version>4.1.2</lib.flyway.version>
+
+		<plugin.maven.flyway.version>${lib.flyway.version}</plugin.maven.flyway.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- H2 (DB) -->
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>${lib.h2.version}</version>
+			</dependency>
+
+			<!-- Flyway -->
+			<dependency>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-core</artifactId>
+				<version>${lib.flyway.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.1</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>${plugin.maven.flyway.version}</version>
+				<configuration>
+					<url>jdbc:h2:file:./target/edu.java.fws.db.flyway</url>
+					<user>sa</user>
+					<password></password>
+					<schemas>
+						<schema>public</schema>
+					</schemas>
+					<placeholders>
+						<schemaSuffix>_feature_branch_1</schemaSuffix>
+					</placeholders>
+					<skip>false</skip>
+					<locations>
+						<location>filesystem:src/main/resources/db/migration</location>
+					</locations>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>com.h2database</groupId>
+						<artifactId>h2</artifactId>
+						<version>${lib.h2.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
