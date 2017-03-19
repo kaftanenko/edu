@@ -17,10 +17,9 @@
 		<lib.apache.commons.lang3.version>3.5</lib.apache.commons.lang3.version>
 		<lib.flyway.version>4.1.2</lib.flyway.version>
 		<lib.h2.version>1.4.191</lib.h2.version>
-		<lib.hibernate.version>3.6.9.Final</lib.hibernate.version>
+		<lib.hibernate.version>4.3.11.Final</lib.hibernate.version>
 		<lib.hibernate.jpa.version>1.0.0.Final</lib.hibernate.jpa.version>
 		<lib.hibernate.validation.version>4.2.0.Final</lib.hibernate.validation.version>
-		<lib.openpojo.version>0.8.4</lib.openpojo.version>
 
 		<lib.test.assertj.version>3.6.2</lib.test.assertj.version>
 		<lib.test.testng.version>6.9.10</lib.test.testng.version>
@@ -66,13 +65,6 @@
 				<groupId>com.h2database</groupId>
 				<artifactId>h2</artifactId>
 				<version>${lib.h2.version}</version>
-			</dependency>
-
-			<!-- Open POJO -->
-			<dependency>
-				<groupId>com.openpojo</groupId>
-				<artifactId>openpojo</artifactId>
-				<version>${lib.openpojo.version}</version>
 			</dependency>
 
 			<!-- Bean Validation -->
@@ -137,21 +129,6 @@
 
 		</dependencies>
 	</dependencyManagement>
-
-	<dependencies>
-
-		<!-- AssertJ (Test) -->
-		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
-		</dependency>
-
-		<!-- Test NG -->
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-		</dependency>
-	</dependencies>
 
 	<build>
 		<pluginManagement>
