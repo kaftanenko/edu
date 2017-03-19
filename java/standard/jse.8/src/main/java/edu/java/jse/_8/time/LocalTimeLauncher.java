@@ -5,7 +5,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-class _Launcher {
+public class LocalTimeLauncher {
 
 	public static void main(final String[] args) {
 
