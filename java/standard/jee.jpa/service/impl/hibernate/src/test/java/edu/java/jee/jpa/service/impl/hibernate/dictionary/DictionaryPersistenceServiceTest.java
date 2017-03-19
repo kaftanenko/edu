@@ -82,7 +82,7 @@ public class DictionaryPersistenceServiceTest extends AbstractPersistenceService
 
 		// ... call operation(s) under test
 		final DictionaryEntryEntity[] dictionaryEntries = serviceUnderTest
-				.findDictionaryEntryEntityByUseCase(useCaseToFindBy);
+				.findDictionaryEntryBySomeUseCase(useCaseToFindBy);
 
 		// ... verify post-conditions
 		final int expectedDictionaryEntriesCount = expectedSomeKeyValues.length;

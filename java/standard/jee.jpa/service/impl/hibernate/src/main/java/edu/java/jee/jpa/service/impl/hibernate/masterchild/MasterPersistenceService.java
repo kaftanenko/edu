@@ -24,7 +24,7 @@ public class MasterPersistenceService extends GenericPersistenceService<MasterEn
 	// ... finder methods
 
 	@Override
-	public MasterEntity[] findMasterEntityBySomeDataField(final Integer masterSomeDataFieldValue) {
+	public MasterEntity[] findMasterBySomeDataField(final Integer masterSomeDataFieldValue) {
 
 		final EntityManager em = emf.createEntityManager();
 
@@ -45,7 +45,7 @@ public class MasterPersistenceService extends GenericPersistenceService<MasterEn
 	}
 
 	@Override
-	public MasterEntity[] findMasterEntityHavingChildsWithSomeDataFieldEqualsTo(final Integer childSomeDataFieldValue) {
+	public MasterEntity[] findMasterHavingChildrenWithSomeDataField(final Integer childSomeDataFieldValue) {
 
 		final EntityManager em = emf.createEntityManager();
 

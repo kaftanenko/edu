@@ -26,7 +26,7 @@ public class DictionaryPersistenceService implements IDictionaryPersistenceServi
 	// ... custom finder methods
 
 	@Override
-	public DictionaryEntryEntity[] findDictionaryEntryEntityByUseCase(final String useCase) {
+	public DictionaryEntryEntity[] findDictionaryEntryBySomeUseCase(final String useCase) {
 
 		final EntityManager em = emf.createEntityManager();
 

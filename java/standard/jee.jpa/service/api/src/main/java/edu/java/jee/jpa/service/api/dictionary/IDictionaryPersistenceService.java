@@ -6,6 +6,6 @@ public interface IDictionaryPersistenceService {
 
 	// ... custom finder methods
 
-	public abstract DictionaryEntryEntity[] findDictionaryEntryEntityByUseCase(String useCase);
+	public abstract DictionaryEntryEntity[] findDictionaryEntryBySomeUseCase(String someUseCase);
 
 }

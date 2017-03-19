@@ -214,7 +214,7 @@ public class MasterPersistenceServiceTest extends AbstractPersistenceServiceTest
 		final int expectedMastersCount = 0;
 
 		// ... call operation(s) under test
-		final MasterEntity[] masters = serviceUnderTest.findMasterEntityBySomeDataField(masterSomeDataFieldValue);
+		final MasterEntity[] masters = serviceUnderTest.findMasterBySomeDataField(masterSomeDataFieldValue);
 
 		// ... verify post-conditions
 		assertThat(expectedMastersCount).isEqualTo(masters.length);
@@ -228,7 +228,7 @@ public class MasterPersistenceServiceTest extends AbstractPersistenceServiceTest
 		final int expectedMastersCount = 2;
 
 		// ... call operation(s) under test
-		final MasterEntity[] masters = serviceUnderTest.findMasterEntityBySomeDataField(masterSomeDataFieldValue);
+		final MasterEntity[] masters = serviceUnderTest.findMasterBySomeDataField(masterSomeDataFieldValue);
 
 		// ... verify post-conditions
 		assertThat(expectedMastersCount).isEqualTo(masters.length);
@@ -243,7 +243,7 @@ public class MasterPersistenceServiceTest extends AbstractPersistenceServiceTest
 
 		// ... call operation(s) under test
 		final MasterEntity[] masters = serviceUnderTest
-				.findMasterEntityHavingChildsWithSomeDataFieldEqualsTo(childSomeDataFieldValue);
+				.findMasterHavingChildrenWithSomeDataField(childSomeDataFieldValue);
 
 		// ... verify post-conditions
 		assertThat(expectedMastersCount).isEqualTo(masters.length);
@@ -258,7 +258,7 @@ public class MasterPersistenceServiceTest extends AbstractPersistenceServiceTest
 
 		// ... call operation(s) under test
 		final MasterEntity[] masters = serviceUnderTest
-				.findMasterEntityHavingChildsWithSomeDataFieldEqualsTo(childSomeDataFieldValue);
+				.findMasterHavingChildrenWithSomeDataField(childSomeDataFieldValue);
 
 		// ... verify post-conditions
 		assertThat(expectedMastersCount).isEqualTo(masters.length);

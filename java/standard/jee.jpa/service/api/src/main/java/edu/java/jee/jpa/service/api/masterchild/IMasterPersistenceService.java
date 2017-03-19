@@ -7,9 +7,8 @@ public interface IMasterPersistenceService extends IGenericPersistenceService<Ma
 
 	// ... custom finder methods
 
-	public abstract MasterEntity[] findMasterEntityBySomeDataField(Integer someFieldValue);
+	public abstract MasterEntity[] findMasterBySomeDataField(Integer someDataFieldValue);
 
-	public abstract MasterEntity[] findMasterEntityHavingChildsWithSomeDataFieldEqualsTo(
-			Integer childSomeDataFieldValue);
+	public abstract MasterEntity[] findMasterHavingChildrenWithSomeDataField(Integer childSomeDataFieldValue);
 
 }
