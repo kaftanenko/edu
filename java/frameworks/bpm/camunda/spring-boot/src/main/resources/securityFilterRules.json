@@ -1,0 +1,12 @@
+{
+	"pathFilter": {
+		"deniedPaths": [
+		],
+		"allowedPaths": [
+			{
+				"path": "/.*",
+				"methods": "*"
+			}
+		]
+	}
+}
