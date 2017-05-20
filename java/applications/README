@@ -9,6 +9,6 @@
 		- educational project around the "calculator service" subject for
 		  studying different technologies including GUI frameworks.
 	
-	edu.java.app.microservices
-		- educational project around the "microservices" subject for
-		  studying different technologies including Cloud solutions.
+	edu.java.app.cloud
+		- educational project around the "cloud" subject for studying 
+		  different technologies including Microservices.
