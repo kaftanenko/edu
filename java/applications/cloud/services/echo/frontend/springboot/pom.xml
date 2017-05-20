@@ -15,6 +15,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<docker.host>https://192.168.99.100:2376</docker.host>
 		<docker.image.prefix>kaftanenko</docker.image.prefix>
 	</properties>
 
@@ -57,9 +58,9 @@
 				<version>0.4.13</version>
 				<configuration>
 					<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-					<dockerDirectory>src/main/docker</dockerDirectory>
-					<dockerHost>https://192.168.99.100:2376</dockerHost>
+					<dockerHost>${docker.host}</dockerHost>
 					<dockerCertPath>${user.home}/.docker/machine/machines/default</dockerCertPath>
+					<dockerDirectory>${project.build.outputDirectory}</dockerDirectory>
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>
