@@ -4,8 +4,8 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>edu.java.app.microservices</groupId>
-	<artifactId>app.microservices</artifactId>
+	<groupId>edu.java.app.cloud</groupId>
+	<artifactId>app.cloud</artifactId>
 	<packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 
