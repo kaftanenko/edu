@@ -1,4 +1,4 @@
-package app.arduino.controller.serial;
+package app.arduino.sereneofshame.service.impl.serial;
 
 import java.io.IOException;
 import java.io.InputStream;

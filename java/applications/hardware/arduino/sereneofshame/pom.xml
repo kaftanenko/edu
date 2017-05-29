@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>edu.java.arduino</groupId>
-	<artifactId>app.arduino.traffic-light-serial-port-controlled</artifactId>
+	<artifactId>app.arduino.sireneofshame</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<repositories>
@@ -17,6 +17,7 @@
 	<dependencies>
 
 		<!-- Jarduino -->
+		<!-- 
 		<dependency>
 			<groupId>org.sintef.jarduino</groupId>
 			<artifactId>org.sintef.jarduino</artifactId>
@@ -32,6 +33,32 @@
 			<artifactId>org.sintef.jarduino.gui</artifactId>
 			<version>0.1.6</version>
 		</dependency>
+		-->
+
+		<!-- TestNG -->
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.11</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- AssertJ -->
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.8.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Mockito -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.8.9</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
