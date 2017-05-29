@@ -1,7 +1,8 @@
 package app.arduino.sereneofshame.service.impl.serial.host;
 
 import static app.arduino.sereneofshame.service.impl.serial.host.util.SerialChannelUtils.closeSerialChannel;
-import static app.arduino.sereneofshame.service.impl.serial.host.util.SerialChannelUtils.findSerialChannelByAndOpenIt;
+import static app.arduino.sereneofshame.service.impl.serial.host.util.SerialChannelUtils.findSerialChannelByWellcomeMessage;
+import static app.arduino.sereneofshame.service.impl.serial.host.util.SerialChannelUtils.openSerialChannel;
 import static app.arduino.sereneofshame.service.impl.serial.host.util.SerialChannelUtils.writeBytes;
 
 import java.io.IOException;
@@ -25,11 +26,11 @@ public class SireneOfShameSerialHostController extends AbstractSireneOfShameCont
 	private static final String COMMAND_SET_STATE_TO_YELLOW = "SET_STATE_TO_YELLOW";
 	private static final String COMMAND_SET_STATE_TO__GREENBLUE = "SET_STATE_TO_GREENBLUE";
 
-	private static final String EXPECTED_GREETING_MESSAGE = "Wellcome to the \"Sirene Of Shame\"!";
+	private static final String EXPECTING_WELCOME_MESSAGE = "Wellcome to the \"Sirene Of Shame\"!";
 
 	// ... properties
 
-	private final SerialChannel channel;
+	private SerialChannel serialChannel;
 
 	// ... constructors
 
@@ -41,15 +42,26 @@ public class SireneOfShameSerialHostController extends AbstractSireneOfShameCont
 	public SireneOfShameSerialHostController(final SireneOfShameControllerConfig configuration) {
 
 		super(configuration);
+	}
 
-		channel = findSerialChannelByAndOpenIt(EXPECTED_GREETING_MESSAGE);
+	public void open() throws Exception {
+
+		final String portName = findSerialChannelByWellcomeMessage(EXPECTING_WELCOME_MESSAGE);
+
+		serialChannel = openSerialChannel(portName);
+		readResponse(); // ... read welcome message
 		setState(configuration.getInitialState());
+	}
+
+	public boolean isOpen() throws Exception {
+
+		return serialChannel.isOpen();
 	}
 
 	@Override
 	public void close() throws Exception {
 
-		closeSerialChannel(channel);
+		closeSerialChannel(serialChannel);
 	}
 
 	// ... business methods
@@ -98,7 +110,7 @@ public class SireneOfShameSerialHostController extends AbstractSireneOfShameCont
 	private void sendCommand(final String commandMessage) {
 
 		try {
-			writeBytes(channel, commandMessage);
+			writeBytes(serialChannel, commandMessage);
 		} catch (final Exception ex) {
 			throw handleFatalException(ex);
 		}
@@ -107,7 +119,7 @@ public class SireneOfShameSerialHostController extends AbstractSireneOfShameCont
 	private String readResponse() {
 
 		try {
-			return SerialChannelUtils.readBytes(channel);
+			return SerialChannelUtils.readBytes(serialChannel);
 		} catch (final IOException ex) {
 			throw handleFatalException(ex);
 		}
