@@ -8,4 +8,10 @@ public interface SireneOfShameController {
 
 	public void setState(final ESireneOfShameState state);
 
+	// ... events management methods
+
+	public void subscribe(SireneOfShameControllerEventsListener eventsListener);
+
+	public void unsubscribe(SireneOfShameControllerEventsListener eventsListener);
+
 }
