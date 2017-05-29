@@ -1,3 +1,7 @@
+#include "Arduino.h"
+#include "SoftwareSerial.h"
+#include "DFRobotDFPlayerMini.h"
+
 #include "Timer.h"
 
 // ... constants
@@ -20,20 +24,61 @@ const String CONFIG_COMMANDS_MESSAGE = "I understand following commands: '"
                                        + "'.";
 
 const int CONFIG_SERIAL_PORT_BAUD_RATE__9600 = 9600;
-const int CONFIG_CHANNEL_TAKT_DURATION_IN_MS__400 = 400;
+const int CONFIG_CHANNEL_LIGHTS_TAKT_DURATION_IN_MS__400 = 400;
+const int CONFIG_CHANNEL_REMEMBERING_SOUND_TAKT_DURATION_IN_MS__12000 = 12000;
 
-const int redChannel_PinsSet[]       = { 2, 3 };
-const int yellowChannel_PinsSet[]    = { 4, 5 };
-const int greenBlueChannel_PinsSet[] = { 6, 7 };
+enum LightState {
+
+  ON,
+  OFF
+};
+
+enum Channel {
+
+  RED,
+  YELLOW,
+  GREENBLUE
+};
+
+class ChannelConfig {
+
+  public:
+
+    Channel _channel;
+    String _channelName;
+    int _lightControlPin1;
+    int _lightControlPin2;
+
+    ChannelConfig(Channel channel, String channelName, int lightControlPin1, int lightControlPin2);
+};
+
+ChannelConfig::ChannelConfig(Channel channel, String channelName, int lightControlPin1, int lightControlPin2) {
+
+  _channel = channel;
+  _channelName = channelName;
+  _lightControlPin1 = lightControlPin1;
+  _lightControlPin2 = lightControlPin2;
+};
+
+ChannelConfig channelConfigs[] = {
+
+  ChannelConfig(RED, "RED", 2, 3),
+  ChannelConfig(YELLOW, "YELLOW", 4, 5),
+  ChannelConfig(GREENBLUE, "GREENBLUE", 6, 7)
+};
 
 // ... properties
 
 String lastCommand = "";
 
-String currentChannelName;
-bool currentChannel_Takt;
-Timer currentChannel_Takt_Timer;
-int currentChannel_PinsSet[] = { 8, 9 };
+ChannelConfig currentChannelConfig = channelConfigs[GREENBLUE];
+LightState currentChannel_LightsState = OFF;
+Timer currentChannel_LightsState_Timer;
+Timer currentChannel_Remember_Timer;
+
+SoftwareSerial mySoftwareSerial(10, 11); // RX, TX
+DFRobotDFPlayerMini myDFPlayer;
+void printDFPlayerDetails(uint8_t type, int value);
 
 // ... business methods
 
@@ -42,15 +87,32 @@ void setup()
 
   Serial.begin(CONFIG_SERIAL_PORT_BAUD_RATE__9600);
 
+  // ... init light channel
+
   println_SerialPort_Message(CONFIG_GREETING_MESSAGE);
   println_SerialPort_Message(CONFIG_COMMANDS_MESSAGE);
 
-  currentChannelName = "GREENBLUE";
-  currentChannel_Takt = false;
+  initChannel_PinsSet(channelConfigs[RED]);
+  initChannel_PinsSet(channelConfigs[YELLOW]);
+  initChannel_PinsSet(channelConfigs[GREENBLUE]);
 
-  initChannel_PinsSet(redChannel_PinsSet);
-  initChannel_PinsSet(yellowChannel_PinsSet);
-  initChannel_PinsSet(greenBlueChannel_PinsSet);
+  // ... init sound channel
+
+  mySoftwareSerial.begin(9600);
+
+  println_SerialPort_Message("");
+  // println_SerialPort_Message("DFPlayer initializing ... (May take 3~5 seconds)");
+
+  if (!myDFPlayer.begin(mySoftwareSerial)) {  //Use softwareSerial to communicate with mp3.
+    println_SerialPort_Message("Unable to begin:");
+    println_SerialPort_Message("1.Please recheck the connection!");
+    println_SerialPort_Message("2.Please insert the SD card!");
+    while (true);
+  }
+  // println_SerialPort_Message("DFPlayer Mini is online.");
+
+  myDFPlayer.volume(30);  // ... 0 to 30
+  // playSoundEffect_Any_Within_Folder(7);
 }
 
 void loop()
@@ -61,38 +123,45 @@ void loop()
     lastCommand = read_SerialPort_Message();
     // println_SerialPort_Message("Command received: '" + lastCommand + "'.");
 
-    currentChannel_Takt = false;
+    currentChannel_LightsState = OFF;
 
     if (lastCommand == COMMAND_GET_STATE) {
-      println_SerialPort_Message(currentChannelName);
+      println_SerialPort_Message(currentChannelConfig._channelName);
     } else if (lastCommand == COMMAND_PING) {
       println_SerialPort_Message(COMMAND_PING_RESPONSE_SUCCEEDED);
     } else if (lastCommand == COMMAND_SET_STATE_TO_RED) {
-      currentChannelName = "RED";
-      copyChannel_PinsSet(redChannel_PinsSet, currentChannel_PinsSet);
+      playSoundEffect_On_ChannelChange(currentChannelConfig._channel, RED);
+      currentChannelConfig = channelConfigs[RED];
+      currentChannel_Remember_Timer.reset();
     } else if (lastCommand == COMMAND_SET_STATE_TO_YELLOW) {
-      currentChannelName = "YELLOW";
-      copyChannel_PinsSet(yellowChannel_PinsSet, currentChannel_PinsSet);
+      playSoundEffect_On_ChannelChange(currentChannelConfig._channel, YELLOW);
+      currentChannelConfig = channelConfigs[YELLOW];
+      currentChannel_Remember_Timer.reset();
     } else if (lastCommand == COMMAND_SET_STATE_TO_GREENBLUE) {
-      currentChannelName = "GREENBLUE";
-      copyChannel_PinsSet(greenBlueChannel_PinsSet, currentChannel_PinsSet);
+      playSoundEffect_On_ChannelChange(currentChannelConfig._channel, GREENBLUE);
+      currentChannelConfig = channelConfigs[GREENBLUE];
+      currentChannel_Remember_Timer.reset();
     } else {
-      println_SerialPort_Message("Command '" + lastCommand + "' is not supported. Controller has been reset.");
+      println_SerialPort_Message("Command '" + lastCommand + "' is not supported.");
     }
-
   }
 
-  if (currentChannel_Takt_Timer.isOver(CONFIG_CHANNEL_TAKT_DURATION_IN_MS__400)) {
+  if (currentChannel_LightsState_Timer.isOver(CONFIG_CHANNEL_LIGHTS_TAKT_DURATION_IN_MS__400)) {
 
-    currentChannel_Takt_Timer.reset();
+    currentChannel_LightsState_Timer.reset();
+    currentChannel_LightsState = currentChannel_LightsState == ON ? OFF : ON;
 
-    currentChannel_Takt = not currentChannel_Takt;
+    switchChannel_Lights_Off(channelConfigs[RED]);
+    switchChannel_Lights_Off(channelConfigs[YELLOW]);
+    switchChannel_Lights_Off(channelConfigs[GREENBLUE]);
 
-    switchChannel_PinsSet_Off(redChannel_PinsSet);
-    switchChannel_PinsSet_Off(yellowChannel_PinsSet);
-    switchChannel_PinsSet_Off(greenBlueChannel_PinsSet);
+    switchChannel_Lights_To(currentChannelConfig, currentChannel_LightsState);
+  }
 
-    toggleChannel_PinsSet_State(currentChannel_PinsSet, currentChannel_Takt);
+  if (currentChannel_Remember_Timer.isOver(CONFIG_CHANNEL_REMEMBERING_SOUND_TAKT_DURATION_IN_MS__12000)) {
+
+    currentChannel_Remember_Timer.reset();
+    playSoundEffect_On_Remember(currentChannelConfig._channel);
   }
 
   delay(10);
@@ -115,6 +184,11 @@ String read_SerialPort_Message() {
   return message;
 }
 
+void print_SerialPort_Message(String message) {
+
+  Serial.print(message);
+}
+
 void println_SerialPort_Message(String message) {
 
   Serial.println(message);
@@ -122,27 +196,106 @@ void println_SerialPort_Message(String message) {
 
 // ...
 
-void copyChannel_PinsSet(int sourcePinsSet[], int targetPinsSet[]) {
+void initChannel_PinsSet(ChannelConfig channelConfig) {
 
-  targetPinsSet[0] = sourcePinsSet[0];
-  targetPinsSet[1] = sourcePinsSet[1];
+  pinMode(channelConfig._lightControlPin1, OUTPUT);
+  pinMode(channelConfig._lightControlPin2, OUTPUT);
 }
 
-void initChannel_PinsSet(int pinsSet[]) {
+void switchChannel_Lights_Off(ChannelConfig channelConfig) {
 
-  pinMode(pinsSet[0], OUTPUT);
-  pinMode(pinsSet[1], OUTPUT);
+  switchChannel_Lights_To(channelConfig, OFF);
 }
 
-void switchChannel_PinsSet_Off(int pinsSet[]) {
+void switchChannel_Lights_To(ChannelConfig channelConfig, LightState toLightState) {
 
-  digitalWrite(pinsSet[0], LOW);
-  digitalWrite(pinsSet[1], LOW);
+  digitalWrite(channelConfig._lightControlPin1, toLightState == ON ? HIGH : LOW);
+  digitalWrite(channelConfig._lightControlPin2, toLightState == ON ? HIGH : LOW);
 }
 
-void toggleChannel_PinsSet_State(int pinsSet[], bool takt) {
+// ...
 
-  digitalWrite(pinsSet[0], takt ? HIGH : LOW);
-  digitalWrite(pinsSet[1], takt ? HIGH : LOW);
+void playSoundEffect_On_Remember(Channel channel) {
+
+  int folderName = channel + 1;
+  playSoundEffect_Any_Within_Folder(folderName);
 }
 
+void playSoundEffect_On_ChannelChange(Channel fromChannel, Channel toChannel) {
+
+  int folderName = (fromChannel + 1) * 10 + toChannel + 1;
+  playSoundEffect_Any_Within_Folder(folderName);
+}
+
+void playSoundEffect_Any_Within_Folder(int folderName) {
+
+  int soundEffectsCount = myDFPlayer.readFileCountsInFolder(folderName);
+  int soundEffectToPlay = random(soundEffectsCount - 2) / 2 + 1;
+
+  playSoundEffect_Within_Folder(folderName, soundEffectToPlay);
+}
+
+void playSoundEffect_Within_Folder(int folderName, int soundEffectToPlay) {
+
+  myDFPlayer.playFolder(folderName, soundEffectToPlay);
+
+  //print_SerialPort_Message("Playing a sound effect " + soundEffectToPlay);
+  //print_SerialPort_Message(" within the folder " + folderName);
+  //println_SerialPort_Message(".");
+}
+
+void printDFPlayerDetails(uint8_t type, int value) {
+
+  switch (type) {
+    case TimeOut:
+      println_SerialPort_Message(F("Time Out!"));
+      break;
+    case WrongStack:
+      println_SerialPort_Message(F("Stack Wrong!"));
+      break;
+    case DFPlayerCardInserted:
+      println_SerialPort_Message(F("Card Inserted!"));
+      break;
+    case DFPlayerCardRemoved:
+      println_SerialPort_Message(F("Card Removed!"));
+      break;
+    case DFPlayerCardOnline:
+      println_SerialPort_Message(F("Card Online!"));
+      break;
+    case DFPlayerPlayFinished:
+      print_SerialPort_Message(F("Number:"));
+      print_SerialPort_Message("" + value);
+      println_SerialPort_Message(F(" Play Finished!"));
+      break;
+    case DFPlayerError:
+      print_SerialPort_Message(F("DFPlayerError:"));
+      switch (value) {
+        case Busy:
+          println_SerialPort_Message(F("Card not found"));
+          break;
+        case Sleeping:
+          println_SerialPort_Message(F("Sleeping"));
+          break;
+        case SerialWrongStack:
+          println_SerialPort_Message(F("Get Wrong Stack"));
+          break;
+        case CheckSumNotMatch:
+          println_SerialPort_Message(F("Check Sum Not Match"));
+          break;
+        case FileIndexOut:
+          println_SerialPort_Message(F("File Index Out of Bound"));
+          break;
+        case FileMismatch:
+          println_SerialPort_Message(F("Cannot Find File"));
+          break;
+        case Advertise:
+          println_SerialPort_Message(F("In Advertise"));
+          break;
+        default:
+          break;
+      }
+      break;
+    default:
+      break;
+  }
+}
