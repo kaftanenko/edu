@@ -48,7 +48,15 @@ public class SireneOfShameSerialHostController extends AbstractSireneOfShameCont
 		super(configuration);
 	}
 
-	public void open() {
+	@Override
+	public void close() throws Exception {
+
+		disconnect();
+	}
+
+	// ... business methods
+
+	public void connect() {
 
 		try {
 
@@ -62,10 +70,25 @@ public class SireneOfShameSerialHostController extends AbstractSireneOfShameCont
 		}
 	}
 
-	public boolean isOpen() throws Exception {
+	public void disconnect() {
 
 		try {
-			if (serialChannel.isOpen()) {
+
+			closeSerialChannel(serialChannel);
+		} catch (final Exception ex) {
+			throw handleFatalException(ex);
+		}
+	}
+
+	public String getPortName() {
+
+		return serialChannelPortName;
+	}
+
+	public boolean isConnected() throws Exception {
+
+		try {
+			if (serialChannel != null && serialChannel.isOpen()) {
 
 				sendCommand(COMMAND_PING);
 				final String responseMessage = readResponse();
@@ -76,19 +99,6 @@ public class SireneOfShameSerialHostController extends AbstractSireneOfShameCont
 		} catch (final Exception ex) {
 			throw handleFatalException(ex);
 		}
-	}
-
-	@Override
-	public void close() throws Exception {
-
-		closeSerialChannel(serialChannel);
-	}
-
-	// ... business methods
-
-	public String getPortName() {
-
-		return serialChannelPortName;
 	}
 
 	@Override

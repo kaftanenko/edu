@@ -9,7 +9,7 @@ public class SireneOfShameSerialHostControllerLauncher {
 	public static void main(final String[] args) {
 
 		try (SireneOfShameSerialHostController controller = new SireneOfShameSerialHostController()) {
-			controller.open();
+			controller.connect();
 			controller.setState(ESireneOfShameState.RED);
 			Thread.sleep(10000);
 		} catch (final Exception ex) {
