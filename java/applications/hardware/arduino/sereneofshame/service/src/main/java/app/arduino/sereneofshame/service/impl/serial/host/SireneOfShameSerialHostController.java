@@ -22,6 +22,9 @@ public class SireneOfShameSerialHostController extends AbstractSireneOfShameCont
 
 	private static final String COMMAND_GET_STATE = "GET_STATE";
 
+	private static final String COMMAND_PING = "PING";
+	private static final String COMMAND_PING_RESPONSE_SUCCEEDED = "SUCCEEDED";
+
 	private static final String COMMAND_SET_STATE_TO_RED = "SET_STATE_TO_RED";
 	private static final String COMMAND_SET_STATE_TO_YELLOW = "SET_STATE_TO_YELLOW";
 	private static final String COMMAND_SET_STATE_TO__GREENBLUE = "SET_STATE_TO_GREENBLUE";
@@ -31,6 +34,7 @@ public class SireneOfShameSerialHostController extends AbstractSireneOfShameCont
 	// ... properties
 
 	private SerialChannel serialChannel;
+	private String serialChannelPortName;
 
 	// ... constructors
 
@@ -44,18 +48,34 @@ public class SireneOfShameSerialHostController extends AbstractSireneOfShameCont
 		super(configuration);
 	}
 
-	public void open() throws Exception {
+	public void open() {
 
-		final String portName = findSerialChannelByWellcomeMessage(EXPECTING_WELCOME_MESSAGE);
+		try {
 
-		serialChannel = openSerialChannel(portName);
-		readResponse(); // ... read welcome message
-		setState(configuration.getInitialState());
+			serialChannelPortName = findSerialChannelByWellcomeMessage(EXPECTING_WELCOME_MESSAGE);
+			serialChannel = openSerialChannel(serialChannelPortName);
+			readResponse(); // ... read welcome message
+
+			setState(configuration.getInitialState());
+		} catch (final Exception ex) {
+			throw handleFatalException(ex);
+		}
 	}
 
 	public boolean isOpen() throws Exception {
 
-		return serialChannel.isOpen();
+		try {
+			if (serialChannel.isOpen()) {
+
+				sendCommand(COMMAND_PING);
+				final String responseMessage = readResponse();
+				return COMMAND_PING_RESPONSE_SUCCEEDED.equals(responseMessage);
+			} else {
+				return false;
+			}
+		} catch (final Exception ex) {
+			throw handleFatalException(ex);
+		}
 	}
 
 	@Override
@@ -65,6 +85,11 @@ public class SireneOfShameSerialHostController extends AbstractSireneOfShameCont
 	}
 
 	// ... business methods
+
+	public String getPortName() {
+
+		return serialChannelPortName;
+	}
 
 	@Override
 	public ESireneOfShameState getState() {
