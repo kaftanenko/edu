@@ -33,7 +33,7 @@ public class SireneOfShameController_UnitTest {
 	public void test_DefaultConfig() {
 
 		// ... prepare test data
-		final ESireneOfShameState expectedValue = ESireneOfShameState.GREEN_BLUE;
+		final ESireneOfShameState expectedValue = ESireneOfShameState.GREENBLUE;
 
 		// ... call service under test
 		final ESireneOfShameState resultValue = serviceUnderTest.getState();
@@ -59,7 +59,7 @@ public class SireneOfShameController_UnitTest {
 	public void test_Subscribe_With_Following_SetState_Succeeds() {
 
 		// ... prepare test data
-		final ESireneOfShameState initialValue = ESireneOfShameState.GREEN_BLUE;
+		final ESireneOfShameState initialValue = ESireneOfShameState.GREENBLUE;
 		final ESireneOfShameState expectedValue = ESireneOfShameState.RED;
 
 		// ... call service under test
@@ -77,7 +77,7 @@ public class SireneOfShameController_UnitTest {
 	public void test_Unsubscribe_With_Following_SetState_Succeeds() {
 
 		// ... prepare test data
-		final ESireneOfShameState initialValue = ESireneOfShameState.GREEN_BLUE;
+		final ESireneOfShameState initialValue = ESireneOfShameState.GREENBLUE;
 		final ESireneOfShameState expectedValue = ESireneOfShameState.RED;
 
 		verify_ServiceState_Is(serviceUnderTest, initialValue);

@@ -9,7 +9,7 @@ public class DefaultSireneOfShameControllerConfig implements SireneOfShameContro
 	@Override
 	public ESireneOfShameState getInitialState() {
 
-		return ESireneOfShameState.GREEN_BLUE;
+		return ESireneOfShameState.GREENBLUE;
 	}
 
 }
