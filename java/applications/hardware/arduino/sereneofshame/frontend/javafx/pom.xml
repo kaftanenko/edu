@@ -19,6 +19,12 @@
 			<artifactId>javafx</artifactId>
 		</dependency>
 
+		<!-- Internal -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>app-sireneofshame-host-service</artifactId>
+		</dependency>
+
 		<!-- AssertJ -->
 		<dependency>
 			<groupId>org.assertj</groupId>

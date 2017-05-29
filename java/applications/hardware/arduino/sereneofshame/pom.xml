@@ -40,6 +40,13 @@
 	<dependencyManagement>
 		<dependencies>
 
+			<!-- Internal -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>app-sireneofshame-host-service</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 			<!-- Jarduino -->
 			<!-- <dependency> <groupId>org.sintef.jarduino</groupId> <artifactId>org.sintef.jarduino</artifactId> 
 				<version>0.1.6</version> </dependency> <dependency> <groupId>org.sintef.jarduino</groupId> 
