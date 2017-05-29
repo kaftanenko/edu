@@ -3,11 +3,11 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>sireneofshame-host-frontend-javafx</artifactId>
+	<artifactId>app-sireneofshame-host-frontend-javafx</artifactId>
 
 	<parent>
 		<groupId>edu.java.arduino.sireneofshame</groupId>
-		<artifactId>sireneofshame-host-frontend</artifactId>
+		<artifactId>app-sireneofshame-host-frontend</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
