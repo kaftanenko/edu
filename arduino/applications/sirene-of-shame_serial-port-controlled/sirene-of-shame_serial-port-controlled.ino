@@ -3,9 +3,13 @@
 // ... constants
 
 const String COMMAND_GET_STATE = "GET_STATE";
+
 const String COMMAND_SET_STATE_TO_RED = "SET_STATE_TO_RED";
 const String COMMAND_SET_STATE_TO_YELLOW = "SET_STATE_TO_YELLOW";
 const String COMMAND_SET_STATE_TO_GREENBLUE = "SET_STATE_TO_GREENBLUE";
+
+const String COMMAND_PING = "PING";
+const String COMMAND_PING_RESPONSE_SUCCEEDED = "SUCCEEDED";
 
 const String CONFIG_GREETING_MESSAGE = "Wellcome to the \"Sirene Of Shame\"!";
 const String CONFIG_COMMANDS_MESSAGE = "I understand following commands: '"
@@ -61,6 +65,8 @@ void loop()
 
     if (lastCommand == COMMAND_GET_STATE) {
       println_SerialPort_Message(currentChannelName);
+    } else if (lastCommand == COMMAND_PING) {
+      println_SerialPort_Message(COMMAND_PING_RESPONSE_SUCCEEDED);
     } else if (lastCommand == COMMAND_SET_STATE_TO_RED) {
       currentChannelName = "RED";
       copyChannel_PinsSet(redChannel_PinsSet, currentChannel_PinsSet);
