@@ -6,76 +6,104 @@
 
 // ... constants
 
-const String COMMAND_GET_STATE = "GET_STATE";
+const String COMMAND_GET_CURRENT_ALARM_LEVEL = "GET_CURRENT_ALARM_LEVEL";
 
-const String COMMAND_SET_STATE_TO_RED = "SET_STATE_TO_RED";
-const String COMMAND_SET_STATE_TO_YELLOW = "SET_STATE_TO_YELLOW";
-const String COMMAND_SET_STATE_TO_GREENBLUE = "SET_STATE_TO_GREENBLUE";
+const String COMMAND_SET_ALARM_LEVEL_TO_RED = "SET_ALARM_LEVEL_TO RED";
+const String COMMAND_SET_ALARM_LEVEL_TO_RED_EXPECTING_UPDATE = "SET_ALARM_LEVEL_TO RED_EXPECTING_UPDATE";
+const String COMMAND_SET_ALARM_LEVEL_TO_YELLOW = "SET_ALARM_LEVEL_TO YELLOW";
+const String COMMAND_SET_ALARM_LEVEL_TO_YELLOW_EXPECTING_UPDATE = "SET_ALARM_LEVEL_TO YELLOW_EXPECTING_UPDATE";
+const String COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE = "SET_ALARM_LEVEL_TO GREENBLUE";
+const String COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE_EXPECTING_UPDATE = "SET_ALARM_LEVEL_TO GREENBLUE_EXPECTING_UPDATE";
 
 const String COMMAND_PING = "PING";
-const String COMMAND_PING_RESPONSE_SUCCEEDED = "SUCCEEDED";
+const String COMMAND_PING_RESPLIGHT_ONSE_SUCCEEDED = "SUCCEEDED";
 
-const String CONFIG_GREETING_MESSAGE = "Wellcome to the \"Sirene Of Shame\"!";
-const String CONFIG_COMMANDS_MESSAGE = "I understand following commands: '"
-                                       + COMMAND_SET_STATE_TO_RED + "', '"
-                                       + COMMAND_SET_STATE_TO_YELLOW + "', '"
-                                       + COMMAND_SET_STATE_TO_GREENBLUE + "', '"
-                                       + COMMAND_GET_STATE
-                                       + "'.";
+const String CLIGHT_ONFIG_GREETING_MESSAGE = "Wellcome to the \"Sirene Of Shame\"!";
+const String CLIGHT_ONFIG_COMMANDS_MESSAGE = "I understand following commands: '"
+    + COMMAND_SET_ALARM_LEVEL_TO_RED + "', '"
+    + COMMAND_SET_ALARM_LEVEL_TO_RED_EXPECTING_UPDATE + "', '"
+    + COMMAND_SET_ALARM_LEVEL_TO_YELLOW + "', '"
+    + COMMAND_SET_ALARM_LEVEL_TO_YELLOW_EXPECTING_UPDATE + "', '"
+    + COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE + "', '"
+    + COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE_EXPECTING_UPDATE + "', '"
+    + COMMAND_GET_CURRENT_ALARM_LEVEL
+    + "'.";
 
-const int CONFIG_SERIAL_PORT_BAUD_RATE__9600 = 9600;
-const int CONFIG_CHANNEL_LIGHTS_TAKT_DURATION_IN_MS__400 = 400;
+const int CLIGHT_ONFIG_SERIAL_PORT_BAUD_RATE__9600 = 9600;
+const int CLIGHT_ONFIG_CHANNEL_LIGHTS_TAKT_DURATILIGHT_ON_IN_MS__400 = 400;
 
-enum LightState {
-
-  ON,
-  OFF
-};
-
-enum Channel {
+enum AlarmLevel {
 
   RED,
   YELLOW,
-  GREENBLUE
+  GREENBLUE,
+
+  RED_EXPECTING_UPDATE,
+  YELLOW_EXPECTING_UPDATE,
+  GREENBLUE_EXPECTING_UPDATE
 };
 
-class ChannelConfig {
+enum LightEffectsState {
+
+  LIGHT_ON,
+  LIGHT_OFF
+};
+
+enum SoundEffectsState {
+
+  SOUND_ON,
+  SOUND_OFF
+};
+
+// ... configuration
+
+class AlarmLevelConfig {
 
   public:
 
-    Channel _channel;
-    String _channelName;
-    int _lightControlPin1;
-    int _lightControlPin2;
+    AlarmLevel _alarmLevel;
+    String _alarmLevelName;
+
+    int _controlPinLight1;
+    int _controlPinLight2;
+
     long _rememberingTaktInMs;
+    SoundEffectsState _rememberingSoundEffectsState;
 
-    ChannelConfig(Channel channel, String channelName, int lightControlPin1, int lightControlPin2, long rememberingTaktInSec);
+    AlarmLevelConfig(AlarmLevel alarmLevel, String alarmLevelName, int controlPinLight1, int controlPinLight2, SoundEffectsState rememberingSoundEffectsState, long rememberingTaktInSec);
 };
 
-ChannelConfig::ChannelConfig(Channel channel, String channelName, int lightControlPin1, int lightControlPin2, long rememberingTaktInSec) {
+AlarmLevelConfig::AlarmLevelConfig(AlarmLevel alarmLevel, String alarmLevelName, int controlPinLight1, int controlPinLight2, SoundEffectsState rememberingSoundEffectsState, long rememberingTaktInSec) {
 
-  _channel = channel;
-  _channelName = channelName;
-  _lightControlPin1 = lightControlPin1;
-  _lightControlPin2 = lightControlPin2;
+  _alarmLevel = alarmLevel;
+  _alarmLevelName = alarmLevelName;
+
+  _controlPinLight1 = controlPinLight1;
+  _controlPinLight2 = controlPinLight2;
+
   _rememberingTaktInMs = rememberingTaktInSec * 1000;
+  _rememberingSoundEffectsState = rememberingSoundEffectsState;
 };
 
-ChannelConfig channelConfigs[] = {
+AlarmLevelConfig alarmLevelConfigs[] = {
 
-  ChannelConfig(RED, "RED", 2, 3, 180),
-  ChannelConfig(YELLOW, "YELLOW", 4, 5, 90),
-  ChannelConfig(GREENBLUE, "GREENBLUE", 6, 7, 120)
+  AlarmLevelConfig(RED, "RED", 2, 3, SOUND_ON, 90),
+  AlarmLevelConfig(YELLOW, "YELLOW", 4, 5, SOUND_ON, 120),
+  AlarmLevelConfig(GREENBLUE, "GREENBLUE", 6, 7, SOUND_ON, 180),
+
+  AlarmLevelConfig(RED_EXPECTING_UPDATE, "RED_EXPECTING_UPDATE", 2, 3, SOUND_OFF, 90),
+  AlarmLevelConfig(YELLOW_EXPECTING_UPDATE, "YELLOW_EXPECTING_UPDATE", 4, 5, SOUND_OFF, 120),
+  AlarmLevelConfig(GREENBLUE_EXPECTING_UPDATE, "GREENBLUE_EXPECTING_UPDATE", 6, 7, SOUND_ON, 180)
 };
 
 // ... properties
 
 String lastCommand = "";
 
-ChannelConfig *currentChannelConfig = &(channelConfigs[GREENBLUE]);
-LightState currentChannel_LightsState = OFF;
-Timer currentChannel_LightsState_Timer;
-Timer currentChannel_Remember_Timer;
+AlarmLevelConfig *currentAlarmLevelConfig = &(alarmLevelConfigs[GREENBLUE]);
+LightEffectsState currentAlarmLevel_LightsState = LIGHT_OFF;
+Timer currentAlarmLevel_LightsState_Timer;
+Timer currentAlarmLevel_Remembering_Timer;
 
 SoftwareSerial mySoftwareSerial(10, 11); // RX, TX
 DFRobotDFPlayerMini myDFPlayer;
@@ -86,18 +114,18 @@ void printDFPlayerDetails(uint8_t type, int value);
 void setup()
 {
 
-  Serial.begin(CONFIG_SERIAL_PORT_BAUD_RATE__9600);
+  Serial.begin(CLIGHT_ONFIG_SERIAL_PORT_BAUD_RATE__9600);
 
-  // ... init light channel
+  // ... init light alarmLevel
 
-  println_SerialPort_Message(CONFIG_GREETING_MESSAGE);
-  println_SerialPort_Message(CONFIG_COMMANDS_MESSAGE);
+  println_SerialPort_Message(CLIGHT_ONFIG_GREETING_MESSAGE);
+  println_SerialPort_Message(CLIGHT_ONFIG_COMMANDS_MESSAGE);
 
-  initChannel_PinsSet(channelConfigs[RED]);
-  initChannel_PinsSet(channelConfigs[YELLOW]);
-  initChannel_PinsSet(channelConfigs[GREENBLUE]);
+  initAlarmLevel_PinsSet(alarmLevelConfigs[RED]);
+  initAlarmLevel_PinsSet(alarmLevelConfigs[YELLOW]);
+  initAlarmLevel_PinsSet(alarmLevelConfigs[GREENBLUE]);
 
-  // ... init sound channel
+  // ... init sound alarmLevel
 
   mySoftwareSerial.begin(9600);
 
@@ -124,39 +152,47 @@ void loop()
     lastCommand = read_SerialPort_Message();
     // println_SerialPort_Message("Command received: '" + lastCommand + "'.");
 
-    if (lastCommand == COMMAND_GET_STATE) {
-      println_SerialPort_Message(currentChannelConfig->_channelName);
+    if (lastCommand == COMMAND_GET_CURRENT_ALARM_LEVEL) {
+      println_SerialPort_Message(currentAlarmLevelConfig->_alarmLevelName);
     } else if (lastCommand == COMMAND_PING) {
-      println_SerialPort_Message(COMMAND_PING_RESPONSE_SUCCEEDED);
-    } else if (lastCommand == COMMAND_SET_STATE_TO_RED) {
+      println_SerialPort_Message(COMMAND_PING_RESPLIGHT_ONSE_SUCCEEDED);
+    } else if (lastCommand == COMMAND_SET_ALARM_LEVEL_TO_RED) {
       doSetState(RED);
-    } else if (lastCommand == COMMAND_SET_STATE_TO_YELLOW) {
+    } else if (lastCommand == COMMAND_SET_ALARM_LEVEL_TO_RED_EXPECTING_UPDATE) {
+      doSetState(RED_EXPECTING_UPDATE);
+    } else if (lastCommand == COMMAND_SET_ALARM_LEVEL_TO_YELLOW) {
       doSetState(YELLOW);
-    } else if (lastCommand == COMMAND_SET_STATE_TO_GREENBLUE) {
+    } else if (lastCommand == COMMAND_SET_ALARM_LEVEL_TO_YELLOW_EXPECTING_UPDATE) {
+      doSetState(YELLOW_EXPECTING_UPDATE);
+    } else if (lastCommand == COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE) {
       doSetState(GREENBLUE);
+    } else if (lastCommand == COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE_EXPECTING_UPDATE) {
+      doSetState(GREENBLUE_EXPECTING_UPDATE);
     } else {
       println_SerialPort_Message("Command '" + lastCommand + "' is not supported.");
     }
   }
 
-  if (currentChannel_LightsState_Timer.isOver(CONFIG_CHANNEL_LIGHTS_TAKT_DURATION_IN_MS__400)) {
+  if (currentAlarmLevel_LightsState_Timer.isOver(CLIGHT_ONFIG_CHANNEL_LIGHTS_TAKT_DURATILIGHT_ON_IN_MS__400)) {
 
-    currentChannel_LightsState_Timer.reset();
-    currentChannel_LightsState = currentChannel_LightsState == ON ? OFF : ON;
+    currentAlarmLevel_LightsState_Timer.reset();
+    currentAlarmLevel_LightsState = currentAlarmLevel_LightsState == LIGHT_ON ? LIGHT_OFF : LIGHT_ON;
 
-    switchChannel_Lights_Off(channelConfigs[RED]);
-    switchChannel_Lights_Off(channelConfigs[YELLOW]);
-    switchChannel_Lights_Off(channelConfigs[GREENBLUE]);
+    switchAlarmLevel_Lights_Off(alarmLevelConfigs[RED]);
+    switchAlarmLevel_Lights_Off(alarmLevelConfigs[YELLOW]);
+    switchAlarmLevel_Lights_Off(alarmLevelConfigs[GREENBLUE]);
 
-    switchChannel_Lights_To(*currentChannelConfig, currentChannel_LightsState);
+    switchAlarmLevel_Lights_To(*currentAlarmLevelConfig, currentAlarmLevel_LightsState);
   }
 
-  if (currentChannel_Remember_Timer.isOver(currentChannelConfig->_rememberingTaktInMs)) {
+  if (currentAlarmLevel_Remembering_Timer.isOver(currentAlarmLevelConfig->_rememberingTaktInMs)) {
 
-    currentChannel_Remember_Timer.reset();
-    println_SerialPort_Message("Remember about current state: " + currentChannelConfig->_channelName + " (each " + currentChannelConfig->_rememberingTaktInMs + " ms)");
+    currentAlarmLevel_Remembering_Timer.reset();
+    println_SerialPort_Message("Remember about current state: " + currentAlarmLevelConfig->_alarmLevelName + " (each " + currentAlarmLevelConfig->_rememberingTaktInMs + " ms)");
 
-    playSoundEffect_On_Remember(currentChannelConfig->_channel);
+    if (currentAlarmLevelConfig->_rememberingSoundEffectsState == SOUND_ON) {
+      playSoundEffect_On_RememberAbout(currentAlarmLevelConfig->_alarmLevel);
+    }
   }
 
   delay(1);
@@ -164,22 +200,22 @@ void loop()
 
 // ... helper methods
 
-void doSetState(Channel newChannel) {
+void doSetState(AlarmLevel newAlarmLevel) {
 
-  if (newChannel != currentChannelConfig->_channel) {
+  if (newAlarmLevel != currentAlarmLevelConfig->_alarmLevel) {
 
-    playSoundEffect_On_ChannelChange(currentChannelConfig->_channel, newChannel);
+    playSoundEffect_On_AlarmLevelChange(currentAlarmLevelConfig->_alarmLevel, newAlarmLevel);
 
-    currentChannel_LightsState_Timer.reset();
-    currentChannel_LightsState = OFF;
+    currentAlarmLevel_LightsState_Timer.reset();
+    currentAlarmLevel_LightsState = LIGHT_OFF;
 
-    currentChannel_Remember_Timer.reset();
+    currentAlarmLevel_Remembering_Timer.reset();
 
-    currentChannelConfig = &(channelConfigs[newChannel]);
+    currentAlarmLevelConfig = &(alarmLevelConfigs[newAlarmLevel]);
 
-    println_SerialPort_Message("Channel changed to: " + currentChannelConfig->_channelName);
+    println_SerialPort_Message("AlarmLevel changed to: " + currentAlarmLevelConfig->_alarmLevelName);
   } else {
-    println_SerialPort_Message("Channel is still the following: " + currentChannelConfig->_channelName);
+    println_SerialPort_Message("AlarmLevel is still the following: " + currentAlarmLevelConfig->_alarmLevelName);
   }
 }
 
@@ -213,34 +249,40 @@ void println_SerialPort_Message(String message) {
 
 // ...
 
-void initChannel_PinsSet(ChannelConfig channelConfig) {
+void initAlarmLevel_PinsSet(AlarmLevelConfig alarmLevelConfig) {
 
-  pinMode(channelConfig._lightControlPin1, OUTPUT);
-  pinMode(channelConfig._lightControlPin2, OUTPUT);
+  pinMode(alarmLevelConfig._controlPinLight1, OUTPUT);
+  pinMode(alarmLevelConfig._controlPinLight2, OUTPUT);
 }
 
-void switchChannel_Lights_Off(ChannelConfig channelConfig) {
+void switchAlarmLevel_Lights_Off(AlarmLevelConfig alarmLevelConfig) {
 
-  switchChannel_Lights_To(channelConfig, OFF);
+  switchAlarmLevel_Lights_To(alarmLevelConfig, LIGHT_OFF);
 }
 
-void switchChannel_Lights_To(ChannelConfig channelConfig, LightState toLightState) {
+void switchAlarmLevel_Lights_To(AlarmLevelConfig alarmLevelConfig, LightEffectsState toLightEffectsState) {
 
-  digitalWrite(channelConfig._lightControlPin1, toLightState == ON ? HIGH : LOW);
-  digitalWrite(channelConfig._lightControlPin2, toLightState == ON ? HIGH : LOW);
+  digitalWrite(alarmLevelConfig._controlPinLight1, toLightEffectsState == LIGHT_ON ? HIGH : LOW);
+  digitalWrite(alarmLevelConfig._controlPinLight2, toLightEffectsState == LIGHT_ON ? HIGH : LOW);
 }
 
 // ...
 
-void playSoundEffect_On_Remember(Channel channel) {
+int getFolderIndexFor(AlarmLevel alarmLevel) {
 
-  int folderName = channel + 1;
+  int folderName = (alarmLevel > 2 ? alarmLevel - 3 : alarmLevel) + 1;
+  return folderName;
+}
+
+void playSoundEffect_On_AlarmLevelChange(AlarmLevel fromAlarmLevel, AlarmLevel toAlarmLevel) {
+
+  int folderName = getFolderIndexFor(fromAlarmLevel) * 10 + getFolderIndexFor(toAlarmLevel);
   playSoundEffect_Any_Within_Folder(folderName);
 }
 
-void playSoundEffect_On_ChannelChange(Channel fromChannel, Channel toChannel) {
+void playSoundEffect_On_RememberAbout(AlarmLevel alarmLevel) {
 
-  int folderName = (fromChannel + 1) * 10 + toChannel + 1;
+  int folderName = getFolderIndexFor(alarmLevel);
   playSoundEffect_Any_Within_Folder(folderName);
 }
 
@@ -255,10 +297,6 @@ void playSoundEffect_Any_Within_Folder(int folderName) {
 void playSoundEffect_Within_Folder(int folderName, int soundEffectToPlay) {
 
   myDFPlayer.playFolder(folderName, soundEffectToPlay);
-
-  //print_SerialPort_Message("Playing a sound effect " + soundEffectToPlay);
-  //print_SerialPort_Message(" within the folder " + folderName);
-  //println_SerialPort_Message(".");
 }
 
 void printDFPlayerDetails(uint8_t type, int value) {

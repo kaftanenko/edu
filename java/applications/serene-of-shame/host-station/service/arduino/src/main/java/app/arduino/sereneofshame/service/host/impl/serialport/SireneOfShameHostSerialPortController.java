@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.Logger;
 
-import app.arduino.sereneofshame.service.host.api.ESireneOfShameState;
+import app.arduino.sereneofshame.service.host.api.ESireneOfShameAlarmLevel;
 import app.arduino.sereneofshame.service.host.api.config.DefaultSireneOfShameHostControllerConfig;
 import app.arduino.sereneofshame.service.host.api.config.SireneOfShameHostControllerConfig;
 import app.arduino.sereneofshame.service.host.impl.SireneOfShameHostFactory;
@@ -17,18 +17,24 @@ import app.arduino.sereneofshame.service.host.impl.common.AbstractSireneOfShameH
 import app.arduino.sereneofshame.service.host.impl.serialport.util.SerialChannelUtils;
 import dk.thibaut.serial.SerialChannel;
 
-public class SireneOfShameHostSerialPortController extends AbstractSireneOfShameHostController implements AutoCloseable {
+public class SireneOfShameHostSerialPortController extends AbstractSireneOfShameHostController
+		implements AutoCloseable {
 
 	// ... constants
 
-	private static final String COMMAND_GET_STATE = "GET_STATE";
+	private static final String COMMAND__GET_CURRENT_ALARM_LEVEL = "GET_CURRENT_ALARM_LEVEL";
 
-	private static final String COMMAND_PING = "PING";
-	private static final String COMMAND_PING_RESPONSE_SUCCEEDED = "SUCCEEDED";
+	private static final String COMMAND__PING = "PING";
+	private static final String COMMAND__PING_RESPONSE_SUCCEEDED = "SUCCEEDED";
 
-	private static final String COMMAND_SET_STATE_TO_RED = "SET_STATE_TO_RED";
-	private static final String COMMAND_SET_STATE_TO_YELLOW = "SET_STATE_TO_YELLOW";
-	private static final String COMMAND_SET_STATE_TO__GREENBLUE = "SET_STATE_TO_GREENBLUE";
+	private static final String COMMAND__SET_ALARM_LEVEL_TO__RED = "SET_ALARM_LEVEL_TO RED";
+	private static final String COMMAND__SET_ALARM_LEVEL_TO__RED_EXPECTING_UPDATE = "SET_ALARM_LEVEL_TO RED_EXPECTING_UPDATE";
+
+	private static final String COMMAND__SET_ALARM_LEVEL_TO__YELLOW = "SET_ALARM_LEVEL_TO YELLOW";
+	private static final String COMMAND__SET_ALARM_LEVEL_TO__YELLOW_EXPECTING_UPDATE = "SET_ALARM_LEVEL_TO YELLOW_EXPECTING_UPDATE";
+
+	private static final String COMMAND__SET_ALARM_LEVEL_TO__GREENBLUE = "SET_ALARM_LEVEL_TO GREENBLUE";
+	private static final String COMMAND__SET_ALARM_LEVEL_TO__GREENBLUE_EXPECTING_UPDATE = "SET_ALARM_LEVEL_TO GREENBLUE_EXPECTING_UPDATE";
 
 	private static final String EXPECTING_WELCOME_MESSAGE = "Wellcome to the \"Sirene Of Shame\"!";
 
@@ -67,7 +73,7 @@ public class SireneOfShameHostSerialPortController extends AbstractSireneOfShame
 			serialChannel = openSerialChannel(serialChannelPortName);
 			readResponse(); // ... read welcome message
 
-			setState(configuration.getInitialState());
+			setAlarmLevelTo(configuration.getInitialState());
 		} catch (final Exception ex) {
 			throw handleFatalException(ex);
 		}
@@ -93,9 +99,9 @@ public class SireneOfShameHostSerialPortController extends AbstractSireneOfShame
 		try {
 			if (serialChannel != null && serialChannel.isOpen()) {
 
-				sendCommand(COMMAND_PING);
+				sendCommand(COMMAND__PING);
 				final String responseMessage = readResponse();
-				return COMMAND_PING_RESPONSE_SUCCEEDED.equals(responseMessage);
+				return COMMAND__PING_RESPONSE_SUCCEEDED.equals(responseMessage);
 			} else {
 				return false;
 			}
@@ -105,44 +111,53 @@ public class SireneOfShameHostSerialPortController extends AbstractSireneOfShame
 	}
 
 	@Override
-	public ESireneOfShameState getState() {
+	public ESireneOfShameAlarmLevel getCurrentAlarmLevel() {
 
 		try {
-			sendCommand(COMMAND_GET_STATE);
+			sendCommand(COMMAND__GET_CURRENT_ALARM_LEVEL);
 
 			final String currentState = readResponse();
-			return ESireneOfShameState.valueOf(currentState);
+			return ESireneOfShameAlarmLevel.valueOf(currentState);
 		} catch (final Exception ex) {
 			LOG.error(ex.getMessage());
-			return ESireneOfShameState.UNDEFINED;
+			return ESireneOfShameAlarmLevel.UNDEFINED;
 		}
 	}
 
 	@Override
-	public void setState(final ESireneOfShameState state) {
+	public void setAlarmLevelTo(final ESireneOfShameAlarmLevel alarmLevel) {
 
 		final String commandMessage;
 
-		switch (state) {
+		switch (alarmLevel) {
 			case RED:
-				commandMessage = COMMAND_SET_STATE_TO_RED;
+				commandMessage = COMMAND__SET_ALARM_LEVEL_TO__RED;
+				break;
+			case RED_EXPECTING_UPDATE:
+				commandMessage = COMMAND__SET_ALARM_LEVEL_TO__RED_EXPECTING_UPDATE;
 				break;
 			case YELLOW:
-				commandMessage = COMMAND_SET_STATE_TO_YELLOW;
+				commandMessage = COMMAND__SET_ALARM_LEVEL_TO__YELLOW;
+				break;
+			case YELLOW_EXPECTING_UPDATE:
+				commandMessage = COMMAND__SET_ALARM_LEVEL_TO__YELLOW_EXPECTING_UPDATE;
 				break;
 			case GREENBLUE:
-				commandMessage = COMMAND_SET_STATE_TO__GREENBLUE;
+				commandMessage = COMMAND__SET_ALARM_LEVEL_TO__GREENBLUE;
+				break;
+			case GREENBLUE_EXPECTING_UPDATE:
+				commandMessage = COMMAND__SET_ALARM_LEVEL_TO__GREENBLUE_EXPECTING_UPDATE;
 				break;
 			default:
-				throw new RuntimeException("Unsupported state: " + state);
+				throw new RuntimeException("Unsupported alarm level: " + alarmLevel);
 		}
 
-		final ESireneOfShameState from = getState();
+		final ESireneOfShameAlarmLevel from = getCurrentAlarmLevel();
 
 		sendCommand(commandMessage);
 		readResponse();
 
-		final ESireneOfShameState to = getState();
+		final ESireneOfShameAlarmLevel to = getCurrentAlarmLevel();
 
 		notifyEventsListenersAboutStateChange(from, to);
 	}
@@ -153,7 +168,7 @@ public class SireneOfShameHostSerialPortController extends AbstractSireneOfShame
 
 		try {
 			writeBytes(serialChannel, commandMessage);
-		} catch (final Exception ex) {
+		} catch (final IOException ex) {
 			throw handleFatalException(ex);
 		}
 	}

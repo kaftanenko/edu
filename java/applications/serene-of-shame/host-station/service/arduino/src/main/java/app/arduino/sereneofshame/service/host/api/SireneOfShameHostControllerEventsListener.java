@@ -4,6 +4,6 @@ public interface SireneOfShameHostControllerEventsListener {
 
 	// ... events handler methods
 
-	public void onStateChanged(ESireneOfShameState from, ESireneOfShameState to);
+	public void onStateChanged(ESireneOfShameAlarmLevel from, ESireneOfShameAlarmLevel to);
 
 }

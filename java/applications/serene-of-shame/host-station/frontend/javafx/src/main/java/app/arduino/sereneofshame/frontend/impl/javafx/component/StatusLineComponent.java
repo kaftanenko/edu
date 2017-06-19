@@ -26,9 +26,9 @@ public class StatusLineComponent extends HBox {
 
 	// ... business methods
 
-	public void setText(final String text) {
+	public void setStatusTextTo(final String statusText) {
 
-		labelStatusLine.setText(text);
+		labelStatusLine.setText(statusText);
 	}
 
 }

@@ -16,8 +16,14 @@ public enum UIImage {
 	BUTTON_DISCONNECT_48("server/disconnected-48.png"),
 
 	JENKINS_STATE_RED_32("jenkins/state/red.png"),
+	JENKINS_STATE_RED_ANIME_32("jenkins/state/red.png"),
+
 	JENKINS_STATE_YELLOW_32("jenkins/state/yellow.png"),
+	JENKINS_STATE_YELLOW_ANIME_32("jenkins/state/yellow.png"),
+
 	JENKINS_STATE_BLUE_32("jenkins/state/blue.png"),
+	JENKINS_STATE_BLUE_ANIME_32("jenkins/state/blue.png"),
+
 	JENKINS_STATE_DISABLED_32("jenkins/state/disabled.png"),
 	//
 	;

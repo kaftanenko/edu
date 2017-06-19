@@ -5,7 +5,7 @@ import java.util.Map;
 
 import app.arduino.sereneofshame.frontend.impl.javafx.SireneOfShameJavaFXController;
 import app.arduino.sereneofshame.frontend.impl.javafx.exception.util.ErrorHelper;
-import app.arduino.sereneofshame.service.host.api.ESireneOfShameState;
+import app.arduino.sereneofshame.service.host.api.ESireneOfShameAlarmLevel;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -14,7 +14,7 @@ public class ControlBoardComponent extends VBox {
 
 	// ... properties
 
-	private final Map<ESireneOfShameState, Button> buttonsSetStateTo = new HashMap<>();
+	private final Map<ESireneOfShameAlarmLevel, Button> buttonsSetAlarmLevelTo = new HashMap<>();
 
 	// ... constructors
 
@@ -23,53 +23,62 @@ public class ControlBoardComponent extends VBox {
 		setSpacing(5);
 		setPadding(new Insets(5));
 
-		for (final ESireneOfShameState state : ESireneOfShameState.values()) {
+		for (final ESireneOfShameAlarmLevel alarmLevel : ESireneOfShameAlarmLevel.values()) {
 
-			if (state == ESireneOfShameState.UNDEFINED) {
+			if (alarmLevel == ESireneOfShameAlarmLevel.UNDEFINED) {
 				continue;
 			}
 
-			final Button buttonSetStateTo = new Button(state.name());
-			buttonSetStateTo.setOnAction(e -> {
-				sireneOfShameController.setState(state);
+			final Button buttonSetAlarmLevelTo = new Button(alarmLevel.name());
+			buttonSetAlarmLevelTo.setOnAction(e -> {
+				sireneOfShameController.setAlarmLevelTo(alarmLevel);
 			});
 
-			buttonSetStateTo.setMinWidth(240);
-			buttonSetStateTo.getStyleClass().removeAll();
-			buttonSetStateTo.getStyleClass().add("buttonSetStateTo");
+			buttonSetAlarmLevelTo.setMinWidth(270);
+			buttonSetAlarmLevelTo.getStyleClass().removeAll();
+			buttonSetAlarmLevelTo.getStyleClass().add("buttonSetAlarmLevelTo");
 
 			final String bgColor;
-			switch (state) {
-			case RED:
-				bgColor = "red";
-				break;
-			case YELLOW:
-				bgColor = "yellow";
-				break;
-			case GREENBLUE:
-				bgColor = "blue";
-				break;
-			default:
-				throw ErrorHelper.handleValueIsNotSupportedYetException("state", state);
+			switch (alarmLevel) {
+				case RED:
+					bgColor = "red";
+					break;
+				case RED_EXPECTING_UPDATE:
+					bgColor = "red";
+					break;
+				case YELLOW:
+					bgColor = "yellow";
+					break;
+				case YELLOW_EXPECTING_UPDATE:
+					bgColor = "yellow";
+					break;
+				case GREENBLUE:
+					bgColor = "blue";
+					break;
+				case GREENBLUE_EXPECTING_UPDATE:
+					bgColor = "blue";
+					break;
+				default:
+					throw ErrorHelper.handleValueIsNotSupportedYetException("state", alarmLevel);
 			}
-			buttonSetStateTo.setStyle("-fx-text-fill: " + bgColor);
+			buttonSetAlarmLevelTo.setStyle("-fx-text-fill: " + bgColor);
 
-			buttonsSetStateTo.put(state, buttonSetStateTo);
-			getChildren().add(buttonSetStateTo);
+			buttonsSetAlarmLevelTo.put(alarmLevel, buttonSetAlarmLevelTo);
+			getChildren().add(buttonSetAlarmLevelTo);
 		}
 
 	}
 
 	// ... business methods
 
-	public void resetStateSelection() {
+	public void resetAlarmLevelSelection() {
 
-		buttonsSetStateTo.values().stream().forEach(b -> b.setDisable(true));
+		buttonsSetAlarmLevelTo.values().stream().forEach(b -> b.setDisable(true));
 	}
 
-	public void updateStateSelection(final ESireneOfShameState state) {
+	public void updateAlarmLevelSelection(final ESireneOfShameAlarmLevel alarmLevel) {
 
-		buttonsSetStateTo.values().stream().forEach(b -> b.setDisable(false));
+		buttonsSetAlarmLevelTo.values().stream().forEach(b -> b.setDisable(false));
 	}
 
 }

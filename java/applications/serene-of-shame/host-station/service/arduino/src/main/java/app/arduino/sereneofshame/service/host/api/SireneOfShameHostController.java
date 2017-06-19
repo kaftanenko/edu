@@ -4,9 +4,9 @@ public interface SireneOfShameHostController {
 
 	// ... business methods
 
-	public ESireneOfShameState getState();
+	public ESireneOfShameAlarmLevel getCurrentAlarmLevel();
 
-	public void setState(final ESireneOfShameState state);
+	void setAlarmLevelTo(ESireneOfShameAlarmLevel alarmLevel);
 
 	// ... events management methods
 

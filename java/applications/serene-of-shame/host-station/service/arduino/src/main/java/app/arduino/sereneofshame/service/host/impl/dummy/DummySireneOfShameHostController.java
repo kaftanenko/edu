@@ -1,6 +1,6 @@
 package app.arduino.sereneofshame.service.host.impl.dummy;
 
-import app.arduino.sereneofshame.service.host.api.ESireneOfShameState;
+import app.arduino.sereneofshame.service.host.api.ESireneOfShameAlarmLevel;
 import app.arduino.sereneofshame.service.host.api.config.DefaultSireneOfShameHostControllerConfig;
 import app.arduino.sereneofshame.service.host.api.config.SireneOfShameHostControllerConfig;
 import app.arduino.sereneofshame.service.host.impl.common.AbstractSireneOfShameHostController;
@@ -9,7 +9,7 @@ public class DummySireneOfShameHostController extends AbstractSireneOfShameHostC
 
 	// ... properties
 
-	private ESireneOfShameState currentState;
+	private ESireneOfShameAlarmLevel currentState;
 
 	// ... constructors
 
@@ -27,15 +27,15 @@ public class DummySireneOfShameHostController extends AbstractSireneOfShameHostC
 	// ... business methods
 
 	@Override
-	public ESireneOfShameState getState() {
+	public ESireneOfShameAlarmLevel getCurrentAlarmLevel() {
 
 		return this.currentState;
 	}
 
 	@Override
-	public void setState(final ESireneOfShameState state) {
+	public void setAlarmLevelTo(final ESireneOfShameAlarmLevel state) {
 
-		final ESireneOfShameState fromState = this.currentState;
+		final ESireneOfShameAlarmLevel fromState = this.currentState;
 		this.currentState = state;
 
 		notifyEventsListenersAboutStateChange(fromState, currentState);

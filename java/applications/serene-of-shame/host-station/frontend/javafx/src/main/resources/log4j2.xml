@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="DEBUG" packages="app.arduino.sereneofshame" xmlns:xi="http://www.w3.org/2001/XInclude">
 	<Appenders>
-		<!-- xi:include href="log4j2-includes/console-appender_pattern-layout_colored.xml" / -->
+		<!-- xi:include href="log4j2_console-appender_pattern-layout_colored.xml" / -->
 		<Console name="ConsoleAppender" target="SYSTEM_OUT">
 			<PatternLayout pattern="%d [%t] %-5level %logger{.} - %msg%n%throwable" />
 		</Console>

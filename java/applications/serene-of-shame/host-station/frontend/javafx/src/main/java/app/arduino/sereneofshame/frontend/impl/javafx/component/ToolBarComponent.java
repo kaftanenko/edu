@@ -5,7 +5,7 @@ import app.arduino.sereneofshame.frontend.impl.javafx.exception.util.ErrorHelper
 import app.arduino.sereneofshame.frontend.impl.javafx.resources.UIImage;
 import app.arduino.sereneofshame.frontend.impl.javafx.resources.UIMessage;
 import app.arduino.sereneofshame.frontend.impl.javafx.type.EConnectionState;
-import app.arduino.sereneofshame.service.host.api.ESireneOfShameState;
+import app.arduino.sereneofshame.service.host.api.ESireneOfShameAlarmLevel;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,9 +23,10 @@ public class ToolBarComponent extends ToolBar {
 
 	private final Button buttonConnect;
 	private final Button buttonDisconnect;
-	private final ImageView imageViewStateRed;
-	private final ImageView imageViewStateYellow;
-	private final ImageView imageViewStateGreenBlue;
+
+	private final ImageView imageViewAlarmLevelRed;
+	private final ImageView imageViewAlarmLevelYellow;
+	private final ImageView imageViewAlarmLevelGreenBlue;
 
 	// ... constructors
 
@@ -54,12 +55,13 @@ public class ToolBarComponent extends ToolBar {
 		final Pane rightSpacer = new Pane();
 		HBox.setHgrow(rightSpacer, Priority.SOMETIMES);
 
-		imageViewStateRed = new ImageView(new Image(UIImage.JENKINS_STATE_RED_32.getAsStream()));
-		imageViewStateYellow = new ImageView(new Image(UIImage.JENKINS_STATE_YELLOW_32.getAsStream()));
-		imageViewStateGreenBlue = new ImageView(new Image(UIImage.JENKINS_STATE_BLUE_32.getAsStream()));
+		imageViewAlarmLevelRed = new ImageView(new Image(UIImage.JENKINS_STATE_RED_32.getAsStream()));
+		imageViewAlarmLevelYellow = new ImageView(new Image(UIImage.JENKINS_STATE_YELLOW_32.getAsStream()));
+		imageViewAlarmLevelGreenBlue = new ImageView(new Image(UIImage.JENKINS_STATE_BLUE_32.getAsStream()));
 
 		final HBox paneJankinsState = new HBox();
-		paneJankinsState.getChildren().addAll(imageViewStateRed, imageViewStateYellow, imageViewStateGreenBlue);
+		paneJankinsState.getChildren().addAll(imageViewAlarmLevelRed, imageViewAlarmLevelYellow,
+				imageViewAlarmLevelGreenBlue);
 
 		getItems().addAll(buttonConnect, buttonDisconnect, rightSpacer, paneJankinsState);
 
@@ -94,44 +96,53 @@ public class ToolBarComponent extends ToolBar {
 	public void setConnectionState(final EConnectionState connectionState) {
 
 		switch (connectionState) {
-		case CONNECTED:
-			buttonConnect.setDisable(true);
-			buttonDisconnect.setDisable(false);
-			break;
-		case DISCONNECTED:
-			buttonConnect.setDisable(false);
-			buttonDisconnect.setDisable(true);
-			break;
-		default:
-			throw ErrorHelper.handleValueIsNotSupportedYetException("connectionState", connectionState);
+			case CONNECTED:
+				buttonConnect.setDisable(true);
+				buttonDisconnect.setDisable(false);
+				break;
+			case DISCONNECTED:
+				buttonConnect.setDisable(false);
+				buttonDisconnect.setDisable(true);
+				break;
+			default:
+				throw ErrorHelper.handleValueIsNotSupportedYetException("connectionState", connectionState);
 		}
 	}
 
 	public void resetStateSelection() {
 
-		imageViewStateRed.setImage(new Image(UIImage.JENKINS_STATE_DISABLED_32.getAsStream()));
-		imageViewStateYellow.setImage(new Image(UIImage.JENKINS_STATE_DISABLED_32.getAsStream()));
-		imageViewStateGreenBlue.setImage(new Image(UIImage.JENKINS_STATE_DISABLED_32.getAsStream()));
+		imageViewAlarmLevelRed.setImage(new Image(UIImage.JENKINS_STATE_DISABLED_32.getAsStream()));
+		imageViewAlarmLevelYellow.setImage(new Image(UIImage.JENKINS_STATE_DISABLED_32.getAsStream()));
+		imageViewAlarmLevelGreenBlue.setImage(new Image(UIImage.JENKINS_STATE_DISABLED_32.getAsStream()));
 	}
 
-	public void updateStateSelection(final ESireneOfShameState state) {
+	public void updateStateSelection(final ESireneOfShameAlarmLevel alarmLevel) {
 
 		resetStateSelection();
 
-		switch (state) {
-		case RED:
-			imageViewStateRed.setImage(new Image(UIImage.JENKINS_STATE_RED_32.getAsStream()));
-			break;
-		case YELLOW:
-			imageViewStateYellow.setImage(new Image(UIImage.JENKINS_STATE_YELLOW_32.getAsStream()));
-			break;
-		case GREENBLUE:
-			imageViewStateGreenBlue.setImage(new Image(UIImage.JENKINS_STATE_BLUE_32.getAsStream()));
-			break;
-		case UNDEFINED:
-			break;
-		default:
-			throw ErrorHelper.handleValueIsNotSupportedYetException("state", state);
+		switch (alarmLevel) {
+			case RED:
+				imageViewAlarmLevelRed.setImage(new Image(UIImage.JENKINS_STATE_RED_32.getAsStream()));
+				break;
+			case RED_EXPECTING_UPDATE:
+				imageViewAlarmLevelRed.setImage(new Image(UIImage.JENKINS_STATE_RED_ANIME_32.getAsStream()));
+				break;
+			case YELLOW:
+				imageViewAlarmLevelYellow.setImage(new Image(UIImage.JENKINS_STATE_YELLOW_32.getAsStream()));
+				break;
+			case YELLOW_EXPECTING_UPDATE:
+				imageViewAlarmLevelYellow.setImage(new Image(UIImage.JENKINS_STATE_YELLOW_ANIME_32.getAsStream()));
+				break;
+			case GREENBLUE:
+				imageViewAlarmLevelGreenBlue.setImage(new Image(UIImage.JENKINS_STATE_BLUE_32.getAsStream()));
+				break;
+			case GREENBLUE_EXPECTING_UPDATE:
+				imageViewAlarmLevelGreenBlue.setImage(new Image(UIImage.JENKINS_STATE_BLUE_ANIME_32.getAsStream()));
+				break;
+			case UNDEFINED:
+				break;
+			default:
+				throw ErrorHelper.handleValueIsNotSupportedYetException("alarmLevel", alarmLevel);
 		}
 	}
 

@@ -6,7 +6,7 @@ import app.arduino.sereneofshame.frontend.impl.javafx.component.ToolBarComponent
 import app.arduino.sereneofshame.frontend.impl.javafx.resources.UIImage;
 import app.arduino.sereneofshame.frontend.impl.javafx.resources.UIMessage;
 import app.arduino.sereneofshame.frontend.impl.javafx.type.EConnectionState;
-import app.arduino.sereneofshame.service.host.api.ESireneOfShameState;
+import app.arduino.sereneofshame.service.host.api.ESireneOfShameAlarmLevel;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -17,8 +17,8 @@ public class SireneOfShameJavaFXApplication extends Application {
 
 	// ... constants
 
-	private static final int DEFAULT_SCENE_WIDTH_IN_PX__240 = 240;
-	private static final int DEFAULT_SCENE_HEIGHT_IN_PX__250 = 250;
+	private static final int DEFAULT_SCENE_WIDTH_IN_PX__270 = 270;
+	private static final int DEFAULT_SCENE_HEIGHT_IN_PX__440 = 440;
 
 	private final String CSS_REFERENCE = this.getClass().getResource("/style/index.css").toExternalForm();
 
@@ -57,9 +57,9 @@ public class SireneOfShameJavaFXApplication extends Application {
 		// ...
 
 		toolBarComponent.setConnectionState(EConnectionState.DISCONNECTED);
-		statusLineComponent.setText(UIMessage.STATUS_DISCONNECTED.getText());
+		statusLineComponent.setStatusTextTo(UIMessage.STATUS_DISCONNECTED.getText());
 
-		final Scene scene = new Scene(rootNode, DEFAULT_SCENE_WIDTH_IN_PX__240, DEFAULT_SCENE_HEIGHT_IN_PX__250);
+		final Scene scene = new Scene(rootNode, DEFAULT_SCENE_WIDTH_IN_PX__270, DEFAULT_SCENE_HEIGHT_IN_PX__440);
 		scene.getStylesheets().clear();
 		scene.getStylesheets().add(CSS_REFERENCE);
 
@@ -86,16 +86,16 @@ public class SireneOfShameJavaFXApplication extends Application {
 
 		toolBarComponent.setConnectionState(EConnectionState.DISCONNECTED);
 		toolBarComponent.resetStateSelection();
-		controlBoardComponent.resetStateSelection();
-		statusLineComponent.setText("Disconnected");
+		controlBoardComponent.resetAlarmLevelSelection();
+		statusLineComponent.setStatusTextTo("Disconnected");
 	}
 
-	public void onConnected(final String portName, final ESireneOfShameState state) {
+	public void onConnected(final String portName, final ESireneOfShameAlarmLevel state) {
 
 		toolBarComponent.setConnectionState(EConnectionState.CONNECTED);
 		toolBarComponent.updateStateSelection(state);
-		controlBoardComponent.updateStateSelection(state);
-		statusLineComponent.setText("Connected to the port " + portName);
+		controlBoardComponent.updateAlarmLevelSelection(state);
+		statusLineComponent.setStatusTextTo("Connected to the port " + portName);
 	}
 
 	public void onDisconnected() {
@@ -103,10 +103,10 @@ public class SireneOfShameJavaFXApplication extends Application {
 		resetApplicationState();
 	}
 
-	public void onStateChanged(final ESireneOfShameState state) {
+	public void onAlarmLevelChanged(final ESireneOfShameAlarmLevel state) {
 
 		toolBarComponent.updateStateSelection(state);
-		controlBoardComponent.updateStateSelection(state);
+		controlBoardComponent.updateAlarmLevelSelection(state);
 	}
 
 }

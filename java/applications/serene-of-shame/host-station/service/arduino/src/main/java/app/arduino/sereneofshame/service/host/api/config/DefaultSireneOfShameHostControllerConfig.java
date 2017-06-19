@@ -1,15 +1,15 @@
 package app.arduino.sereneofshame.service.host.api.config;
 
-import app.arduino.sereneofshame.service.host.api.ESireneOfShameState;
+import app.arduino.sereneofshame.service.host.api.ESireneOfShameAlarmLevel;
 
 public class DefaultSireneOfShameHostControllerConfig implements SireneOfShameHostControllerConfig {
 
 	// ... business methods
 
 	@Override
-	public ESireneOfShameState getInitialState() {
+	public ESireneOfShameAlarmLevel getInitialState() {
 
-		return ESireneOfShameState.GREENBLUE;
+		return ESireneOfShameAlarmLevel.GREENBLUE;
 	}
 
 }

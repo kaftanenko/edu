@@ -5,7 +5,7 @@ import org.mockito.Mockito;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import app.arduino.sereneofshame.service.host.api.ESireneOfShameState;
+import app.arduino.sereneofshame.service.host.api.ESireneOfShameAlarmLevel;
 import app.arduino.sereneofshame.service.host.api.SireneOfShameHostController;
 import app.arduino.sereneofshame.service.host.api.SireneOfShameHostControllerEventsListener;
 import app.arduino.sereneofshame.service.host.impl.dummy.DummySireneOfShameHostController;
@@ -33,10 +33,10 @@ public class SireneOfShameController_UnitTest {
 	public void test_DefaultConfig() {
 
 		// ... prepare test data
-		final ESireneOfShameState expectedValue = ESireneOfShameState.GREENBLUE;
+		final ESireneOfShameAlarmLevel expectedValue = ESireneOfShameAlarmLevel.GREENBLUE;
 
 		// ... call service under test
-		final ESireneOfShameState resultValue = serviceUnderTest.getState();
+		final ESireneOfShameAlarmLevel resultValue = serviceUnderTest.getCurrentAlarmLevel();
 
 		// ... verify post-conditions
 		Assertions.assertThat(resultValue).isEqualTo(expectedValue);
@@ -46,10 +46,10 @@ public class SireneOfShameController_UnitTest {
 	public void test_SetState_Succeeds() {
 
 		// ... prepare test data
-		final ESireneOfShameState expectedValue = ESireneOfShameState.RED;
+		final ESireneOfShameAlarmLevel expectedValue = ESireneOfShameAlarmLevel.RED;
 
 		// ... call service under test
-		serviceUnderTest.setState(expectedValue);
+		serviceUnderTest.setAlarmLevelTo(expectedValue);
 
 		// ... verify post-conditions
 		verify_ServiceState_Is(serviceUnderTest, expectedValue);
@@ -59,12 +59,12 @@ public class SireneOfShameController_UnitTest {
 	public void test_Subscribe_With_Following_SetState_Succeeds() {
 
 		// ... prepare test data
-		final ESireneOfShameState initialValue = ESireneOfShameState.GREENBLUE;
-		final ESireneOfShameState expectedValue = ESireneOfShameState.RED;
+		final ESireneOfShameAlarmLevel initialValue = ESireneOfShameAlarmLevel.GREENBLUE;
+		final ESireneOfShameAlarmLevel expectedValue = ESireneOfShameAlarmLevel.RED;
 
 		// ... call service under test
 		serviceUnderTest.subscribe(eventsListenerUnderTest);
-		serviceUnderTest.setState(ESireneOfShameState.RED);
+		serviceUnderTest.setAlarmLevelTo(ESireneOfShameAlarmLevel.RED);
 
 		// ... verify post-conditions
 		verify_ServiceState_Is(serviceUnderTest, expectedValue);
@@ -77,8 +77,8 @@ public class SireneOfShameController_UnitTest {
 	public void test_Unsubscribe_With_Following_SetState_Succeeds() {
 
 		// ... prepare test data
-		final ESireneOfShameState initialValue = ESireneOfShameState.GREENBLUE;
-		final ESireneOfShameState expectedValue = ESireneOfShameState.RED;
+		final ESireneOfShameAlarmLevel initialValue = ESireneOfShameAlarmLevel.GREENBLUE;
+		final ESireneOfShameAlarmLevel expectedValue = ESireneOfShameAlarmLevel.RED;
 
 		verify_ServiceState_Is(serviceUnderTest, initialValue);
 
@@ -86,7 +86,7 @@ public class SireneOfShameController_UnitTest {
 
 		// ... call service under test
 		serviceUnderTest.unsubscribe(eventsListenerUnderTest);
-		serviceUnderTest.setState(ESireneOfShameState.RED);
+		serviceUnderTest.setAlarmLevelTo(ESireneOfShameAlarmLevel.RED);
 
 		// ... verify post-conditions
 		verify_ServiceState_Is(serviceUnderTest, expectedValue);
@@ -97,9 +97,9 @@ public class SireneOfShameController_UnitTest {
 	// ... verify methods
 
 	private static void verify_ServiceState_Is(final SireneOfShameHostController service,
-			final ESireneOfShameState expectedValue) {
+			final ESireneOfShameAlarmLevel expectedValue) {
 
-		final ESireneOfShameState currentValue = service.getState();
+		final ESireneOfShameAlarmLevel currentValue = service.getCurrentAlarmLevel();
 		Assertions.assertThat(currentValue).isEqualTo(expectedValue);
 	}
 

@@ -1,6 +1,6 @@
 package app.arduino.sereneofshame.service.host.api;
 
-public enum ESireneOfShameState {
+public enum ESireneOfShameSoundEffectsState {
 
 	// ... constants
 

@@ -3,7 +3,7 @@ package app.arduino.sereneofshame.service.host.impl.common;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.arduino.sereneofshame.service.host.api.ESireneOfShameState;
+import app.arduino.sereneofshame.service.host.api.ESireneOfShameAlarmLevel;
 import app.arduino.sereneofshame.service.host.api.SireneOfShameHostController;
 import app.arduino.sereneofshame.service.host.api.SireneOfShameHostControllerEventsListener;
 import app.arduino.sereneofshame.service.host.api.config.SireneOfShameHostControllerConfig;
@@ -26,7 +26,7 @@ public abstract class AbstractSireneOfShameHostController implements SireneOfSha
 
 	// ... events management methods
 
-	protected void notifyEventsListenersAboutStateChange(final ESireneOfShameState from, final ESireneOfShameState to) {
+	protected void notifyEventsListenersAboutStateChange(final ESireneOfShameAlarmLevel from, final ESireneOfShameAlarmLevel to) {
 
 		for (final SireneOfShameHostControllerEventsListener eventsListener : eventsListeners) {
 

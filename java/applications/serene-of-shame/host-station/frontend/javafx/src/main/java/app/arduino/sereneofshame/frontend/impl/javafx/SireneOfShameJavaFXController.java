@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import app.arduino.sereneofshame.service.host.api.ESireneOfShameState;
+import app.arduino.sereneofshame.service.host.api.ESireneOfShameAlarmLevel;
 import app.arduino.sereneofshame.service.host.api.SireneOfShameHostControllerEventsListener;
 import app.arduino.sereneofshame.service.host.impl.serialport.SireneOfShameHostSerialPortController;
 import app.sereneofshame.host.service.jenkins.client.http.JenkinsHttpClientConfig;
@@ -50,8 +50,8 @@ public class SireneOfShameJavaFXController implements AutoCloseable {
 
 		final SireneOfShameHostControllerEventsListener eventsListener = new SireneOfShameHostControllerEventsListener() {
 			@Override
-			public void onStateChanged(final ESireneOfShameState from, final ESireneOfShameState to) {
-				gui.onStateChanged(to);
+			public void onStateChanged(final ESireneOfShameAlarmLevel from, final ESireneOfShameAlarmLevel to) {
+				gui.onAlarmLevelChanged(to);
 			}
 		};
 		sireneOfShameController.subscribe(eventsListener);
@@ -80,15 +80,23 @@ public class SireneOfShameJavaFXController implements AutoCloseable {
 				final Collection<Map<String, Object>> jsonJobsNode = JenkinsApiJsonParser.extractJobsNode(jsonRootNode);
 				final Set<String> jobsStatesSummary = JenkinsApiJsonParser.collectJobsStates(jsonJobsNode);
 
-				final ESireneOfShameState highestState;
-				if (jobsStatesSummary.contains("red") || jobsStatesSummary.contains("red_anime")) {
-					highestState = ESireneOfShameState.RED;
-				} else if (jobsStatesSummary.contains("yellow") || jobsStatesSummary.contains("yellow_anime")) {
-					highestState = ESireneOfShameState.YELLOW;
+				final ESireneOfShameAlarmLevel highestState;
+				if (jobsStatesSummary.contains("red")) {
+					highestState = ESireneOfShameAlarmLevel.RED;
+				} else if (jobsStatesSummary.contains("red_anime")) {
+					highestState = ESireneOfShameAlarmLevel.RED_EXPECTING_UPDATE;
+				} else if (jobsStatesSummary.contains("yellow")) {
+					highestState = ESireneOfShameAlarmLevel.YELLOW;
+				} else if (jobsStatesSummary.contains("yellow_anime")) {
+					highestState = ESireneOfShameAlarmLevel.YELLOW_EXPECTING_UPDATE;
+				} else if (jobsStatesSummary.contains("blue_anime")) {
+					highestState = ESireneOfShameAlarmLevel.GREENBLUE_EXPECTING_UPDATE;
+				} else if (jobsStatesSummary.contains("blue")) {
+					highestState = ESireneOfShameAlarmLevel.GREENBLUE;
 				} else {
-					highestState = ESireneOfShameState.GREENBLUE;
+					highestState = ESireneOfShameAlarmLevel.UNDEFINED;
 				}
-				sireneOfShameJavaFXController.setState(highestState);
+				sireneOfShameJavaFXController.setAlarmLevelTo(highestState);
 			}
 		};
 		jenkinsApiJsonScanner.subscribe(scannerEventsListener);
@@ -109,9 +117,9 @@ public class SireneOfShameJavaFXController implements AutoCloseable {
 		sireneOfShameController.connect();
 
 		final String portName = sireneOfShameController.getPortName();
-		final ESireneOfShameState state = sireneOfShameController.getState();
+		final ESireneOfShameAlarmLevel alarmLevel = sireneOfShameController.getCurrentAlarmLevel();
 
-		gui.onConnected(portName, state);
+		gui.onConnected(portName, alarmLevel);
 
 		jenkinsApiJsonScannerThread = new Thread(jenkinsApiJsonScanner);
 		jenkinsApiJsonScannerThread.start();
@@ -125,13 +133,13 @@ public class SireneOfShameJavaFXController implements AutoCloseable {
 		gui.onDisconnected();
 	}
 
-	public void setState(final ESireneOfShameState newState) {
+	public void setAlarmLevelTo(final ESireneOfShameAlarmLevel newAlarmLevel) {
 
-		final ESireneOfShameState currentState = sireneOfShameController.getState();
-		if (currentState != newState) {
+		final ESireneOfShameAlarmLevel currentState = sireneOfShameController.getCurrentAlarmLevel();
+		if (currentState != newAlarmLevel) {
 
-			sireneOfShameController.setState(newState);
-			gui.onStateChanged(newState);
+			sireneOfShameController.setAlarmLevelTo(newAlarmLevel);
+			gui.onAlarmLevelChanged(newAlarmLevel);
 		}
 	}
 
