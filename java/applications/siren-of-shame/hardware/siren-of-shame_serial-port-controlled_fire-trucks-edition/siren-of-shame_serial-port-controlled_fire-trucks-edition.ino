@@ -49,6 +49,12 @@ enum LightState {
   LIGHT_OFF,
 };
 
+enum LightEffectsState {
+
+  LIGHT_EFFECTS_ON,
+  LIGHT_EFFECTS_OFF,
+};
+
 enum SoundEffectsState {
 
   SOUND_EFFECTS_ON,
@@ -84,18 +90,22 @@ class AlarmLevelConfig {
 
     ControlPinState *_controlPinsState;
 
+    LightEffectsState _lightEffectsState;
+
     long _rememberingTaktInMs;
     SoundEffectsState _rememberingSoundEffectsState;
 
-    AlarmLevelConfig(AlarmLevel alarmLevel, String alarmLevelName, ControlPinState *controlPinsState, SoundEffectsState rememberingSoundEffectsState, long rememberingTaktInSec);
+    AlarmLevelConfig(AlarmLevel alarmLevel, String alarmLevelName, ControlPinState *controlPinsState, LightEffectsState lightEffectsState, SoundEffectsState rememberingSoundEffectsState, long rememberingTaktInSec);
 };
 
-AlarmLevelConfig::AlarmLevelConfig(AlarmLevel alarmLevel, String alarmLevelName, ControlPinState *controlPinsState, SoundEffectsState rememberingSoundEffectsState, long rememberingTaktInSec) {
+AlarmLevelConfig::AlarmLevelConfig(AlarmLevel alarmLevel, String alarmLevelName, ControlPinState *controlPinsState, LightEffectsState lightEffectsState, SoundEffectsState rememberingSoundEffectsState, long rememberingTaktInSec) {
 
   _alarmLevel = alarmLevel;
   _alarmLevelName = alarmLevelName;
 
   _controlPinsState = controlPinsState;
+
+  _lightEffectsState = lightEffectsState;
 
   _rememberingTaktInMs = rememberingTaktInSec * 1000;
   _rememberingSoundEffectsState = rememberingSoundEffectsState;
@@ -136,13 +146,13 @@ const ControlPinState controlPinsState_For_GreenBlue[] = {
 
 AlarmLevelConfig alarmLevelConfigs[] = {
 
-  AlarmLevelConfig(RED, "RED", controlPinsState_For_Red, SOUND_EFFECTS_ON, 120),
-  AlarmLevelConfig(YELLOW, "YELLOW", controlPinsState_For_Yellow, SOUND_EFFECTS_ON, 120),
-  AlarmLevelConfig(GREENBLUE, "GREENBLUE", controlPinsState_For_GreenBlue, SOUND_EFFECTS_ON, 180),
+  AlarmLevelConfig(RED, "RED", controlPinsState_For_Red, LIGHT_EFFECTS_ON, SOUND_EFFECTS_ON, 120),
+  AlarmLevelConfig(YELLOW, "YELLOW", controlPinsState_For_Yellow, LIGHT_EFFECTS_ON, SOUND_EFFECTS_ON, 120),
+  AlarmLevelConfig(GREENBLUE, "GREENBLUE", controlPinsState_For_GreenBlue, LIGHT_EFFECTS_OFF, SOUND_EFFECTS_OFF, 180),
 
-  AlarmLevelConfig(RED_EXPECTING_UPDATE, "RED_EXPECTING_UPDATE", controlPinsState_For_Red, SOUND_EFFECTS_OFF, 120),
-  AlarmLevelConfig(YELLOW_EXPECTING_UPDATE, "YELLOW_EXPECTING_UPDATE", controlPinsState_For_Yellow, SOUND_EFFECTS_OFF, 120),
-  AlarmLevelConfig(GREENBLUE_EXPECTING_UPDATE, "GREENBLUE_EXPECTING_UPDATE", controlPinsState_For_GreenBlue, SOUND_EFFECTS_ON, 180),
+  AlarmLevelConfig(RED_EXPECTING_UPDATE, "RED_EXPECTING_UPDATE", controlPinsState_For_Red, LIGHT_EFFECTS_ON, SOUND_EFFECTS_OFF, 120),
+  AlarmLevelConfig(YELLOW_EXPECTING_UPDATE, "YELLOW_EXPECTING_UPDATE", controlPinsState_For_Yellow, LIGHT_EFFECTS_ON, SOUND_EFFECTS_OFF, 120),
+  AlarmLevelConfig(GREENBLUE_EXPECTING_UPDATE, "GREENBLUE_EXPECTING_UPDATE", controlPinsState_For_GreenBlue, LIGHT_EFFECTS_OFF, SOUND_EFFECTS_ON, 180),
 };
 
 // ... properties
@@ -216,14 +226,19 @@ void loop()
     } else if (lastCommand == COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE_EXPECTING_UPDATE) {
       doSetState(GREENBLUE_EXPECTING_UPDATE);
     } else {
-      //println_SerialPort_Message("Command '" + lastCommand + "' is not supported.");
+      // println_SerialPort_Message("Command '" + lastCommand + "' is not supported.");
     }
   }
 
   if (currentAlarmLevel_LightsState_Timer.isOver(CONFIG_CHANNEL_LIGHTS_TAKT_DURATION_IN_MS__600)) {
 
     currentAlarmLevel_LightsState_Timer.reset();
-    currentAlarmLevel_LightsState = currentAlarmLevel_LightsState == LIGHT_ON ? LIGHT_OFF : LIGHT_ON;
+    
+    if (currentAlarmLevelConfig->_lightEffectsState == LIGHT_EFFECTS_OFF) {
+      currentAlarmLevel_LightsState = LIGHT_ON;
+    } else {
+      currentAlarmLevel_LightsState = currentAlarmLevel_LightsState == LIGHT_ON ? LIGHT_OFF : LIGHT_ON;
+    }
 
     for (int i = 0; i < CONTROL_PINS_COUNT; i++) {
 
@@ -241,7 +256,7 @@ void loop()
   if (currentAlarmLevel_Remembering_Timer.isOver(currentAlarmLevelConfig->_rememberingTaktInMs)) {
 
     currentAlarmLevel_Remembering_Timer.reset();
-    println_SerialPort_Message("Remember about current state: " + currentAlarmLevelConfig->_alarmLevelName + " (each " + currentAlarmLevelConfig->_rememberingTaktInMs + " ms)");
+    // println_SerialPort_Message("Remember about current state: " + currentAlarmLevelConfig->_alarmLevelName + " (each " + currentAlarmLevelConfig->_rememberingTaktInMs + " ms)");
 
     if (currentAlarmLevelConfig->_rememberingSoundEffectsState == SOUND_EFFECTS_ON) {
       playSoundEffect_On_RememberAbout(currentAlarmLevelConfig->_alarmLevel);
@@ -262,13 +277,13 @@ void doSetState(AlarmLevel newAlarmLevel) {
     currentAlarmLevelConfig = &(alarmLevelConfigs[newAlarmLevel]);
 
     currentAlarmLevel_LightsState_Timer.reset();
-    currentAlarmLevel_LightsState = LIGHT_ON;
+    currentAlarmLevel_LightsState = LIGHT_OFF;
 
     currentAlarmLevel_Remembering_Timer.reset();
 
-    println_SerialPort_Message("AlarmLevel changed to: " + currentAlarmLevelConfig->_alarmLevelName);
+    // println_SerialPort_Message("AlarmLevel changed to: " + currentAlarmLevelConfig->_alarmLevelName);
   } else {
-    println_SerialPort_Message("AlarmLevel is still the following: " + currentAlarmLevelConfig->_alarmLevelName);
+    // println_SerialPort_Message("AlarmLevel is still the following: " + currentAlarmLevelConfig->_alarmLevelName);
   }
 }
 
