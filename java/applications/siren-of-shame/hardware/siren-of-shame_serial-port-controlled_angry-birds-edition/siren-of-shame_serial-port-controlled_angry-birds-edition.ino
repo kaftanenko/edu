@@ -29,10 +29,8 @@ const String CONFIG_COMMANDS_MESSAGE = "I understand following commands: '"
                                        + COMMAND_GET_CURRENT_ALARM_LEVEL
                                        + "'.";
 
-const bool USE_INVERT_HIGH_LOW = true;
-
 const int CONFIG_SERIAL_PORT_BAUD_RATE__9600 = 9600;
-const int CONFIG_CHANNEL_LIGHTS_TAKT_DURATILIGHT_ON_IN_MS__400 = 400;
+const int CONFIG_CHANNEL_LIGHTS_TAKT_DURATION_IN_MS__200 = 200;
 
 enum AlarmLevel {
 
@@ -222,7 +220,7 @@ void loop()
     }
   }
 
-  if (currentAlarmLevel_LightsState_Timer.isOver(CONFIG_CHANNEL_LIGHTS_TAKT_DURATILIGHT_ON_IN_MS__400)) {
+  if (currentAlarmLevel_LightsState_Timer.isOver(CONFIG_CHANNEL_LIGHTS_TAKT_DURATION_IN_MS__200)) {
 
     currentAlarmLevel_LightsState_Timer.reset();
     // currentAlarmLevel_LightsState = currentAlarmLevel_LightsState == LIGHT_ON ? LIGHT_OFF : LIGHT_ON;
