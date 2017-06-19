@@ -14,7 +14,9 @@ public enum UIMessage {
 	ACTION_COMMON_DISCONNECT("sireneofshame.common.disconnect"),
 
 	STATUS_CONNECTED_TO("sireneofshame.common.status.connected-to"),
-	STATUS_DISCONNECTED("sireneofshame.common.status.disconnected"),//
+	STATUS_DISCONNECTED("sireneofshame.common.status.disconnected"), //
+
+	BUTTON_SET_TO_ALARM_LEVEL("sireneofshame.common.button.set-to-alarm-level."),//
 	;
 
 	// ... constants
@@ -46,6 +48,11 @@ public enum UIMessage {
 	public String getText() {
 
 		return getMessageText(messageKey);
+	}
+
+	public String getText(final String keyPostfix) {
+
+		return getMessageText(messageKey + keyPostfix);
 	}
 
 	// ... helper methods

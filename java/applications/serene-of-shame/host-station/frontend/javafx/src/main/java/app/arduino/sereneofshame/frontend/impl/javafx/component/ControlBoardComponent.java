@@ -5,6 +5,7 @@ import java.util.Map;
 
 import app.arduino.sereneofshame.frontend.impl.javafx.SireneOfShameJavaFXController;
 import app.arduino.sereneofshame.frontend.impl.javafx.exception.util.ErrorHelper;
+import app.arduino.sereneofshame.frontend.impl.javafx.resources.UIMessage;
 import app.arduino.sereneofshame.service.host.api.ESireneOfShameAlarmLevel;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -29,7 +30,9 @@ public class ControlBoardComponent extends VBox {
 				continue;
 			}
 
-			final Button buttonSetAlarmLevelTo = new Button(alarmLevel.name());
+			final String buttonDisplayText = UIMessage.BUTTON_SET_TO_ALARM_LEVEL
+					.getText(alarmLevel.name().toLowerCase());
+			final Button buttonSetAlarmLevelTo = new Button(buttonDisplayText);
 			buttonSetAlarmLevelTo.setOnAction(e -> {
 				sireneOfShameController.setAlarmLevelTo(alarmLevel);
 			});
@@ -59,7 +62,7 @@ public class ControlBoardComponent extends VBox {
 					bgColor = "blue";
 					break;
 				default:
-					throw ErrorHelper.handleValueIsNotSupportedYetException("state", alarmLevel);
+					throw ErrorHelper.handleValueIsNotSupportedYetException("alarLevel", alarmLevel);
 			}
 			buttonSetAlarmLevelTo.setStyle("-fx-text-fill: " + bgColor);
 
