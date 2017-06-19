@@ -10,27 +10,15 @@
 		<artifactId>app-sireneofshame-host-service</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	
+
 	<dependencies>
 
 		<!-- Jarduino -->
-		<!-- 
-		<dependency>
-			<groupId>org.sintef.jarduino</groupId>
-			<artifactId>org.sintef.jarduino</artifactId>
-			<version>0.1.6</version>
-		</dependency>
-		<dependency>
-			<groupId>org.sintef.jarduino</groupId>
-			<artifactId>org.sintef.jarduino.core</artifactId>
-			<version>0.1.6</version>
-		</dependency>
-		<dependency>
-			<groupId>org.sintef.jarduino</groupId>
-			<artifactId>org.sintef.jarduino.gui</artifactId>
-			<version>0.1.6</version>
-		</dependency>
-		-->
+		<!-- <dependency> <groupId>org.sintef.jarduino</groupId> <artifactId>org.sintef.jarduino</artifactId> 
+			<version>0.1.6</version> </dependency> <dependency> <groupId>org.sintef.jarduino</groupId> 
+			<artifactId>org.sintef.jarduino.core</artifactId> <version>0.1.6</version> 
+			</dependency> <dependency> <groupId>org.sintef.jarduino</groupId> <artifactId>org.sintef.jarduino.gui</artifactId> 
+			<version>0.1.6</version> </dependency> -->
 
 		<!-- AssertJ -->
 		<dependency>
@@ -44,6 +32,22 @@
 			<artifactId>mockito-core</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Jarduino -->
+		<!-- 
+		<dependency>
+			<groupId>org.sintef.jarduino</groupId>
+			<artifactId>org.sintef.jarduino</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.sintef.jarduino</groupId>
+			<artifactId>org.sintef.jarduino.core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.sintef.jarduino</groupId>
+			<artifactId>org.sintef.jarduino.gui</artifactId>
+		</dependency>
+		-->
 
 		<!-- TestNG -->
 		<dependency>

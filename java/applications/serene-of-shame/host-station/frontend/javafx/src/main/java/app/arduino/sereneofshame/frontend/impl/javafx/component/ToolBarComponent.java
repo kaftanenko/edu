@@ -94,16 +94,16 @@ public class ToolBarComponent extends ToolBar {
 	public void setConnectionState(final EConnectionState connectionState) {
 
 		switch (connectionState) {
-			case CONNECTED:
-				buttonConnect.setDisable(true);
-				buttonDisconnect.setDisable(false);
-				break;
-			case DISCONNECTED:
-				buttonConnect.setDisable(false);
-				buttonDisconnect.setDisable(true);
-				break;
-			default:
-				throw ErrorHelper.handleValueIsNotSupportedYetException("connectionState", connectionState);
+		case CONNECTED:
+			buttonConnect.setDisable(true);
+			buttonDisconnect.setDisable(false);
+			break;
+		case DISCONNECTED:
+			buttonConnect.setDisable(false);
+			buttonDisconnect.setDisable(true);
+			break;
+		default:
+			throw ErrorHelper.handleValueIsNotSupportedYetException("connectionState", connectionState);
 		}
 	}
 
@@ -119,17 +119,19 @@ public class ToolBarComponent extends ToolBar {
 		resetStateSelection();
 
 		switch (state) {
-			case RED:
-				imageViewStateRed.setImage(new Image(UIImage.JENKINS_STATE_RED_32.getAsStream()));
-				break;
-			case YELLOW:
-				imageViewStateYellow.setImage(new Image(UIImage.JENKINS_STATE_YELLOW_32.getAsStream()));
-				break;
-			case GREENBLUE:
-				imageViewStateGreenBlue.setImage(new Image(UIImage.JENKINS_STATE_BLUE_32.getAsStream()));
-				break;
-			default:
-				throw ErrorHelper.handleValueIsNotSupportedYetException("state", state);
+		case RED:
+			imageViewStateRed.setImage(new Image(UIImage.JENKINS_STATE_RED_32.getAsStream()));
+			break;
+		case YELLOW:
+			imageViewStateYellow.setImage(new Image(UIImage.JENKINS_STATE_YELLOW_32.getAsStream()));
+			break;
+		case GREENBLUE:
+			imageViewStateGreenBlue.setImage(new Image(UIImage.JENKINS_STATE_BLUE_32.getAsStream()));
+			break;
+		case UNDEFINED:
+			break;
+		default:
+			throw ErrorHelper.handleValueIsNotSupportedYetException("state", state);
 		}
 	}
 

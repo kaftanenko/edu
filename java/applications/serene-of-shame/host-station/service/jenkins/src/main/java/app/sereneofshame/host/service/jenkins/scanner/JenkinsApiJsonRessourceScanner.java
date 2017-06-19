@@ -38,10 +38,12 @@ public class JenkinsApiJsonRessourceScanner implements Runnable {
 				System.out.println(JenkinsApiJsonRessourceScanner.class.getSimpleName() + " was interrupted.");
 			}
 
-			final String currentTime = Calendar.getInstance().toString();
+			final String currentTime = Calendar.getInstance().getTime().toGMTString();
 			System.out.println(currentTime + ": Request Jenkins Ressource: " + config.getResourcePath());
 
 			final Map<String, Object> jsonRootNode = jenkinsHttpClient.callJsonApi(config.getResourcePath());
+			System.out.println("Jenkins response: " + jsonRootNode);
+
 			notifyEventsListenersAboutResourceRead(jsonRootNode);
 		}
 	}

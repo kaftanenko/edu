@@ -1,9 +1,9 @@
 #include "Arduino.h"
 #include "Timer.h"
 
-bool Timer::isOver(int timeoutInMs) {
+bool Timer::isOver(long timeoutInMs) {
 
-  int currentTime = millis();
+  long currentTime = millis();
   return (currentTime - _timerStartTime) > timeoutInMs;
 }
 

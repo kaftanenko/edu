@@ -6,11 +6,11 @@
 class Timer {
 
   public:
-    bool isOver(int timeoutInMs);
+    bool isOver(long timeoutInMs);
     void reset();
 	
   private:
-    int _timerStartTime;
+    long _timerStartTime;
 
 };
 

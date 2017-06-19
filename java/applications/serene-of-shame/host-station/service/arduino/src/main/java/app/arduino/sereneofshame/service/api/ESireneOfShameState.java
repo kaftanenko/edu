@@ -6,6 +6,7 @@ public enum ESireneOfShameState {
 
 	RED, //
 	YELLOW, //
-	GREENBLUE;
+	GREENBLUE, //
+	UNDEFINED;
 
 }

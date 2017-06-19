@@ -23,9 +23,10 @@
 		<lib.assertj.version>3.8.0</lib.assertj.version>
 		<lib.fasterxml.jackson.version>2.8.8</lib.fasterxml.jackson.version>
 
-		<lib.javafx.system-path>d:/software/dev/sdk/jdk/jdk1.8.0_77/jre/lib/ext/jfxrt.jar</lib.javafx.system-path>
+		<lib.javafx.system-path>c:/developer-moma/tools/java/jdk8u101/jre/lib/ext/jfxrt.jar</lib.javafx.system-path>
 		<lib.javafx.version>2.0</lib.javafx.version>
 		<lib.mockito.version>2.8.9</lib.mockito.version>
+		<lib.sintef.jarduino.version>0.1.6</lib.sintef.jarduino.version>
 		<lib.testng.version>6.11</lib.testng.version>
 
 		<lib.apache.httpcomponents.version>4.5.3</lib.apache.httpcomponents.version>
@@ -57,11 +58,21 @@
 			</dependency>
 
 			<!-- Jarduino -->
-			<!-- <dependency> <groupId>org.sintef.jarduino</groupId> <artifactId>org.sintef.jarduino</artifactId> 
-				<version>0.1.6</version> </dependency> <dependency> <groupId>org.sintef.jarduino</groupId> 
-				<artifactId>org.sintef.jarduino.core</artifactId> <version>0.1.6</version> 
-				</dependency> <dependency> <groupId>org.sintef.jarduino</groupId> <artifactId>org.sintef.jarduino.gui</artifactId> 
-				<version>0.1.6</version> </dependency> -->
+			<dependency>
+				<groupId>org.sintef.jarduino</groupId>
+				<artifactId>org.sintef.jarduino</artifactId>
+				<version>${lib.sintef.jarduino.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.sintef.jarduino</groupId>
+				<artifactId>org.sintef.jarduino.core</artifactId>
+				<version>${lib.sintef.jarduino.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.sintef.jarduino</groupId>
+				<artifactId>org.sintef.jarduino.gui</artifactId>
+				<version>${lib.sintef.jarduino.version}</version>
+			</dependency>
 
 			<!-- JSON / Jackson -->
 			<dependency>

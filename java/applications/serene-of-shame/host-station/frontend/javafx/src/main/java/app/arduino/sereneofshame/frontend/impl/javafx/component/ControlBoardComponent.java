@@ -25,6 +25,10 @@ public class ControlBoardComponent extends VBox {
 
 		for (final ESireneOfShameState state : ESireneOfShameState.values()) {
 
+			if (state == ESireneOfShameState.UNDEFINED) {
+				continue;
+			}
+
 			final Button buttonSetStateTo = new Button(state.name());
 			buttonSetStateTo.setOnAction(e -> {
 				sireneOfShameController.setState(state);
@@ -36,17 +40,17 @@ public class ControlBoardComponent extends VBox {
 
 			final String bgColor;
 			switch (state) {
-				case RED:
-					bgColor = "red";
-					break;
-				case YELLOW:
-					bgColor = "yellow";
-					break;
-				case GREENBLUE:
-					bgColor = "blue";
-					break;
-				default:
-					throw ErrorHelper.handleValueIsNotSupportedYetException("state", state);
+			case RED:
+				bgColor = "red";
+				break;
+			case YELLOW:
+				bgColor = "yellow";
+				break;
+			case GREENBLUE:
+				bgColor = "blue";
+				break;
+			default:
+				throw ErrorHelper.handleValueIsNotSupportedYetException("state", state);
 			}
 			buttonSetStateTo.setStyle("-fx-text-fill: " + bgColor);
 

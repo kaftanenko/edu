@@ -23,7 +23,7 @@ public class SerialChannelUtils {
 			DataBits.D8 //
 	);
 	private static final int SERIAL_PORT_DELAY_BEFORE_FIRST_READ_IN_MS__100 = 500;
-	private static final int SERIAL_PORT_DELAY_AFTER_WRITE_IN_MS__1 = 1;
+	private static final int SERIAL_PORT_DELAY_AFTER_WRITE_IN_MS__100 = 100;
 	private static final int SERIAL_PORT_TIMEOUT_IN_MS__1000 = 1000;
 
 	// ... business methods
@@ -90,7 +90,7 @@ public class SerialChannelUtils {
 		final int writtenBytes = channel.write(messageBuffer);
 		channel.flush(true, true);
 
-		delayThreadFor(SERIAL_PORT_DELAY_AFTER_WRITE_IN_MS__1);
+		// delayThreadFor(SERIAL_PORT_DELAY_AFTER_WRITE_IN_MS__100);
 
 		System.out.println("out: (" + writtenBytes + ") '" + message + "'");
 	}

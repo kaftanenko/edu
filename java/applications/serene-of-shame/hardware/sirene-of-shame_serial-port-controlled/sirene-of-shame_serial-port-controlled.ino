@@ -25,7 +25,6 @@ const String CONFIG_COMMANDS_MESSAGE = "I understand following commands: '"
 
 const int CONFIG_SERIAL_PORT_BAUD_RATE__9600 = 9600;
 const int CONFIG_CHANNEL_LIGHTS_TAKT_DURATION_IN_MS__400 = 400;
-const int CONFIG_CHANNEL_REMEMBERING_SOUND_TAKT_DURATION_IN_MS__12000 = 12000;
 
 enum LightState {
 
@@ -48,23 +47,25 @@ class ChannelConfig {
     String _channelName;
     int _lightControlPin1;
     int _lightControlPin2;
+    long _rememberingTaktInMs;
 
-    ChannelConfig(Channel channel, String channelName, int lightControlPin1, int lightControlPin2);
+    ChannelConfig(Channel channel, String channelName, int lightControlPin1, int lightControlPin2, long rememberingTaktInSec);
 };
 
-ChannelConfig::ChannelConfig(Channel channel, String channelName, int lightControlPin1, int lightControlPin2) {
+ChannelConfig::ChannelConfig(Channel channel, String channelName, int lightControlPin1, int lightControlPin2, long rememberingTaktInSec) {
 
   _channel = channel;
   _channelName = channelName;
   _lightControlPin1 = lightControlPin1;
   _lightControlPin2 = lightControlPin2;
+  _rememberingTaktInMs = rememberingTaktInSec * 1000;
 };
 
 ChannelConfig channelConfigs[] = {
 
-  ChannelConfig(RED, "RED", 2, 3),
-  ChannelConfig(YELLOW, "YELLOW", 4, 5),
-  ChannelConfig(GREENBLUE, "GREENBLUE", 6, 7)
+  ChannelConfig(RED, "RED", 2, 3, 180),
+  ChannelConfig(YELLOW, "YELLOW", 4, 5, 90),
+  ChannelConfig(GREENBLUE, "GREENBLUE", 6, 7, 120)
 };
 
 // ... properties
@@ -103,11 +104,11 @@ void setup()
   println_SerialPort_Message("");
   // println_SerialPort_Message("DFPlayer initializing ... (May take 3~5 seconds)");
 
-  if (!myDFPlayer.begin(mySoftwareSerial)) {  //Use softwareSerial to communicate with mp3.
+  if (!myDFPlayer.begin(mySoftwareSerial)) { // Use softwareSerial to communicate with mp3.
     println_SerialPort_Message("Unable to begin:");
     println_SerialPort_Message("1.Please recheck the connection!");
     println_SerialPort_Message("2.Please insert the SD card!");
-   // while (true);
+    // while (true);
   }
   // println_SerialPort_Message("DFPlayer Mini is online.");
 
@@ -123,10 +124,8 @@ void loop()
     lastCommand = read_SerialPort_Message();
     // println_SerialPort_Message("Command received: '" + lastCommand + "'.");
 
-    currentChannel_LightsState = OFF;
-
     if (lastCommand == COMMAND_GET_STATE) {
-       println_SerialPort_Message(currentChannelConfig->_channelName);
+      println_SerialPort_Message(currentChannelConfig->_channelName);
     } else if (lastCommand == COMMAND_PING) {
       println_SerialPort_Message(COMMAND_PING_RESPONSE_SUCCEEDED);
     } else if (lastCommand == COMMAND_SET_STATE_TO_RED) {
@@ -152,13 +151,15 @@ void loop()
     switchChannel_Lights_To(*currentChannelConfig, currentChannel_LightsState);
   }
 
-  if (currentChannel_Remember_Timer.isOver(CONFIG_CHANNEL_REMEMBERING_SOUND_TAKT_DURATION_IN_MS__12000)) {
+  if (currentChannel_Remember_Timer.isOver(currentChannelConfig->_rememberingTaktInMs)) {
 
     currentChannel_Remember_Timer.reset();
+    println_SerialPort_Message("Remember about current state: " + currentChannelConfig->_channelName + " (each " + currentChannelConfig->_rememberingTaktInMs + " ms)");
+
     playSoundEffect_On_Remember(currentChannelConfig->_channel);
   }
 
-  delay(10);
+  delay(1);
 }
 
 // ... helper methods
@@ -167,7 +168,7 @@ void doSetState(Channel newChannel) {
 
   if (newChannel != currentChannelConfig->_channel) {
 
-    // playSoundEffect_On_ChannelChange(currentChannelConfig->_channel, newChannel);
+    playSoundEffect_On_ChannelChange(currentChannelConfig->_channel, newChannel);
 
     currentChannel_LightsState_Timer.reset();
     currentChannel_LightsState = OFF;
@@ -175,6 +176,10 @@ void doSetState(Channel newChannel) {
     currentChannel_Remember_Timer.reset();
 
     currentChannelConfig = &(channelConfigs[newChannel]);
+
+    println_SerialPort_Message("Channel changed to: " + currentChannelConfig->_channelName);
+  } else {
+    println_SerialPort_Message("Channel is still the following: " + currentChannelConfig->_channelName);
   }
 }
 
@@ -203,6 +208,7 @@ void print_SerialPort_Message(String message) {
 void println_SerialPort_Message(String message) {
 
   Serial.println(message);
+  Serial.flush();
 }
 
 // ...

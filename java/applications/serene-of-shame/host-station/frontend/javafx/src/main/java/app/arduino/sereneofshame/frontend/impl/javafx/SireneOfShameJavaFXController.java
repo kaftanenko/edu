@@ -22,7 +22,7 @@ public class SireneOfShameJavaFXController implements AutoCloseable {
 	// ... constants
 
 	private static final String JENKINS_RESOURCE_PATH__MAIS__BUILD_JOBS = "/job/mais/job/build-jobs";
-	protected static final long JENKINS_POLLING_PERIOD__IN_SEC__5 = 5;
+	protected static final long JENKINS_POLLING_PERIOD__IN_SEC__15 = 15;
 
 	// ... properties
 
@@ -64,7 +64,7 @@ public class SireneOfShameJavaFXController implements AutoCloseable {
 
 		final JenkinsHttpClientConfig config = JenkinsHttpClientConfig.of(HOST_URL, AUTH_USERNAME, AUTH_PASSWORD);
 		final JenkinsApiJsonRessourceScannerConfig jenkinsJobsStateScannerConfig = JenkinsApiJsonRessourceScannerConfig
-				.of(config, JENKINS_POLLING_PERIOD__IN_SEC__5 * 1000, JENKINS_RESOURCE_PATH__MAIS__BUILD_JOBS);
+				.of(config, JENKINS_POLLING_PERIOD__IN_SEC__15 * 1000, JENKINS_RESOURCE_PATH__MAIS__BUILD_JOBS);
 		final JenkinsApiJsonRessourceScanner jenkinsApiJsonScanner = new JenkinsApiJsonRessourceScanner(
 				jenkinsJobsStateScannerConfig);
 
@@ -77,9 +77,9 @@ public class SireneOfShameJavaFXController implements AutoCloseable {
 				final Set<String> jobsStatesSummary = JenkinsJsonApiParser.collectJobsStates(jsonJobsNode);
 
 				final ESireneOfShameState highestState;
-				if (jobsStatesSummary.contains("red")) {
+				if (jobsStatesSummary.contains("red") || jobsStatesSummary.contains("red_anime")) {
 					highestState = ESireneOfShameState.RED;
-				} else if (jobsStatesSummary.contains("yellow")) {
+				} else if (jobsStatesSummary.contains("yellow") || jobsStatesSummary.contains("yellow_anime")) {
 					highestState = ESireneOfShameState.YELLOW;
 				} else {
 					highestState = ESireneOfShameState.GREENBLUE;
