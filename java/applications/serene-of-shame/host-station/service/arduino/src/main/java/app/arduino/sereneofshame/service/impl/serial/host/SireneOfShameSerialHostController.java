@@ -1,6 +1,7 @@
 package app.arduino.sereneofshame.service.impl.serial.host;
 
 import static app.arduino.sereneofshame.service.impl.serial.host.util.SerialChannelUtils.closeSerialChannel;
+import static app.arduino.sereneofshame.service.impl.serial.host.util.SerialChannelUtils.findSerialChannelByWellcomeMessage;
 import static app.arduino.sereneofshame.service.impl.serial.host.util.SerialChannelUtils.openSerialChannel;
 import static app.arduino.sereneofshame.service.impl.serial.host.util.SerialChannelUtils.writeBytes;
 
@@ -118,17 +119,17 @@ public class SireneOfShameSerialHostController extends AbstractSireneOfShameCont
 		final String commandMessage;
 
 		switch (state) {
-		case RED:
-			commandMessage = COMMAND_SET_STATE_TO_RED;
-			break;
-		case YELLOW:
-			commandMessage = COMMAND_SET_STATE_TO_YELLOW;
-			break;
-		case GREENBLUE:
-			commandMessage = COMMAND_SET_STATE_TO__GREENBLUE;
-			break;
-		default:
-			throw new RuntimeException("Unsupported state: " + state);
+			case RED:
+				commandMessage = COMMAND_SET_STATE_TO_RED;
+				break;
+			case YELLOW:
+				commandMessage = COMMAND_SET_STATE_TO_YELLOW;
+				break;
+			case GREENBLUE:
+				commandMessage = COMMAND_SET_STATE_TO__GREENBLUE;
+				break;
+			default:
+				throw new RuntimeException("Unsupported state: " + state);
 		}
 
 		final ESireneOfShameState from = getState();
