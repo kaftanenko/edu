@@ -16,10 +16,10 @@ const String COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE = "SET_ALARM_LEVEL_TO GREENBLU
 const String COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE_EXPECTING_UPDATE = "SET_ALARM_LEVEL_TO GREENBLUE_EXPECTING_UPDATE";
 
 const String COMMAND_PING = "PING";
-const String COMMAND_PING_RESPLIGHT_ONSE_SUCCEEDED = "SUCCEEDED";
+const String COMMAND_PING_RESPONSE_SUCCEEDED = "SUCCEEDED";
 
-const String CLIGHT_ONFIG_GREETING_MESSAGE = "Wellcome to the \"Sirene Of Shame\"!";
-const String CLIGHT_ONFIG_COMMANDS_MESSAGE = "I understand following commands: '"
+const String CONFIG_GREETING_MESSAGE = "Wellcome to the \"Sirene Of Shame\"!";
+const String CONFIG_COMMANDS_MESSAGE = "I understand following commands: '"
     + COMMAND_SET_ALARM_LEVEL_TO_RED + "', '"
     + COMMAND_SET_ALARM_LEVEL_TO_RED_EXPECTING_UPDATE + "', '"
     + COMMAND_SET_ALARM_LEVEL_TO_YELLOW + "', '"
@@ -29,8 +29,8 @@ const String CLIGHT_ONFIG_COMMANDS_MESSAGE = "I understand following commands: '
     + COMMAND_GET_CURRENT_ALARM_LEVEL
     + "'.";
 
-const int CLIGHT_ONFIG_SERIAL_PORT_BAUD_RATE__9600 = 9600;
-const int CLIGHT_ONFIG_CHANNEL_LIGHTS_TAKT_DURATILIGHT_ON_IN_MS__400 = 400;
+const int CONFIG_SERIAL_PORT_BAUD_RATE__9600 = 9600;
+const int CONFIG_CHANNEL_LIGHTS_TAKT_DURATION_IN_MS__400 = 400;
 
 enum AlarmLevel {
 
@@ -43,7 +43,7 @@ enum AlarmLevel {
   GREENBLUE_EXPECTING_UPDATE
 };
 
-enum LightEffectsState {
+enum LightState {
 
   LIGHT_ON,
   LIGHT_OFF
@@ -51,8 +51,8 @@ enum LightEffectsState {
 
 enum SoundEffectsState {
 
-  SOUND_ON,
-  SOUND_OFF
+  SOUND_EFFECTS_ON,
+  SOUND_EFFECTS_OFF
 };
 
 // ... configuration
@@ -87,13 +87,13 @@ AlarmLevelConfig::AlarmLevelConfig(AlarmLevel alarmLevel, String alarmLevelName,
 
 AlarmLevelConfig alarmLevelConfigs[] = {
 
-  AlarmLevelConfig(RED, "RED", 2, 3, SOUND_ON, 90),
-  AlarmLevelConfig(YELLOW, "YELLOW", 4, 5, SOUND_ON, 120),
-  AlarmLevelConfig(GREENBLUE, "GREENBLUE", 6, 7, SOUND_ON, 180),
+  AlarmLevelConfig(RED, "RED", 2, 3, SOUND_EFFECTS_ON, 90),
+  AlarmLevelConfig(YELLOW, "YELLOW", 4, 5, SOUND_EFFECTS_ON, 120),
+  AlarmLevelConfig(GREENBLUE, "GREENBLUE", 6, 7, SOUND_EFFECTS_ON, 180),
 
-  AlarmLevelConfig(RED_EXPECTING_UPDATE, "RED_EXPECTING_UPDATE", 2, 3, SOUND_OFF, 90),
-  AlarmLevelConfig(YELLOW_EXPECTING_UPDATE, "YELLOW_EXPECTING_UPDATE", 4, 5, SOUND_OFF, 120),
-  AlarmLevelConfig(GREENBLUE_EXPECTING_UPDATE, "GREENBLUE_EXPECTING_UPDATE", 6, 7, SOUND_ON, 180)
+  AlarmLevelConfig(RED_EXPECTING_UPDATE, "RED_EXPECTING_UPDATE", 2, 3, SOUND_EFFECTS_OFF, 90),
+  AlarmLevelConfig(YELLOW_EXPECTING_UPDATE, "YELLOW_EXPECTING_UPDATE", 4, 5, SOUND_EFFECTS_OFF, 120),
+  AlarmLevelConfig(GREENBLUE_EXPECTING_UPDATE, "GREENBLUE_EXPECTING_UPDATE", 6, 7, SOUND_EFFECTS_ON, 180)
 };
 
 // ... properties
@@ -101,7 +101,7 @@ AlarmLevelConfig alarmLevelConfigs[] = {
 String lastCommand = "";
 
 AlarmLevelConfig *currentAlarmLevelConfig = &(alarmLevelConfigs[GREENBLUE]);
-LightEffectsState currentAlarmLevel_LightsState = LIGHT_OFF;
+LightState currentAlarmLevel_LightsState = LIGHT_OFF;
 Timer currentAlarmLevel_LightsState_Timer;
 Timer currentAlarmLevel_Remembering_Timer;
 
@@ -114,12 +114,12 @@ void printDFPlayerDetails(uint8_t type, int value);
 void setup()
 {
 
-  Serial.begin(CLIGHT_ONFIG_SERIAL_PORT_BAUD_RATE__9600);
+  Serial.begin(CONFIG_SERIAL_PORT_BAUD_RATE__9600);
 
   // ... init light alarmLevel
 
-  println_SerialPort_Message(CLIGHT_ONFIG_GREETING_MESSAGE);
-  println_SerialPort_Message(CLIGHT_ONFIG_COMMANDS_MESSAGE);
+  println_SerialPort_Message(CONFIG_GREETING_MESSAGE);
+  println_SerialPort_Message(CONFIG_COMMANDS_MESSAGE);
 
   initAlarmLevel_PinsSet(alarmLevelConfigs[RED]);
   initAlarmLevel_PinsSet(alarmLevelConfigs[YELLOW]);
@@ -155,7 +155,7 @@ void loop()
     if (lastCommand == COMMAND_GET_CURRENT_ALARM_LEVEL) {
       println_SerialPort_Message(currentAlarmLevelConfig->_alarmLevelName);
     } else if (lastCommand == COMMAND_PING) {
-      println_SerialPort_Message(COMMAND_PING_RESPLIGHT_ONSE_SUCCEEDED);
+      println_SerialPort_Message(COMMAND_PING_RESPONSE_SUCCEEDED);
     } else if (lastCommand == COMMAND_SET_ALARM_LEVEL_TO_RED) {
       doSetState(RED);
     } else if (lastCommand == COMMAND_SET_ALARM_LEVEL_TO_RED_EXPECTING_UPDATE) {
@@ -173,7 +173,7 @@ void loop()
     }
   }
 
-  if (currentAlarmLevel_LightsState_Timer.isOver(CLIGHT_ONFIG_CHANNEL_LIGHTS_TAKT_DURATILIGHT_ON_IN_MS__400)) {
+  if (currentAlarmLevel_LightsState_Timer.isOver(CONFIG_CHANNEL_LIGHTS_TAKT_DURATION_IN_MS__400)) {
 
     currentAlarmLevel_LightsState_Timer.reset();
     currentAlarmLevel_LightsState = currentAlarmLevel_LightsState == LIGHT_ON ? LIGHT_OFF : LIGHT_ON;
@@ -190,7 +190,7 @@ void loop()
     currentAlarmLevel_Remembering_Timer.reset();
     println_SerialPort_Message("Remember about current state: " + currentAlarmLevelConfig->_alarmLevelName + " (each " + currentAlarmLevelConfig->_rememberingTaktInMs + " ms)");
 
-    if (currentAlarmLevelConfig->_rememberingSoundEffectsState == SOUND_ON) {
+    if (currentAlarmLevelConfig->_rememberingSoundEffectsState == SOUND_EFFECTS_ON) {
       playSoundEffect_On_RememberAbout(currentAlarmLevelConfig->_alarmLevel);
     }
   }
@@ -204,7 +204,7 @@ void doSetState(AlarmLevel newAlarmLevel) {
 
   if (newAlarmLevel != currentAlarmLevelConfig->_alarmLevel) {
 
-    playSoundEffect_On_AlarmLevelChange(currentAlarmLevelConfig->_alarmLevel, newAlarmLevel);
+    playSoundEffect_On_ChangeTo(currentAlarmLevelConfig->_alarmLevel, newAlarmLevel);
 
     currentAlarmLevel_LightsState_Timer.reset();
     currentAlarmLevel_LightsState = LIGHT_OFF;
@@ -260,21 +260,21 @@ void switchAlarmLevel_Lights_Off(AlarmLevelConfig alarmLevelConfig) {
   switchAlarmLevel_Lights_To(alarmLevelConfig, LIGHT_OFF);
 }
 
-void switchAlarmLevel_Lights_To(AlarmLevelConfig alarmLevelConfig, LightEffectsState toLightEffectsState) {
+void switchAlarmLevel_Lights_To(AlarmLevelConfig alarmLevelConfig, LightState toLightState) {
 
-  digitalWrite(alarmLevelConfig._controlPinLight1, toLightEffectsState == LIGHT_ON ? HIGH : LOW);
-  digitalWrite(alarmLevelConfig._controlPinLight2, toLightEffectsState == LIGHT_ON ? HIGH : LOW);
+  digitalWrite(alarmLevelConfig._controlPinLight1, toLightState == LIGHT_ON ? HIGH : LOW);
+  digitalWrite(alarmLevelConfig._controlPinLight2, toLightState == LIGHT_ON ? HIGH : LOW);
 }
 
 // ...
 
 int getFolderIndexFor(AlarmLevel alarmLevel) {
 
-  int folderName = (alarmLevel > 2 ? alarmLevel - 3 : alarmLevel) + 1;
+  int folderName = alarmLevel % 3 + 1;
   return folderName;
 }
 
-void playSoundEffect_On_AlarmLevelChange(AlarmLevel fromAlarmLevel, AlarmLevel toAlarmLevel) {
+void playSoundEffect_On_ChangeTo(AlarmLevel fromAlarmLevel, AlarmLevel toAlarmLevel) {
 
   int folderName = getFolderIndexFor(fromAlarmLevel) * 10 + getFolderIndexFor(toAlarmLevel);
   playSoundEffect_Any_Within_Folder(folderName);
