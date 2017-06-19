@@ -47,7 +47,12 @@
 			<!-- Internal -->
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>app-sireneofshame-host-service</artifactId>
+				<artifactId>app-sireneofshame-host-service-arduino</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>app-sireneofshame-host-service-jenkins</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 

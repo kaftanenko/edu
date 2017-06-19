@@ -3,27 +3,34 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>app-sireneofshame-host-frontend-javafx</artifactId>
+	<artifactId>app-sireneofshame-host-service-arduino</artifactId>
 
 	<parent>
 		<groupId>edu.java.arduino.sireneofshame</groupId>
-		<artifactId>app-sireneofshame-host-frontend</artifactId>
+		<artifactId>app-sireneofshame-host-service</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-
+	
 	<dependencies>
 
-		<!-- JavaFX -->
+		<!-- Jarduino -->
+		<!-- 
 		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>javafx</artifactId>
+			<groupId>org.sintef.jarduino</groupId>
+			<artifactId>org.sintef.jarduino</artifactId>
+			<version>0.1.6</version>
 		</dependency>
-
-		<!-- Internal -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>app-sireneofshame-host-service-arduino</artifactId>
+			<groupId>org.sintef.jarduino</groupId>
+			<artifactId>org.sintef.jarduino.core</artifactId>
+			<version>0.1.6</version>
 		</dependency>
+		<dependency>
+			<groupId>org.sintef.jarduino</groupId>
+			<artifactId>org.sintef.jarduino.gui</artifactId>
+			<version>0.1.6</version>
+		</dependency>
+		-->
 
 		<!-- AssertJ -->
 		<dependency>

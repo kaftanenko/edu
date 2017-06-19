@@ -3,26 +3,30 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>app-sireneofshame-host-frontend-javafx</artifactId>
+	<artifactId>app-sireneofshame-host-service-jenkins</artifactId>
 
 	<parent>
 		<groupId>edu.java.arduino.sireneofshame</groupId>
-		<artifactId>app-sireneofshame-host-frontend</artifactId>
+		<artifactId>app-sireneofshame-host-service</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-
+	
 	<dependencies>
 
-		<!-- JavaFX -->
+		<!-- JSON / Jackson -->
 		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>javafx</artifactId>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
 		</dependency>
 
-		<!-- Internal -->
+		<!-- Apache Commons -->
 		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>app-sireneofshame-host-service-arduino</artifactId>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
 		</dependency>
 
 		<!-- AssertJ -->
