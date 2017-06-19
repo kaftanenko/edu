@@ -66,8 +66,7 @@ public class SireneOfShameJavaFXApplication extends Application {
 		window.setScene(scene);
 
 		window.setTitle(UIMessage.APP_TITLE.getText());
-		window.getIcons().add(new Image(UIImage.APPLICATION_LOGO_32.getAsStream()));
-		window.getIcons().add(new Image(UIImage.APPLICATION_LOGO_48.getAsStream()));
+		window.getIcons().add(new Image(UIImage.APPLICATION_LOGO_36.getAsStream()));
 
 		resetApplicationState();
 
@@ -86,6 +85,7 @@ public class SireneOfShameJavaFXApplication extends Application {
 	private void resetApplicationState() {
 
 		toolBarComponent.setConnectionState(EConnectionState.DISCONNECTED);
+		toolBarComponent.resetStateSelection();
 		controlBoardComponent.resetStateSelection();
 		statusLineComponent.setText("Disconnected");
 	}
@@ -93,6 +93,7 @@ public class SireneOfShameJavaFXApplication extends Application {
 	public void onConnected(final String portName, final ESireneOfShameState state) {
 
 		toolBarComponent.setConnectionState(EConnectionState.CONNECTED);
+		toolBarComponent.updateStateSelection(state);
 		controlBoardComponent.updateStateSelection(state);
 		statusLineComponent.setText("Connected to the port " + portName);
 	}
@@ -104,6 +105,7 @@ public class SireneOfShameJavaFXApplication extends Application {
 
 	public void onStateChanged(final ESireneOfShameState state) {
 
+		toolBarComponent.updateStateSelection(state);
 		controlBoardComponent.updateStateSelection(state);
 	}
 

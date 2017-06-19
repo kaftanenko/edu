@@ -6,11 +6,21 @@ public enum UIImage {
 
 	// ... enumeration values
 
-	APPLICATION_LOGO_32("server/icons8-Disconnected-32.png"),
-	APPLICATION_LOGO_48("server/icons8-Disconnected-48.png"),
+	APPLICATION_LOGO_36("jenkins/head.png"),
 
-	BUTTON_CONNECT_24("server/icons8-Connected-24.png"),
-	BUTTON_DISCONNECT_24("server/icons8-Disconnected-24.png");
+	BUTTON_CONNECT_24("server/connected-24.png"),
+	BUTTON_CONNECT_36("server/connected-36.png"),
+	BUTTON_CONNECT_48("server/connected-48.png"),
+	BUTTON_DISCONNECT_24("server/disconnected-24.png"),
+	BUTTON_DISCONNECT_36("server/disconnected-36.png"),
+	BUTTON_DISCONNECT_48("server/disconnected-48.png"),
+
+	JENKINS_STATE_RED_32("jenkins/state/red.png"),
+	JENKINS_STATE_YELLOW_32("jenkins/state/yellow.png"),
+	JENKINS_STATE_BLUE_32("jenkins/state/blue.png"),
+	JENKINS_STATE_DISABLED_32("jenkins/state/disabled.png"),
+	//
+	;
 
 	// ... properties
 
