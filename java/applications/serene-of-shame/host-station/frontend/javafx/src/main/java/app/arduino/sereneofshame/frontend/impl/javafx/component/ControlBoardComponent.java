@@ -5,7 +5,7 @@ import java.util.Map;
 
 import app.arduino.sereneofshame.frontend.impl.javafx.SireneOfShameJavaFXController;
 import app.arduino.sereneofshame.frontend.impl.javafx.exception.util.ErrorHelper;
-import app.arduino.sereneofshame.service.api.ESireneOfShameState;
+import app.arduino.sereneofshame.service.host.api.ESireneOfShameState;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;

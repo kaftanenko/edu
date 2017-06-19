@@ -1,21 +1,21 @@
 package app.arduino.sereneofshame.frontend.impl.javafx;
 
-import static app.sereneofshame.host.service.jenkins.JenkinsConstants.AUTH_PASSWORD;
-import static app.sereneofshame.host.service.jenkins.JenkinsConstants.AUTH_USERNAME;
-import static app.sereneofshame.host.service.jenkins.JenkinsConstants.HOST_URL;
+import static app.sereneofshame.host.service.jenkins.client.JenkinsClientConstants.AUTH_PASSWORD;
+import static app.sereneofshame.host.service.jenkins.client.JenkinsClientConstants.AUTH_USERNAME;
+import static app.sereneofshame.host.service.jenkins.client.JenkinsClientConstants.HOST_URL;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import app.arduino.sereneofshame.service.api.ESireneOfShameState;
-import app.arduino.sereneofshame.service.api.SireneOfShameControllerEventsListener;
-import app.arduino.sereneofshame.service.impl.serial.host.SireneOfShameSerialHostController;
-import app.sereneofshame.host.service.jenkins.client.JenkinsHttpClientConfig;
-import app.sereneofshame.host.service.jenkins.parser.JenkinsJsonApiParser;
-import app.sereneofshame.host.service.jenkins.scanner.JenkinsApiJsonRessourceScanner;
-import app.sereneofshame.host.service.jenkins.scanner.JenkinsApiJsonRessourceScannerConfig;
-import app.sereneofshame.host.service.jenkins.scanner.JenkinsApiJsonRessourceScannerEventsListener;
+import app.arduino.sereneofshame.service.host.api.ESireneOfShameState;
+import app.arduino.sereneofshame.service.host.api.SireneOfShameHostControllerEventsListener;
+import app.arduino.sereneofshame.service.host.impl.serialport.SireneOfShameHostSerialPortController;
+import app.sereneofshame.host.service.jenkins.client.http.JenkinsHttpClientConfig;
+import app.sereneofshame.host.service.jenkins.client.json.parser.JenkinsApiJsonParser;
+import app.sereneofshame.host.service.jenkins.client.json.scanner.JenkinsApiJsonRessourceScanner;
+import app.sereneofshame.host.service.jenkins.client.json.scanner.JenkinsApiJsonRessourceScannerConfig;
+import app.sereneofshame.host.service.jenkins.client.json.scanner.JenkinsApiJsonRessourceScannerEventsListener;
 
 public class SireneOfShameJavaFXController implements AutoCloseable {
 
@@ -27,7 +27,7 @@ public class SireneOfShameJavaFXController implements AutoCloseable {
 	// ... properties
 
 	private final SireneOfShameJavaFXApplication gui;
-	private final SireneOfShameSerialHostController sireneOfShameController;
+	private final SireneOfShameHostSerialPortController sireneOfShameController;
 
 	private final JenkinsApiJsonRessourceScanner jenkinsApiJsonScanner;
 	private Thread jenkinsApiJsonScannerThread;
@@ -43,12 +43,12 @@ public class SireneOfShameJavaFXController implements AutoCloseable {
 		jenkinsApiJsonScanner = initJenkinsApiJsonRessourceScanner(this);
 	}
 
-	private static SireneOfShameSerialHostController initSireneOfShameController(
+	private static SireneOfShameHostSerialPortController initSireneOfShameController(
 			final SireneOfShameJavaFXApplication gui) {
 
-		final SireneOfShameSerialHostController sireneOfShameController = new SireneOfShameSerialHostController();
+		final SireneOfShameHostSerialPortController sireneOfShameController = new SireneOfShameHostSerialPortController();
 
-		final SireneOfShameControllerEventsListener eventsListener = new SireneOfShameControllerEventsListener() {
+		final SireneOfShameHostControllerEventsListener eventsListener = new SireneOfShameHostControllerEventsListener() {
 			@Override
 			public void onStateChanged(final ESireneOfShameState from, final ESireneOfShameState to) {
 				gui.onStateChanged(to);
@@ -71,10 +71,14 @@ public class SireneOfShameJavaFXController implements AutoCloseable {
 		final JenkinsApiJsonRessourceScannerEventsListener scannerEventsListener = new JenkinsApiJsonRessourceScannerEventsListener() {
 
 			@Override
-			public void onRessourceRead(final Map<String, Object> jsonRootNode) {
+			public void onBeforeRessourceRequest(final String resourcePath) {
+			}
 
-				final Collection<Map<String, Object>> jsonJobsNode = JenkinsJsonApiParser.extractJobsNode(jsonRootNode);
-				final Set<String> jobsStatesSummary = JenkinsJsonApiParser.collectJobsStates(jsonJobsNode);
+			@Override
+			public void onAfterRessourceResponse(final String resourcePath, final Map<String, Object> jsonRootNode) {
+
+				final Collection<Map<String, Object>> jsonJobsNode = JenkinsApiJsonParser.extractJobsNode(jsonRootNode);
+				final Set<String> jobsStatesSummary = JenkinsApiJsonParser.collectJobsStates(jsonJobsNode);
 
 				final ESireneOfShameState highestState;
 				if (jobsStatesSummary.contains("red") || jobsStatesSummary.contains("red_anime")) {

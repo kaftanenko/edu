@@ -6,7 +6,7 @@ import app.arduino.sereneofshame.frontend.impl.javafx.component.ToolBarComponent
 import app.arduino.sereneofshame.frontend.impl.javafx.resources.UIImage;
 import app.arduino.sereneofshame.frontend.impl.javafx.resources.UIMessage;
 import app.arduino.sereneofshame.frontend.impl.javafx.type.EConnectionState;
-import app.arduino.sereneofshame.service.api.ESireneOfShameState;
+import app.arduino.sereneofshame.service.host.api.ESireneOfShameState;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;

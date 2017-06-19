@@ -5,7 +5,7 @@ import app.arduino.sereneofshame.frontend.impl.javafx.exception.util.ErrorHelper
 import app.arduino.sereneofshame.frontend.impl.javafx.resources.UIImage;
 import app.arduino.sereneofshame.frontend.impl.javafx.resources.UIMessage;
 import app.arduino.sereneofshame.frontend.impl.javafx.type.EConnectionState;
-import app.arduino.sereneofshame.service.api.ESireneOfShameState;
+import app.arduino.sereneofshame.service.host.api.ESireneOfShameState;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

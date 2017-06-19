@@ -5,26 +5,26 @@ import org.mockito.Mockito;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import app.arduino.sereneofshame.service.api.ESireneOfShameState;
-import app.arduino.sereneofshame.service.api.SireneOfShameController;
-import app.arduino.sereneofshame.service.api.SireneOfShameControllerEventsListener;
-import app.arduino.sereneofshame.service.impl.dummy.DummySireneOfShameController;
+import app.arduino.sereneofshame.service.host.api.ESireneOfShameState;
+import app.arduino.sereneofshame.service.host.api.SireneOfShameHostController;
+import app.arduino.sereneofshame.service.host.api.SireneOfShameHostControllerEventsListener;
+import app.arduino.sereneofshame.service.host.impl.dummy.DummySireneOfShameHostController;
 
 public class SireneOfShameController_UnitTest {
 
 	// ... properties
 
-	private SireneOfShameController serviceUnderTest;
+	private SireneOfShameHostController serviceUnderTest;
 
-	private SireneOfShameControllerEventsListener eventsListenerUnderTest;
+	private SireneOfShameHostControllerEventsListener eventsListenerUnderTest;
 
 	// ... setUp()/tearDown() methods
 
 	@BeforeMethod(alwaysRun = true)
 	public void setUp() {
 
-		serviceUnderTest = new DummySireneOfShameController();
-		eventsListenerUnderTest = Mockito.mock(SireneOfShameControllerEventsListener.class);
+		serviceUnderTest = new DummySireneOfShameHostController();
+		eventsListenerUnderTest = Mockito.mock(SireneOfShameHostControllerEventsListener.class);
 	}
 
 	// ... test methods
@@ -96,7 +96,7 @@ public class SireneOfShameController_UnitTest {
 
 	// ... verify methods
 
-	private static void verify_ServiceState_Is(final SireneOfShameController service,
+	private static void verify_ServiceState_Is(final SireneOfShameHostController service,
 			final ESireneOfShameState expectedValue) {
 
 		final ESireneOfShameState currentValue = service.getState();

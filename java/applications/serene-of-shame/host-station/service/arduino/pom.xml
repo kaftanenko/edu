@@ -20,6 +20,16 @@
 			</dependency> <dependency> <groupId>org.sintef.jarduino</groupId> <artifactId>org.sintef.jarduino.gui</artifactId> 
 			<version>0.1.6</version> </dependency> -->
 
+		<!-- Apache Log4J -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+		</dependency>
+
 		<!-- AssertJ -->
 		<dependency>
 			<groupId>org.assertj</groupId>
@@ -34,20 +44,10 @@
 		</dependency>
 
 		<!-- Jarduino -->
-		<!-- 
-		<dependency>
-			<groupId>org.sintef.jarduino</groupId>
-			<artifactId>org.sintef.jarduino</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.sintef.jarduino</groupId>
-			<artifactId>org.sintef.jarduino.core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.sintef.jarduino</groupId>
-			<artifactId>org.sintef.jarduino.gui</artifactId>
-		</dependency>
-		-->
+		<!-- <dependency> <groupId>org.sintef.jarduino</groupId> <artifactId>org.sintef.jarduino</artifactId> 
+			</dependency> <dependency> <groupId>org.sintef.jarduino</groupId> <artifactId>org.sintef.jarduino.core</artifactId> 
+			</dependency> <dependency> <groupId>org.sintef.jarduino</groupId> <artifactId>org.sintef.jarduino.gui</artifactId> 
+			</dependency> -->
 
 		<!-- TestNG -->
 		<dependency>
