@@ -18,16 +18,16 @@ const String COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE_EXPECTING_UPDATE = "SET_ALARM_
 const String COMMAND_PING = "PING";
 const String COMMAND_PING_RESPONSE_SUCCEEDED = "SUCCEEDED";
 
-const String CONFIG_GREETING_MESSAGE = "Wellcome to the \"Sirene Of Shame\"!";
+const String CONFIG_GREETING_MESSAGE = "Wellcome to the \"Siren Of Shame\"!";
 const String CONFIG_COMMANDS_MESSAGE = "I understand following commands: '"
-    + COMMAND_SET_ALARM_LEVEL_TO_RED + "', '"
-    + COMMAND_SET_ALARM_LEVEL_TO_RED_EXPECTING_UPDATE + "', '"
-    + COMMAND_SET_ALARM_LEVEL_TO_YELLOW + "', '"
-    + COMMAND_SET_ALARM_LEVEL_TO_YELLOW_EXPECTING_UPDATE + "', '"
-    + COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE + "', '"
-    + COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE_EXPECTING_UPDATE + "', '"
-    + COMMAND_GET_CURRENT_ALARM_LEVEL
-    + "'.";
+                                       + COMMAND_SET_ALARM_LEVEL_TO_RED + "', '"
+                                       + COMMAND_SET_ALARM_LEVEL_TO_RED_EXPECTING_UPDATE + "', '"
+                                       + COMMAND_SET_ALARM_LEVEL_TO_YELLOW + "', '"
+                                       + COMMAND_SET_ALARM_LEVEL_TO_YELLOW_EXPECTING_UPDATE + "', '"
+                                       + COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE + "', '"
+                                       + COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE_EXPECTING_UPDATE + "', '"
+                                       + COMMAND_GET_CURRENT_ALARM_LEVEL
+                                       + "'.";
 
 const int CONFIG_SERIAL_PORT_BAUD_RATE__9600 = 9600;
 const int CONFIG_CHANNEL_LIGHTS_TAKT_DURATION_IN_MS__400 = 400;
@@ -121,9 +121,9 @@ void setup()
   println_SerialPort_Message(CONFIG_GREETING_MESSAGE);
   println_SerialPort_Message(CONFIG_COMMANDS_MESSAGE);
 
-  initAlarmLevel_PinsSet(alarmLevelConfigs[RED]);
-  initAlarmLevel_PinsSet(alarmLevelConfigs[YELLOW]);
-  initAlarmLevel_PinsSet(alarmLevelConfigs[GREENBLUE]);
+  initAlarmLevel_ControlPinsSet(alarmLevelConfigs[RED]);
+  initAlarmLevel_ControlPinsSet(alarmLevelConfigs[YELLOW]);
+  initAlarmLevel_ControlPinsSet(alarmLevelConfigs[GREENBLUE]);
 
   // ... init sound alarmLevel
 
@@ -141,7 +141,7 @@ void setup()
   // println_SerialPort_Message("DFPlayer Mini is online.");
 
   myDFPlayer.volume(30);  // ... 0 to 30
-  // playSoundEffect_Any_Within_Folder(7);
+  playSoundEffect_Any_Within_Folder(7);
 }
 
 void loop()
@@ -249,7 +249,7 @@ void println_SerialPort_Message(String message) {
 
 // ...
 
-void initAlarmLevel_PinsSet(AlarmLevelConfig alarmLevelConfig) {
+void initAlarmLevel_ControlPinsSet(AlarmLevelConfig alarmLevelConfig) {
 
   pinMode(alarmLevelConfig._controlPinLight1, OUTPUT);
   pinMode(alarmLevelConfig._controlPinLight2, OUTPUT);
@@ -289,7 +289,13 @@ void playSoundEffect_On_RememberAbout(AlarmLevel alarmLevel) {
 void playSoundEffect_Any_Within_Folder(int folderName) {
 
   int soundEffectsCount = myDFPlayer.readFileCountsInFolder(folderName);
-  int soundEffectToPlay = random(soundEffectsCount - 2) / 2 + 1;
+
+  int soundEffectToPlay;
+  if (soundEffectsCount <= 2) {
+    soundEffectToPlay = 1;
+  } else {
+    soundEffectToPlay = random(soundEffectsCount - 2) / 2 + 1;
+  }
 
   playSoundEffect_Within_Folder(folderName, soundEffectToPlay);
 }
