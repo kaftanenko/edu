@@ -1,4 +1,4 @@
-package app.sereneofshame.host.service.jenkins;
+package app.sereneofshame.host.service.jenkins.client;
 
 import static app.sereneofshame.host.service.jenkins.JenkinsConstants.AUTH_PASSWORD;
 import static app.sereneofshame.host.service.jenkins.JenkinsConstants.AUTH_USERNAME;
@@ -24,6 +24,7 @@ public class JenkinsHttpClientLauncher {
 		final JenkinsHttpClient controller = new JenkinsHttpClient(config);
 
 		final Map<String, Object> jsonRootNode = controller.callJsonApi(JENKINS_RESOURCE_PATH__MAIS__BUILD_JOBS);
+		System.out.println(jsonRootNode);
 
 		final Collection<Map<String, Object>> jsonJobsNode = JenkinsJsonApiParser.extractJobsNode(jsonRootNode);
 		System.out.println(jsonJobsNode);

@@ -1,4 +1,4 @@
-package app.sereneofshame.host.service.jenkins;
+package app.sereneofshame.host.service.jenkins.client;
 
 import java.io.IOException;
 import java.util.Map;
