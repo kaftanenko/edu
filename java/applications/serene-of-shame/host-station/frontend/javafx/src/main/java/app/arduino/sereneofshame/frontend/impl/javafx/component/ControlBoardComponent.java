@@ -46,7 +46,7 @@ public class ControlBoardComponent extends VBox {
 					bgColor = "blue";
 					break;
 				default:
-					throw ErrorHelper.handleValueIsNotSupportedYet("state", state);
+					throw ErrorHelper.handleValueIsNotSupportedYetException("state", state);
 			}
 			buttonSetStateTo.setStyle("-fx-text-fill: " + bgColor);
 

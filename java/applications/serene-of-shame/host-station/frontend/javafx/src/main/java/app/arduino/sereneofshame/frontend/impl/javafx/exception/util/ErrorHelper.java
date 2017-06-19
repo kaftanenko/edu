@@ -4,12 +4,22 @@ public class ErrorHelper {
 
 	// ... business methods
 
-	public static RuntimeException handleValueIsNotSupportedYet(final String attributeName,
+	public static RuntimeException handleFatalExceptoin(final Exception ex) {
+
+		throw new RuntimeException(ex);
+	}
+
+	public static RuntimeException handleFatalException(final String message) {
+
+		throw new RuntimeException(message);
+	}
+
+	public static RuntimeException handleValueIsNotSupportedYetException(final String attributeName,
 			final Object attributeValue) {
 
 		final String errorMessage = "The value \"" + attributeValue + "\" of the attribute \"" + attributeName
 				+ "\" is not supported yet.";
-		throw new RuntimeException(errorMessage);
+		throw handleFatalException(errorMessage);
 	}
 
 }

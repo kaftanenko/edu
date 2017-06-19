@@ -24,6 +24,10 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>app-sireneofshame-host-service-arduino</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>app-sireneofshame-host-service-jenkins</artifactId>
+		</dependency>
 
 		<!-- AssertJ -->
 		<dependency>

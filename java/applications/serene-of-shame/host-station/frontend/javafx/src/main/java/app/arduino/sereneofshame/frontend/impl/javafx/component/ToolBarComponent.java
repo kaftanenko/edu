@@ -103,7 +103,7 @@ public class ToolBarComponent extends ToolBar {
 				buttonDisconnect.setDisable(true);
 				break;
 			default:
-				throw ErrorHelper.handleValueIsNotSupportedYet("connectionState", connectionState);
+				throw ErrorHelper.handleValueIsNotSupportedYetException("connectionState", connectionState);
 		}
 	}
 
@@ -129,7 +129,7 @@ public class ToolBarComponent extends ToolBar {
 				imageViewStateGreenBlue.setImage(new Image(UIImage.JENKINS_STATE_BLUE_32.getAsStream()));
 				break;
 			default:
-				throw ErrorHelper.handleValueIsNotSupportedYet("state", state);
+				throw ErrorHelper.handleValueIsNotSupportedYetException("state", state);
 		}
 	}
 
