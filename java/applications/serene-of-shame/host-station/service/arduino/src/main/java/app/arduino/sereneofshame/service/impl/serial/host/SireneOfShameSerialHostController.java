@@ -105,8 +105,8 @@ public class SireneOfShameSerialHostController extends AbstractSireneOfShameCont
 	public ESireneOfShameState getState() {
 
 		sendCommand(COMMAND_GET_STATE);
-		final String currentState = readResponse();
 
+		final String currentState = readResponse();
 		return ESireneOfShameState.valueOf(currentState);
 	}
 

@@ -71,7 +71,7 @@ ChannelConfig channelConfigs[] = {
 
 String lastCommand = "";
 
-ChannelConfig currentChannelConfig = channelConfigs[GREENBLUE];
+ChannelConfig *currentChannelConfig = &(channelConfigs[GREENBLUE]);
 LightState currentChannel_LightsState = OFF;
 Timer currentChannel_LightsState_Timer;
 Timer currentChannel_Remember_Timer;
@@ -107,7 +107,7 @@ void setup()
     println_SerialPort_Message("Unable to begin:");
     println_SerialPort_Message("1.Please recheck the connection!");
     println_SerialPort_Message("2.Please insert the SD card!");
-    while (true);
+   // while (true);
   }
   // println_SerialPort_Message("DFPlayer Mini is online.");
 
@@ -126,21 +126,15 @@ void loop()
     currentChannel_LightsState = OFF;
 
     if (lastCommand == COMMAND_GET_STATE) {
-      println_SerialPort_Message(currentChannelConfig._channelName);
+       println_SerialPort_Message(currentChannelConfig->_channelName);
     } else if (lastCommand == COMMAND_PING) {
       println_SerialPort_Message(COMMAND_PING_RESPONSE_SUCCEEDED);
     } else if (lastCommand == COMMAND_SET_STATE_TO_RED) {
-      playSoundEffect_On_ChannelChange(currentChannelConfig._channel, RED);
-      currentChannelConfig = channelConfigs[RED];
-      currentChannel_Remember_Timer.reset();
+      doSetState(RED);
     } else if (lastCommand == COMMAND_SET_STATE_TO_YELLOW) {
-      playSoundEffect_On_ChannelChange(currentChannelConfig._channel, YELLOW);
-      currentChannelConfig = channelConfigs[YELLOW];
-      currentChannel_Remember_Timer.reset();
+      doSetState(YELLOW);
     } else if (lastCommand == COMMAND_SET_STATE_TO_GREENBLUE) {
-      playSoundEffect_On_ChannelChange(currentChannelConfig._channel, GREENBLUE);
-      currentChannelConfig = channelConfigs[GREENBLUE];
-      currentChannel_Remember_Timer.reset();
+      doSetState(GREENBLUE);
     } else {
       println_SerialPort_Message("Command '" + lastCommand + "' is not supported.");
     }
@@ -155,19 +149,36 @@ void loop()
     switchChannel_Lights_Off(channelConfigs[YELLOW]);
     switchChannel_Lights_Off(channelConfigs[GREENBLUE]);
 
-    switchChannel_Lights_To(currentChannelConfig, currentChannel_LightsState);
+    switchChannel_Lights_To(*currentChannelConfig, currentChannel_LightsState);
   }
 
   if (currentChannel_Remember_Timer.isOver(CONFIG_CHANNEL_REMEMBERING_SOUND_TAKT_DURATION_IN_MS__12000)) {
 
     currentChannel_Remember_Timer.reset();
-    playSoundEffect_On_Remember(currentChannelConfig._channel);
+    playSoundEffect_On_Remember(currentChannelConfig->_channel);
   }
 
   delay(10);
 }
 
 // ... helper methods
+
+void doSetState(Channel newChannel) {
+
+  if (newChannel != currentChannelConfig->_channel) {
+
+    // playSoundEffect_On_ChannelChange(currentChannelConfig->_channel, newChannel);
+
+    currentChannel_LightsState_Timer.reset();
+    currentChannel_LightsState = OFF;
+
+    currentChannel_Remember_Timer.reset();
+
+    currentChannelConfig = &(channelConfigs[newChannel]);
+  }
+}
+
+// ...
 
 bool isAvailable_SerialPort_Message() {
 
