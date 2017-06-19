@@ -1,0 +1,89 @@
+{
+	"_class": "com.cloudbees.hudson.plugins.folder.Folder",
+	"actions": [
+		{
+			
+		},
+		{
+			
+		},
+		{
+			"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+		}
+	],
+	"description": null,
+	"displayName": "build-jobs",
+	"displayNameOrNull": null,
+	"fullDisplayName": "mais » build-jobs",
+	"fullName": "mais/build-jobs",
+	"name": "build-jobs",
+	"url": "http://svs-jci01:8080/job/mais/job/build-jobs/",
+	"healthReport": [
+		{
+			"description": "Worst health: mais » build-jobs » angular-frontend: Build stability: 3 out of the last 5 builds failed.",
+			"iconClassName": "icon-health-20to39",
+			"iconUrl": "health-20to39.png",
+			"score": 40
+		}
+	],
+	"jobs": [
+		{
+			"_class": "hudson.model.FreeStyleProject",
+			"name": "angular-frontend",
+			"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/angular-frontend/",
+			"color": "blue"
+		},
+		{
+			"_class": "hudson.model.FreeStyleProject",
+			"name": "mais-app-integration-test",
+			"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/mais-app-integration-test/",
+			"color": "blue"
+		},
+		{
+			"_class": "hudson.model.FreeStyleProject",
+			"name": "mais-app-unit-test",
+			"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/mais-app-unit-test/",
+			"color": "blue"
+		},
+		{
+			"_class": "hudson.maven.MavenModuleSet",
+			"name": "rk-internal-common_ci",
+			"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/rk-internal-common_ci/",
+			"color": "blue"
+		},
+		{
+			"_class": "hudson.maven.MavenModuleSet",
+			"name": "rk-internal-leben-common_ci",
+			"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/rk-internal-leben-common_ci/",
+			"color": "blue"
+		},
+		{
+			"_class": "hudson.maven.MavenModuleSet",
+			"name": "rk-internal-leben-rkv_ci",
+			"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/rk-internal-leben-rkv_ci/",
+			"color": "blue"
+		}
+	],
+	"primaryView": {
+		"_class": "hudson.model.AllView",
+		"name": "All",
+		"url": "http://svs-jci01:8080/job/mais/job/build-jobs/"
+	},
+	"views": [
+		{
+			"_class": "hudson.model.AllView",
+			"name": "All",
+			"url": "http://svs-jci01:8080/job/mais/job/build-jobs/"
+		},
+		{
+			"_class": "hudson.model.ListView",
+			"name": "mais-app",
+			"url": "http://svs-jci01:8080/job/mais/job/build-jobs/view/mais-app/"
+		},
+		{
+			"_class": "hudson.model.ListView",
+			"name": "rechenkerne",
+			"url": "http://svs-jci01:8080/job/mais/job/build-jobs/view/rechenkerne/"
+		}
+	]
+}
