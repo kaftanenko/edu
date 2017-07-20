@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>edu.java.jse.junit</groupId>
-	<artifactId>junit.calculator</artifactId>
+	<groupId>edu.java.fws.junit</groupId>
+	<artifactId>fws-junit.calculator</artifactId>
 	<name>${project.artifactId}</name>
 	<version>0.0.1</version>
 	<packaging>pom</packaging>
@@ -16,10 +16,10 @@
 	</properties>
 
 	<modules>
-		<module>junit.calculator.api</module>
-		<module>junit.calculator.impl</module>
-		<module>junit.calculator.tests-skeleton</module>
-		<module>junit.calculator.tests-solution</module>
+		<module>calculator.api</module>
+		<module>calculator.impl</module>
+		<module>calculator.tests-skeleton</module>
+		<module>calculator.tests-solution</module>
 	</modules>
 
 	<dependencyManagement>
@@ -28,17 +28,17 @@
 
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>junit.calculator.api</artifactId>
+				<artifactId>fws-junit.calculator.api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>junit.calculator.impl</artifactId>
+				<artifactId>fws-junit.calculator.impl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>junit.calculator.tests</artifactId>
+				<artifactId>fws-junit.calculator.tests</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 

@@ -2,13 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>junit.calculator.api</artifactId>
+	<artifactId>fws-junit.calculator.api</artifactId>
 	<name>${project.artifactId}</name>
 	<packaging>jar</packaging>
 
 	<parent>
-		<groupId>edu.java.jse.junit</groupId>
-		<artifactId>junit.calculator</artifactId>
+		<groupId>edu.java.fws.junit</groupId>
+		<artifactId>fws-junit.calculator</artifactId>
 		<version>0.0.1</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
