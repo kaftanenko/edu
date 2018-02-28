@@ -61,6 +61,8 @@ enum SoundEffectsState {
   SOUND_EFFECTS_OFF,
 };
 
+const int GLOBAL_SWITCH__SOUND_EFFECTS__ON_OFF = SOUND_EFFECTS_ON;
+
 // ... configuration
 
 class ControlPinState {
@@ -233,7 +235,7 @@ void loop()
   if (currentAlarmLevel_LightsState_Timer.isOver(CONFIG_CHANNEL_LIGHTS_TAKT_DURATION_IN_MS__600)) {
 
     currentAlarmLevel_LightsState_Timer.reset();
-    
+
     if (currentAlarmLevelConfig->_lightEffectsState == LIGHT_EFFECTS_OFF) {
       currentAlarmLevel_LightsState = LIGHT_ON;
     } else {
@@ -362,7 +364,9 @@ void playSoundEffect_Any_Within_Folder(int folderName) {
 
 void playSoundEffect_Within_Folder(int folderName, int soundEffectToPlay) {
 
-  myDFPlayer.playFolder(folderName, soundEffectToPlay);
+  if (GLOBAL_SWITCH__SOUND_EFFECTS__ON_OFF == SOUND_EFFECTS_ON) {
+    myDFPlayer.playFolder(folderName, soundEffectToPlay);
+  }
 }
 
 void printDFPlayerDetails(uint8_t type, int value) {
