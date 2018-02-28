@@ -143,4 +143,9 @@ public class SirenOfShameJavaFXController implements AutoCloseable {
 		}
 	}
 
+	public void showPropertiesDialog() {
+
+		gui.showPropertiesDialog();
+	}
+
 }

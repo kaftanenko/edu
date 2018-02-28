@@ -23,6 +23,7 @@ public class ToolBarComponent extends ToolBar {
 
 	private final Button buttonConnect;
 	private final Button buttonDisconnect;
+	private final Button buttonConfiguration;
 
 	private final ImageView imageViewAlarmLevelRed;
 	private final ImageView imageViewAlarmLevelYellow;
@@ -52,6 +53,16 @@ public class ToolBarComponent extends ToolBar {
 		});
 		// buttonDisconnect.setPadding(new Insets(5));
 
+		buttonConfiguration = newToolBarButton(UIMessage.EMPTY, UIImage.BUTTON_DISCONNECT_24, new Runnable() {
+
+			@Override
+			public void run() {
+
+				sirenOfShameController.showPropertiesDialog();
+			}
+		});
+		// buttonConfiguration.setPadding(new Insets(5));
+
 		final Pane rightSpacer = new Pane();
 		HBox.setHgrow(rightSpacer, Priority.SOMETIMES);
 
@@ -63,7 +74,7 @@ public class ToolBarComponent extends ToolBar {
 		paneJankinsState.getChildren().addAll(imageViewAlarmLevelRed, imageViewAlarmLevelYellow,
 				imageViewAlarmLevelGreenBlue);
 
-		getItems().addAll(buttonConnect, buttonDisconnect, rightSpacer, paneJankinsState);
+		getItems().addAll(buttonConnect, buttonDisconnect, buttonConfiguration, rightSpacer, paneJankinsState);
 
 		getStyleClass().removeAll();
 		getStyleClass().add("tools-bar");
@@ -96,16 +107,16 @@ public class ToolBarComponent extends ToolBar {
 	public void setConnectionState(final EConnectionState connectionState) {
 
 		switch (connectionState) {
-			case CONNECTED:
-				buttonConnect.setDisable(true);
-				buttonDisconnect.setDisable(false);
-				break;
-			case DISCONNECTED:
-				buttonConnect.setDisable(false);
-				buttonDisconnect.setDisable(true);
-				break;
-			default:
-				throw ErrorHelper.handleValueIsNotSupportedYetException("connectionState", connectionState);
+		case CONNECTED:
+			buttonConnect.setDisable(true);
+			buttonDisconnect.setDisable(false);
+			break;
+		case DISCONNECTED:
+			buttonConnect.setDisable(false);
+			buttonDisconnect.setDisable(true);
+			break;
+		default:
+			throw ErrorHelper.handleValueIsNotSupportedYetException("connectionState", connectionState);
 		}
 	}
 
@@ -121,28 +132,28 @@ public class ToolBarComponent extends ToolBar {
 		resetStateSelection();
 
 		switch (alarmLevel) {
-			case RED:
-				imageViewAlarmLevelRed.setImage(new Image(UIImage.JENKINS_STATE_RED_32.getAsStream()));
-				break;
-			case RED_EXPECTING_UPDATE:
-				imageViewAlarmLevelRed.setImage(new Image(UIImage.JENKINS_STATE_RED_ANIME_32.getAsStream()));
-				break;
-			case YELLOW:
-				imageViewAlarmLevelYellow.setImage(new Image(UIImage.JENKINS_STATE_YELLOW_32.getAsStream()));
-				break;
-			case YELLOW_EXPECTING_UPDATE:
-				imageViewAlarmLevelYellow.setImage(new Image(UIImage.JENKINS_STATE_YELLOW_ANIME_32.getAsStream()));
-				break;
-			case GREENBLUE:
-				imageViewAlarmLevelGreenBlue.setImage(new Image(UIImage.JENKINS_STATE_BLUE_32.getAsStream()));
-				break;
-			case GREENBLUE_EXPECTING_UPDATE:
-				imageViewAlarmLevelGreenBlue.setImage(new Image(UIImage.JENKINS_STATE_BLUE_ANIME_32.getAsStream()));
-				break;
-			case UNDEFINED:
-				break;
-			default:
-				throw ErrorHelper.handleValueIsNotSupportedYetException("alarmLevel", alarmLevel);
+		case RED:
+			imageViewAlarmLevelRed.setImage(new Image(UIImage.JENKINS_STATE_RED_32.getAsStream()));
+			break;
+		case RED_EXPECTING_UPDATE:
+			imageViewAlarmLevelRed.setImage(new Image(UIImage.JENKINS_STATE_RED_ANIME_32.getAsStream()));
+			break;
+		case YELLOW:
+			imageViewAlarmLevelYellow.setImage(new Image(UIImage.JENKINS_STATE_YELLOW_32.getAsStream()));
+			break;
+		case YELLOW_EXPECTING_UPDATE:
+			imageViewAlarmLevelYellow.setImage(new Image(UIImage.JENKINS_STATE_YELLOW_ANIME_32.getAsStream()));
+			break;
+		case GREENBLUE:
+			imageViewAlarmLevelGreenBlue.setImage(new Image(UIImage.JENKINS_STATE_BLUE_32.getAsStream()));
+			break;
+		case GREENBLUE_EXPECTING_UPDATE:
+			imageViewAlarmLevelGreenBlue.setImage(new Image(UIImage.JENKINS_STATE_BLUE_ANIME_32.getAsStream()));
+			break;
+		case UNDEFINED:
+			break;
+		default:
+			throw ErrorHelper.handleValueIsNotSupportedYetException("alarmLevel", alarmLevel);
 		}
 	}
 

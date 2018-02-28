@@ -4,7 +4,7 @@ public class ErrorHelper {
 
 	// ... business methods
 
-	public static RuntimeException handleFatalExceptoin(final Exception ex) {
+	public static RuntimeException handleFatalException(final Exception ex) {
 
 		throw new RuntimeException(ex);
 	}

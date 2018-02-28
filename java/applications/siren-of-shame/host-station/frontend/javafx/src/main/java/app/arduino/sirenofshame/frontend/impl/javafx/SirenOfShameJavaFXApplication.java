@@ -5,6 +5,7 @@ import app.arduino.sirenofshame.frontend.impl.javafx.component.StatusLineCompone
 import app.arduino.sirenofshame.frontend.impl.javafx.component.ToolBarComponent;
 import app.arduino.sirenofshame.frontend.impl.javafx.resources.UIImage;
 import app.arduino.sirenofshame.frontend.impl.javafx.resources.UIMessage;
+import app.arduino.sirenofshame.frontend.impl.javafx.stage.PropertiesDialogStage;
 import app.arduino.sirenofshame.frontend.impl.javafx.type.EConnectionState;
 import app.arduino.sirenofshame.service.host.api.ESirenOfShameAlarmLevel;
 import javafx.application.Application;
@@ -27,6 +28,7 @@ public class SirenOfShameJavaFXApplication extends Application {
 	private ToolBarComponent toolBarComponent;
 	private ControlBoardComponent controlBoardComponent;
 	private StatusLineComponent statusLineComponent;
+	private PropertiesDialogStage propertiesDialogStage;
 
 	private SirenOfShameJavaFXController sirenOfShameJavaFXController;
 
@@ -42,6 +44,12 @@ public class SirenOfShameJavaFXApplication extends Application {
 
 	@Override
 	public void start(final Stage window) throws Exception {
+
+		// ...
+
+		propertiesDialogStage = new PropertiesDialogStage();
+
+		// ...
 
 		final BorderPane rootNode = new BorderPane();
 
@@ -81,6 +89,10 @@ public class SirenOfShameJavaFXApplication extends Application {
 	}
 
 	// ... GUI components management methods
+
+	public void showPropertiesDialog() {
+		propertiesDialogStage.showAndWait();
+	}
 
 	private void resetApplicationState() {
 

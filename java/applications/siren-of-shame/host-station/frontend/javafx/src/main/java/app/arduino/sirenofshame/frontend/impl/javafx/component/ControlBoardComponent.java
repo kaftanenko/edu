@@ -32,42 +32,36 @@ public class ControlBoardComponent extends VBox {
 
 			final String buttonDisplayText = UIMessage.BUTTON_SET_TO_ALARM_LEVEL
 					.getText(alarmLevel.name().toLowerCase());
-			final Button buttonSetAlarmLevelTo = new Button(buttonDisplayText);
-			buttonSetAlarmLevelTo.setOnAction(e -> {
+			final Button newButtonSetAlarmLevelTo = new Button(buttonDisplayText);
+			newButtonSetAlarmLevelTo.setOnAction(e -> {
 				sirenOfShameController.setAlarmLevelTo(alarmLevel);
 			});
 
-			buttonSetAlarmLevelTo.setMinWidth(270);
-			buttonSetAlarmLevelTo.getStyleClass().removeAll();
-			buttonSetAlarmLevelTo.getStyleClass().add("buttonSetAlarmLevelTo");
+			newButtonSetAlarmLevelTo.setMinWidth(270);
+			newButtonSetAlarmLevelTo.getStyleClass().removeAll();
+			newButtonSetAlarmLevelTo.getStyleClass().add("buttonSetAlarmLevelTo");
 
 			final String bgColor;
 			switch (alarmLevel) {
-				case RED:
-					bgColor = "red";
-					break;
-				case RED_EXPECTING_UPDATE:
-					bgColor = "red";
-					break;
-				case YELLOW:
-					bgColor = "yellow";
-					break;
-				case YELLOW_EXPECTING_UPDATE:
-					bgColor = "yellow";
-					break;
-				case GREENBLUE:
-					bgColor = "blue";
-					break;
-				case GREENBLUE_EXPECTING_UPDATE:
-					bgColor = "blue";
-					break;
-				default:
-					throw ErrorHelper.handleValueIsNotSupportedYetException("alarLevel", alarmLevel);
+			case RED:
+			case RED_EXPECTING_UPDATE:
+				bgColor = "red";
+				break;
+			case YELLOW:
+			case YELLOW_EXPECTING_UPDATE:
+				bgColor = "yellow";
+				break;
+			case GREENBLUE:
+			case GREENBLUE_EXPECTING_UPDATE:
+				bgColor = "blue";
+				break;
+			default:
+				throw ErrorHelper.handleValueIsNotSupportedYetException("alarLevel", alarmLevel);
 			}
-			buttonSetAlarmLevelTo.setStyle("-fx-text-fill: " + bgColor);
+			newButtonSetAlarmLevelTo.setStyle("-fx-text-fill: " + bgColor);
 
-			buttonsSetAlarmLevelTo.put(alarmLevel, buttonSetAlarmLevelTo);
-			getChildren().add(buttonSetAlarmLevelTo);
+			buttonsSetAlarmLevelTo.put(alarmLevel, newButtonSetAlarmLevelTo);
+			getChildren().add(newButtonSetAlarmLevelTo);
 		}
 
 	}
