@@ -23,7 +23,7 @@
 		<lib.assertj.version>3.8.0</lib.assertj.version>
 		<lib.fasterxml.jackson.version>2.8.8</lib.fasterxml.jackson.version>
 
-		<lib.javafx.system-path>d:/software/dev/sdk/java/jdk1.8.0_141/jre/lib/ext/jfxrt.jar</lib.javafx.system-path>
+		<lib.javafx.system-path>c:/developer-moma/tools/java/jdk8u101/jre/lib/ext/jfxrt.jar</lib.javafx.system-path>
 		<lib.javafx.version>2.0</lib.javafx.version>
 
 		<lib.log4j.version>2.8.2</lib.log4j.version>

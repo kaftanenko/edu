@@ -8,43 +8,43 @@ import org.apache.logging.log4j.Logger;
 import app.sirenofshame.host.service.jenkins.client.JenkinsClientFactory;
 
 public class DefaultJenkinsApiJsonRessourceScannerEventsListener
-		implements JenkinsApiJsonRessourceScannerEventsListener {
+    implements JenkinsApiJsonRessourceScannerEventsListener {
 
-	// ... dependencies
+  // ... dependencies
 
-	private static final Logger LOG = JenkinsClientFactory.getLogger();
+  private static final Logger LOG = JenkinsClientFactory.getLogger();
 
-	// ... events handler methods
+  // ... events handler methods
 
-	@Override
-	public void onBeforeRessourceRequest(final String resourcePath) {
+  @Override
+  public void onBeforeRessourceRequest(final String resourcePath) {
 
-		final String currentTime = getCurrentTimeInGMTFormat();
-		LOG.info("Send Request:\n" //
-				+ "{\n" //
-				+ "\t currentTime: " + currentTime + ", \n" //
-				+ "\t resourcePath: " + resourcePath + " \n" //
-				+ "}");
-	}
+    final String currentTime = getCurrentTimeInGMTFormat();
+    LOG.info("Sent Request:\n" //
+        + "{\n" //
+        + "\t currentTime: " + currentTime + ", \n" //
+        + "\t resourcePath: " + resourcePath + " \n" //
+        + "}");
+  }
 
-	@Override
-	public void onAfterRessourceResponse(final String resourcePath, final Map<String, Object> jsonRootNode) {
+  @Override
+  public void onAfterRessourceResponse(final String resourcePath, final Map<String, Object> jsonRootNode) {
 
-		final String currentTime = getCurrentTimeInGMTFormat();
-		LOG.info("Received Response:\n" //
-				+ "{\n" //
-				+ "\t currentTime: " + currentTime + ", \n" //
-				+ "\t resourcePath: " + resourcePath + ", \n" //
-				+ "\t responseBody: " + jsonRootNode + "\n" //
-				+ "}");
-	}
+    final String currentTime = getCurrentTimeInGMTFormat();
+    LOG.info("Received Response:\n" //
+        + "{\n" //
+        + "\t currentTime: " + currentTime + ", \n" //
+        + "\t resourcePath: " + resourcePath + ", \n" //
+        + "\t responseBody: " + jsonRootNode + "\n" //
+        + "}");
+  }
 
-	// ... helper methods
+  // ... helper methods
 
-	private String getCurrentTimeInGMTFormat() {
+  private String getCurrentTimeInGMTFormat() {
 
-		final String currentTime = Calendar.getInstance().getTime().toGMTString();
-		return currentTime;
-	}
+    final String currentTime = Calendar.getInstance().getTime().toGMTString();
+    return currentTime;
+  }
 
 }

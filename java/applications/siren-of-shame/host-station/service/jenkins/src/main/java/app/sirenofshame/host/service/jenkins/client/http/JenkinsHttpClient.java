@@ -29,91 +29,91 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JenkinsHttpClient {
 
-	// ... constants
+  // ... constants
 
-	private static final String JENKINS_URL_POSTFIX__JSON_API = "/api/json";
+  private static final String JENKINS_URL_POSTFIX__API_JSON = "/api/json";
 
-	// ... properties
+  // ... properties
 
-	private final DefaultHttpClient client;
-	private final BasicHttpContext context;
+  private final DefaultHttpClient client;
+  private final BasicHttpContext context;
 
-	private final JenkinsHttpClientConfig config;
+  private final JenkinsHttpClientConfig config;
 
-	// ... business methods
+  // ... business methods
 
-	public JenkinsHttpClient(final JenkinsHttpClientConfig config) {
+  public JenkinsHttpClient(final JenkinsHttpClientConfig config) {
 
-		this.config = config;
+    this.config = config;
 
-		// Create your httpclient
-		client = new DefaultHttpClient();
+    // Create your httpclient
+    client = new DefaultHttpClient();
 
-		// Then provide the right credentials
-		client.getCredentialsProvider().setCredentials(new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT),
-				new UsernamePasswordCredentials(config.getUsername(), config.getPassword()));
+    // Then provide the right credentials
+    client.getCredentialsProvider().setCredentials(new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT),
+        new UsernamePasswordCredentials(config.getUsername(), config.getPassword()));
 
-		// Generate BASIC scheme object and stick it to the execution context
-		final BasicScheme basicAuth = new BasicScheme();
-		context = new BasicHttpContext();
-		context.setAttribute("preemptive-auth", basicAuth);
+    // Generate BASIC scheme object and stick it to the execution context
+    final BasicScheme basicAuth = new BasicScheme();
+    context = new BasicHttpContext();
+    context.setAttribute("preemptive-auth", basicAuth);
 
-		// Add as the first (because of the zero) request interceptor
-		// It will first intercept the request and preemptively initialize the
-		// authentication scheme if there is not
-		client.addRequestInterceptor(new PreemptiveAuth(), 0);
-	}
+    // Add as the first (because of the zero) request interceptor
+    // It will first intercept the request and preemptively initialize the
+    // authentication scheme if there is not
+    client.addRequestInterceptor(new PreemptiveAuth(), 0);
+  }
 
-	public Map<String, Object> callJsonApi(final String ressourcePath) {
+  public Map<String, Object> callJsonApi(final String ressourcePath) {
 
-		final HttpGet get = new HttpGet(buildJsonApiRequestURL(ressourcePath));
+    final HttpGet get = new HttpGet(buildJsonApiRequestURL(ressourcePath));
 
-		try {
-			final HttpResponse response = client.execute(get, context);
-			final HttpEntity entity = response.getEntity();
-			final String bodyAsString = EntityUtils.toString(entity);
+    try {
+      final HttpResponse response = client.execute(get, context);
+      final HttpEntity entity = response.getEntity();
+      final String bodyAsString = EntityUtils.toString(entity);
 
-			final Map<String, Object> jsonContentAsMap = new ObjectMapper().readValue(bodyAsString,
-					new TypeReference<Map<String, Object>>() {
-					});
-			return jsonContentAsMap;
-		} catch (final IOException ex) {
-			throw new RuntimeException(ex);
-		}
-	}
+      final Map<String, Object> jsonContentAsMap = //
+          new ObjectMapper().readValue(bodyAsString, new TypeReference<Map<String, Object>>() {
+          });
+      return jsonContentAsMap;
+    } catch (final IOException ex) {
+      throw new RuntimeException(ex);
+    }
+  }
 
-	// ... helper methods
+  // ... helper methods
 
-	private String buildJsonApiRequestURL(final String ressourcePath) {
+  private String buildJsonApiRequestURL(final String ressourcePath) {
 
-		return config.getHostUrl() + ressourcePath + JENKINS_URL_POSTFIX__JSON_API;
-	}
+    return config.getHostUrl() + ressourcePath + JENKINS_URL_POSTFIX__API_JSON;
+  }
 
-	private static class PreemptiveAuth implements HttpRequestInterceptor {
+  private static class PreemptiveAuth implements HttpRequestInterceptor {
 
-		@Override
-		public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
-			// Get the AuthState
-			final AuthState authState = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
+    @Override
+    public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
+      // Get the AuthState
+      final AuthState authState = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
 
-			// If no auth scheme available yet, try to initialize it
-			// preemptively
-			if (authState.getAuthScheme() == null) {
-				final AuthScheme authScheme = (AuthScheme) context.getAttribute("preemptive-auth");
-				final CredentialsProvider credsProvider = (CredentialsProvider) context
-						.getAttribute(ClientContext.CREDS_PROVIDER);
-				final HttpHost targetHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
-				if (authScheme != null) {
-					final Credentials creds = credsProvider
-							.getCredentials(new AuthScope(targetHost.getHostName(), targetHost.getPort()));
-					if (creds == null) {
-						throw new HttpException("No credentials for preemptive authentication");
-					}
-					authState.setAuthScheme(authScheme);
-					authState.setCredentials(creds);
-				}
-			}
-		}
-	}
+      // If no auth scheme available yet, try to initialize it
+      // preemptively
+      if (authState.getAuthScheme() == null) {
+        final AuthScheme authScheme = (AuthScheme) context.getAttribute("preemptive-auth");
+        final CredentialsProvider credsProvider = (CredentialsProvider) context
+            .getAttribute(ClientContext.CREDS_PROVIDER);
+        final HttpHost targetHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
+        if (authScheme != null) {
+          final Credentials creds = credsProvider
+              .getCredentials(new AuthScope(targetHost.getHostName(), targetHost.getPort()));
+          if (creds == null) {
+            throw new HttpException("No credentials for preemptive authentication");
+          }
+          authState.setAuthScheme(authScheme);
+          authState.setCredentials(creds);
+        }
+      }
+    }
+  }
 
 }

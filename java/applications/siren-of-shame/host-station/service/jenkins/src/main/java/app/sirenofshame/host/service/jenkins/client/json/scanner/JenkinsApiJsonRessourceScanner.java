@@ -11,79 +11,84 @@ import app.sirenofshame.host.service.jenkins.client.http.JenkinsHttpClient;
 
 public class JenkinsApiJsonRessourceScanner implements Runnable {
 
-	// ... dependencies
+  // ... dependencies
 
-	private static final Logger LOG = JenkinsClientFactory.getLogger();
+  private static final Logger LOG = JenkinsClientFactory.getLogger();
 
-	// ... properties
+  // ... properties
 
-	private final JenkinsHttpClient jenkinsHttpClient;
+  private final JenkinsHttpClient jenkinsHttpClient;
 
-	private final JenkinsApiJsonRessourceScannerConfig config;
-	private final List<JenkinsApiJsonRessourceScannerEventsListener> eventsListeners;
+  private final JenkinsApiJsonRessourceScannerConfig config;
+  private final List<JenkinsApiJsonRessourceScannerEventsListener> eventsListeners;
 
-	// ... constructors
+  // ... constructors
 
-	public JenkinsApiJsonRessourceScanner(final JenkinsApiJsonRessourceScannerConfig config) {
+  public JenkinsApiJsonRessourceScanner(final JenkinsApiJsonRessourceScannerConfig config) {
 
-		this.config = config;
-		this.eventsListeners = new ArrayList<>();
-		this.jenkinsHttpClient = new JenkinsHttpClient(config.getJenkinsHttpClientConfig());
+    this.config = config;
+    this.eventsListeners = new ArrayList<>();
+    this.jenkinsHttpClient = new JenkinsHttpClient(config.getJenkinsHttpClientConfig());
 
-		subscribe(new DefaultJenkinsApiJsonRessourceScannerEventsListener());
-	}
+    subscribe(new DefaultJenkinsApiJsonRessourceScannerEventsListener());
+  }
 
-	// ... business methods
+  // ... business methods
 
-	@Override
-	public void run() {
+  @Override
+  public void run() {
 
-		final String resourcePath = config.getResourcePath();
-		final long pollingTaktDurationInMs = config.getPollingTaktDurationInMs();
+    final String resourcePath = config.getResourcePath();
+    final long pollingTaktDurationInMs = config.getPollingTaktDurationInMs();
 
-		while (true) {
+    while (true) {
 
-			try {
-				Thread.sleep(pollingTaktDurationInMs);
-			} catch (final InterruptedException ex) {
-				LOG.error("... polling thread interrupted.");
-			}
+      try {
+        Thread.sleep(pollingTaktDurationInMs);
+      } catch (final InterruptedException ex) {
+        LOG.error("... polling thread interrupted.");
+      }
 
-			notifyEventsListenersAboutRessourceRequest(resourcePath);
+      try {
 
-			final Map<String, Object> jsonRootNode = jenkinsHttpClient.callJsonApi(resourcePath);
+        notifyEventsListenersAboutRessourceRequest(resourcePath);
 
-			notifyEventsListenersAboutResourceResponse(resourcePath, jsonRootNode);
-		}
-	}
+        final Map<String, Object> jsonRootNode = jenkinsHttpClient.callJsonApi(resourcePath);
 
-	// ... events management methods
+        notifyEventsListenersAboutResourceResponse(resourcePath, jsonRootNode);
+      } catch (final Exception ex) {
+        LOG.error(ex);
+      }
+    }
+  }
 
-	protected void notifyEventsListenersAboutRessourceRequest(final String resourcePath) {
+  // ... events management methods
 
-		for (final JenkinsApiJsonRessourceScannerEventsListener eventsListener : eventsListeners) {
+  protected void notifyEventsListenersAboutRessourceRequest(final String resourcePath) {
 
-			eventsListener.onBeforeRessourceRequest(resourcePath);
-		}
-	}
+    for (final JenkinsApiJsonRessourceScannerEventsListener eventsListener : eventsListeners) {
 
-	protected void notifyEventsListenersAboutResourceResponse(final String resourcePath,
-			final Map<String, Object> jsonRootNode) {
+      eventsListener.onBeforeRessourceRequest(resourcePath);
+    }
+  }
 
-		for (final JenkinsApiJsonRessourceScannerEventsListener eventsListener : eventsListeners) {
+  protected void notifyEventsListenersAboutResourceResponse(final String resourcePath,
+      final Map<String, Object> jsonRootNode) {
 
-			eventsListener.onAfterRessourceResponse(resourcePath, jsonRootNode);
-		}
-	}
+    for (final JenkinsApiJsonRessourceScannerEventsListener eventsListener : eventsListeners) {
 
-	public void subscribe(final JenkinsApiJsonRessourceScannerEventsListener eventsListener) {
+      eventsListener.onAfterRessourceResponse(resourcePath, jsonRootNode);
+    }
+  }
 
-		eventsListeners.add(eventsListener);
-	}
+  public void subscribe(final JenkinsApiJsonRessourceScannerEventsListener eventsListener) {
 
-	public void unsubscribe(final JenkinsApiJsonRessourceScannerEventsListener eventsListener) {
+    eventsListeners.add(eventsListener);
+  }
 
-		eventsListeners.remove(eventsListener);
-	}
+  public void unsubscribe(final JenkinsApiJsonRessourceScannerEventsListener eventsListener) {
+
+    eventsListeners.remove(eventsListener);
+  }
 
 };

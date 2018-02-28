@@ -3,28 +3,44 @@ package app.sirenofshame.host.service.jenkins.client.json.parser;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class JenkinsApiJsonParser {
 
-	// ... constants
+  // ... constants
 
-	private static final String JENKINS_RESPONSE__JSON_NODE_NAME__JOBS = "jobs";
-	private static final String JENKINS_RESPONSE__JSON_ATTRIBUTE_NAME__COLOR = "color";
+  private static final String JENKINS_RESPONSE__JSON_NODE_NAME__JOBS = "jobs";
+  private static final String JENKINS_RESPONSE__JSON_ATTRIBUTE_NAME__NAME = "name";
+  private static final String JENKINS_RESPONSE__JSON_ATTRIBUTE_NAME__COLOR = "color";
 
-	// ... business methods
+  // ... business methods
 
-	public static Set<String> collectJobsStates(final Collection<Map<String, Object>> jobsNode) {
+  public static Set<String> collectJobsStates(final Collection<Map<String, Object>> jobsNode,
+      final Pattern jobNamesRegEx) {
 
-		return jobsNode.stream().map( //
-				e -> e.get(JENKINS_RESPONSE__JSON_ATTRIBUTE_NAME__COLOR).toString() //
-		).collect(Collectors.toSet());
-	}
+    return jobsNode //
+        .stream() //
+        .filter(e -> {
 
-	@SuppressWarnings("unchecked")
-	public static Collection<Map<String, Object>> extractJobsNode(final Map<String, Object> rootNode) {
+          final Object jobName = e.get(JENKINS_RESPONSE__JSON_ATTRIBUTE_NAME__NAME);
 
-		return (Collection<Map<String, Object>>) rootNode.get(JENKINS_RESPONSE__JSON_NODE_NAME__JOBS);
-	}
+          if (jobName != null && jobNamesRegEx.matcher(jobName.toString()).matches()) {
+            return true;
+          } else {
+            return false;
+          }
+        }) //
+        .filter(e -> e.get(JENKINS_RESPONSE__JSON_ATTRIBUTE_NAME__COLOR) != null) //
+        .map(e -> e.get(JENKINS_RESPONSE__JSON_ATTRIBUTE_NAME__COLOR).toString()) //
+        .collect(Collectors.toSet()) //
+    ;
+  }
+
+  @SuppressWarnings("unchecked")
+  public static Collection<Map<String, Object>> extractJobsNode(final Map<String, Object> rootNode) {
+
+    return (Collection<Map<String, Object>>) rootNode.get(JENKINS_RESPONSE__JSON_NODE_NAME__JOBS);
+  }
 
 }
