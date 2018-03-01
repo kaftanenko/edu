@@ -23,7 +23,7 @@ DS250x add-only programmable memory reader w/SKIP ROM.
  */
 
 #include <OneWire.h>
-OneWire ds(6);                    // OneWire bus on digital pin 6
+OneWire ds(2);                    // OneWire bus on digital pin 2
 void setup() {
   Serial.begin (9600);
 }

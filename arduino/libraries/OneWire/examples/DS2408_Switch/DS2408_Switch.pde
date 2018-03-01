@@ -44,7 +44,7 @@ void ReadAndReport(OneWire* net, uint8_t* addr) {
   Serial.println(buf[3], BIN);
 }
 
-OneWire net(10);  // on pin 10
+OneWire net(2);  // on pin 2
 
 void setup(void) {
   Serial.begin(9600);
