@@ -1,7 +1,0 @@
-{_class=com.cloudbees.hudson.plugins.folder.Folder, name=hotfix-branch, url=http://svs-jci01:8080/job/mais/job/build-jobs/job/hotfix-branch/}, 
-{_class=org.jenkinsci.plugins.workflow.job.WorkflowJob, name=mais-app-integration-test-pipeline, url=http://svs-jci01:8080/job/mais/job/build-jobs/job/mais-app-integration-test-pipeline/, color=yellow}, 
-{_class=org.jenkinsci.plugins.workflow.job.WorkflowJob, name=mais-app-unit-test-pipeline, url=http://svs-jci01:8080/job/mais/job/build-jobs/job/mais-app-unit-test-pipeline/, color=yellow_anime}, 
-{_class=hudson.maven.MavenModuleSet, name=rk-internal-common_ci, url=http://svs-jci01:8080/job/mais/job/build-jobs/job/rk-internal-common_ci/, color=blue}, 
-{_class=hudson.maven.MavenModuleSet, name=rk-internal-leben-common_ci, url=http://svs-jci01:8080/job/mais/job/build-jobs/job/rk-internal-leben-common_ci/, color=blue}, 
-{_class=hudson.maven.MavenModuleSet, name=rk-internal-leben-rkv_ci, url=http://svs-jci01:8080/job/mais/job/build-jobs/job/rk-internal-leben-rkv_ci/, color=blue}, 
-{_class=org.jenkinsci.plugins.workflow.job.WorkflowJob, name=svs-app-print, url=http://svs-jci01:8080/job/mais/job/build-jobs/job/svs-app-print/, color=disabled}
