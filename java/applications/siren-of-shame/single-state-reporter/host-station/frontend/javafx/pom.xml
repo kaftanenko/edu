@@ -22,11 +22,11 @@
 		<!-- Internal -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>sirenofshame-singlestate-host-service-arduino</artifactId>
+			<artifactId>sirenofshame-common-host-service-jenkins</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>sirenofshame-singlestate-host-service-jenkins</artifactId>
+			<artifactId>sirenofshame-singlestate-host-service-arduino</artifactId>
 		</dependency>
 
 		<!-- Apache Log4J -->
