@@ -9,8 +9,8 @@
     [jobDetails]="job">
   </app-jenkins-job-details>
 
-  <app-jenkins-folder-details *ngFor="let folder of getFolders()" 
-    [groupDetails]="folder" 
+  <app-jenkins-folder-details *ngFor="let folder of getSubFolders()" 
+    [folderDetails]="folder" 
     [class]="getBootstrapColumnClasses()"
     [hierarchyLevel]="1*hierarchyLevel + 1">
   </app-jenkins-folder-details>

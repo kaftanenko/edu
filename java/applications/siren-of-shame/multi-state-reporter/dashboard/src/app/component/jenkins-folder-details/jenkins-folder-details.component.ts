@@ -12,7 +12,7 @@ export class JenkinsFolderDetailsComponent implements OnInit {
   hierarchyLevel: number;
 
   @Input()
-  groupDetails: JenkinsFolderDetails;
+  folderDetails: JenkinsFolderDetails;
 
   constructor() { }
 
@@ -21,52 +21,50 @@ export class JenkinsFolderDetailsComponent implements OnInit {
 
   getGroupName() {
 
-    if (this.groupDetails.fullDisplayName) {
-      // return (this.groupDetails.fullDisplayName)
-      return "... » " + this.groupDetails.name;
+    if (this.folderDetails.displayName) {
+      return "... » " + this.folderDetails.displayName;
     } else {
-      return "... » " + this.groupDetails.name;
+      return "... » " + this.folderDetails.name;
     }
   }
 
-  getFolders() {
-    return this.getJobsByClassRegEx("^.*\.Folder$");
+  getSubFolders() {
+    return this.getJobNodesByClassRegEx("^.*\.Folder$");
   }
 
   getWorkflowJobs() {
-    return this.getJobsByClassRegEx("^.*\.(MavenModuleSet|FreeStyleProject|WorkflowJob)$");
+    return this.getJobNodesByClassRegEx("^.*\.(MavenModuleSet|FreeStyleProject|WorkflowJob)$");
+  }
+
+  getJobNodesByClassRegEx(_classRegExPattern: string) {
+
+    if (this.folderDetails.jobs) {
+
+      return this.folderDetails.jobs
+        .filter(job => job._class.match(_classRegExPattern));
+    } else {
+      return [];
+    }
   }
 
   // ...
 
   getBootstrapColumnClasses() {
 
-    if (this.getFolders().length <= 1) {
+    if (this.getSubFolders().length <= 1) {
       return "col-lg-12 col-md-12 col-sm-12 col-xs-12";
     } else {
       switch (this.hierarchyLevel) {
         case 0:
-          return "col-lg-6 col-md-6 col-sm-6 col-xs-6";
         case 1:
           return "col-lg-6 col-md-6 col-sm-6 col-xs-12";
         case 2:
           return "col-lg-6 col-md-6 col-sm-12 col-xs-12";
         case 3:
-          return "col-lg-6 col-md-12 col-sm-12 col-xs-12";
+          return "col-lg-6 col-md-12 col-sm-6 col-xs-12";
         default:
           return "col-lg-12 col-md-12 col-sm-12 col-xs-12";
       }
-    }
-  }
-
-  getJobsByClassRegEx(_classRegExPattern: string) {
-
-    if (this.groupDetails.jobs) {
-
-      return this.groupDetails.jobs
-        .filter(job => job._class.match(_classRegExPattern));
-    } else {
-      return [];
     }
   }
 
