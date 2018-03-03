@@ -9,6 +9,9 @@ import { JenkinsFolderDetails } from '../../model/jenkins-folder-details';
 export class JenkinsFolderDetailsComponent implements OnInit {
 
   @Input()
+  hierarchyLevel: number;
+
+  @Input()
   groupDetails: JenkinsFolderDetails;
 
   constructor() { }
@@ -18,10 +21,11 @@ export class JenkinsFolderDetailsComponent implements OnInit {
 
   getGroupName() {
 
-    if (this.groupDetails.fullDisplayName) {      
-      return (this.groupDetails.fullDisplayName)
+    if (this.groupDetails.fullDisplayName) {
+      // return (this.groupDetails.fullDisplayName)
+      return "... » " + this.groupDetails.name;
     } else {
-      return this.groupDetails.name;
+      return "... » " + this.groupDetails.name;
     }
   }
 
@@ -30,7 +34,29 @@ export class JenkinsFolderDetailsComponent implements OnInit {
   }
 
   getWorkflowJobs() {
-    return this.getJobsByClassRegEx("^.*\.WorkflowJob$");
+    return this.getJobsByClassRegEx("^.*\.(MavenModuleSet|FreeStyleProject|WorkflowJob)$");
+  }
+
+  // ...
+
+  getBootstrapColumnClasses() {
+
+    if (this.getFolders().length <= 1) {
+      return "col-lg-12 col-md-12 col-sm-12 col-xs-12";
+    } else {
+      switch (this.hierarchyLevel) {
+        case 0:
+          return "col-lg-6 col-md-6 col-sm-6 col-xs-6";
+        case 1:
+          return "col-lg-6 col-md-6 col-sm-6 col-xs-12";
+        case 2:
+          return "col-lg-6 col-md-6 col-sm-12 col-xs-12";
+        case 3:
+          return "col-lg-6 col-md-12 col-sm-12 col-xs-12";
+        default:
+          return "col-lg-12 col-md-12 col-sm-12 col-xs-12";
+      }
+    }
   }
 
   getJobsByClassRegEx(_classRegExPattern: string) {

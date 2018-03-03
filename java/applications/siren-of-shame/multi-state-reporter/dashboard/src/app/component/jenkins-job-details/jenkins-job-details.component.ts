@@ -16,8 +16,8 @@ export class JobDetailsComponent implements OnInit {
   ngOnInit() {
   }
 
-  lastStateStyle() {
-    return "jenkins-job-details " + this.jobDetails.color;
+  getCurrentStateStyle() {
+    return this.jobDetails.color;
   }
 
 }

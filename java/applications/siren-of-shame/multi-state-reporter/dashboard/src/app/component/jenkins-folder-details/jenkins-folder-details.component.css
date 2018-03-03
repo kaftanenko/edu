@@ -1,10 +1,22 @@
+.jenkins-folder-details {
+    padding: 5px;
+}
 
-.group-details {
-
-    float: left;
-
-    margin: 3px;
-    padding: 3px;    
-    
-    border: solid 1px;
+.hierarchy-level-0 {
+    background-color: rgb(127, 127, 127, 0.8);
+}
+.hierarchy-level-1 {
+    background-color: rgb(127, 127, 127, 0.6);
+}
+.hierarchy-level-2 {
+    background-color: rgb(127, 127, 127, 0.5);
+}
+.hierarchy-level-3 {
+    background-color: rgb(127, 127, 127, 0.4);
+}
+.hierarchy-level-4 {
+    background-color: rgb(127, 127, 127, 0.2);
+}
+.hierarchy-level-5 {
+    background-color: rgb(127, 127, 127, 0.0);
 }

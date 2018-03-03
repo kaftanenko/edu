@@ -1,5 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    padding: 0px 20px;    
+}
 
-html, body {
-    height:100%;
+.general-padding {
+    padding: 0px 2px;    
+}
+.general-margin {
+    margin: 2px;    
+}
+.general-border {
+    border: 1px dashed;
 }

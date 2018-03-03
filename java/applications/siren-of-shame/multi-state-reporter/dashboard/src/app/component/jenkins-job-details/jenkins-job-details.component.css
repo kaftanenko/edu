@@ -1,20 +1,21 @@
-
 .jenkins-job-details {
-
-    border: solid 1px;
     margin: 3px;
-    padding: 3px;    
 }
-
+.jenkins-job-details * {
+    padding: 3px;
+}
+.blue, .blue_anime {
+    background-color: rgba(0,255,0,0.3);
+}
 .disabled {
     background-color: rgba(127,127,127,0.3);
 }
-.red {
+.green, .green_anime {
+    background-color: rgba(0,255,0,0.3);
+}
+.red, .red_anime {
     background-color: rgba(255,0,0,0.3);
 }
-.yellow {
+.yellow, .yellow_anime {
     background-color: rgba(251, 255, 0, 0.3);
-}
-.greenblue {
-    background-color: rgba(0,255,0,0.3);
 }

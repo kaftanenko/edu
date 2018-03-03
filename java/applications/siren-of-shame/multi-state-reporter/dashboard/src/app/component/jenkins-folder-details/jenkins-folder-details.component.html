@@ -1,11 +1,18 @@
-<div class="group-details">
+<div class="row general-border general-margin general-padding">
 
-  Folder: {{getGroupName()}}
+  <div class="text-danger general-padding" *ngIf="hierarchyLevel > 0">
+    <strong>L{{hierarchyLevel}}: {{getGroupName()}}</strong>
+  </div>
 
-  <app-jenkins-job-details *ngFor="let job of getWorkflowJobs()" [jobDetails]="job">
+  <app-jenkins-job-details 
+    *ngFor="let job of getWorkflowJobs()" 
+    [jobDetails]="job">
   </app-jenkins-job-details>
-  <br>
-  <app-jenkins-folder-details *ngFor="let folder of getFolders()" [groupDetails]="folder">
+
+  <app-jenkins-folder-details *ngFor="let folder of getFolders()" 
+    [groupDetails]="folder" 
+    [class]="getBootstrapColumnClasses()"
+    [hierarchyLevel]="1*hierarchyLevel + 1">
   </app-jenkins-folder-details>
 
 </div>

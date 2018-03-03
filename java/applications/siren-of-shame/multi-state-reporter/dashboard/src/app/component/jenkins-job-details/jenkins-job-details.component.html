@@ -1,4 +1,5 @@
-
-<div [class]="lastStateStyle()">
-  Job: {{jobDetails.name}}
+<div class="jenkins-job-details">
+  <div [class]="getCurrentStateStyle()">
+    {{jobDetails.name}}
+  </div>
 </div>

@@ -1,2 +1,15 @@
+<div id="header" class="row">
+    <h2 class="h2">Jenkins Dashboard</h2>
+</div>
 
-<app-jenkins-dashboard></app-jenkins-dashboard>
+<div id="header" class="row">
+    <app-jenkins-folder-details 
+        hierarchyLevel="0" 
+        [groupDetails]="jenkinsStateInfo"
+    >
+    </app-jenkins-folder-details>
+</div>
+
+<div id="status-bar" class="row">
+    <strong>Zuletzt aktualisiert:</strong> {{jenkinsStateInfoTimestamp}}
+</div>

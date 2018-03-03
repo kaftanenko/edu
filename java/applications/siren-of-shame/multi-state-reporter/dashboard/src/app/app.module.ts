@@ -6,7 +6,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { JenkinsFolderDetailsComponent } from './component/jenkins-folder-details/jenkins-folder-details.component';
 import { JobDetailsComponent } from './component/jenkins-job-details/jenkins-job-details.component';
-import { DashboardComponent } from './component/jenkins-dashboard/jenkins-dashboard.component';
 import { JenkinsInfoService } from './service/jenkins-info.service';
 
 
@@ -15,7 +14,6 @@ import { JenkinsInfoService } from './service/jenkins-info.service';
     AppComponent,
     JenkinsFolderDetailsComponent,
     JobDetailsComponent,
-    DashboardComponent
   ],
   imports: [
     BrowserModule,
