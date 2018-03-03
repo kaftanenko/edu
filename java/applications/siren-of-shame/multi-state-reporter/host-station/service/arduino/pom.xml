@@ -11,51 +11,14 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<dependencies>
+  <dependencies>
 
-		<!-- Jarduino -->
-		<!-- <dependency> <groupId>org.sintef.jarduino</groupId> <artifactId>org.sintef.jarduino</artifactId> 
-			<version>0.1.6</version> </dependency> <dependency> <groupId>org.sintef.jarduino</groupId> 
-			<artifactId>org.sintef.jarduino.core</artifactId> <version>0.1.6</version> 
-			</dependency> <dependency> <groupId>org.sintef.jarduino</groupId> <artifactId>org.sintef.jarduino.gui</artifactId> 
-			<version>0.1.6</version> </dependency> -->
+    <!-- Internal -->
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>sirenofshame-common-host-service-arduino</artifactId>
+    </dependency>
 
-		<!-- Apache Log4J -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-		</dependency>
-
-		<!-- AssertJ -->
-		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
-		</dependency>
-
-		<!-- Mockito -->
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- Jarduino -->
-		<!-- <dependency> <groupId>org.sintef.jarduino</groupId> <artifactId>org.sintef.jarduino</artifactId> 
-			</dependency> <dependency> <groupId>org.sintef.jarduino</groupId> <artifactId>org.sintef.jarduino.core</artifactId> 
-			</dependency> <dependency> <groupId>org.sintef.jarduino</groupId> <artifactId>org.sintef.jarduino.gui</artifactId> 
-			</dependency> -->
-
-		<!-- TestNG -->
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-	</dependencies>
+  </dependencies>
 
 </project>

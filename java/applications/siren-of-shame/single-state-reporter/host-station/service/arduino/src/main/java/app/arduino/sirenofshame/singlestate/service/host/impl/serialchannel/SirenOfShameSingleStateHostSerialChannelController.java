@@ -65,8 +65,8 @@ public class SirenOfShameSingleStateHostSerialChannelController
 		try {
 			if (serialChannel != null && serialChannel.isOpen()) {
 
-				sendCommand(COMMAND__PING);
-				final String responseMessage = readResponse();
+				sendMessage(COMMAND__PING);
+				final String responseMessage = readMessage();
 				return COMMAND__PING_RESPONSE_SUCCEEDED.equals(responseMessage);
 			} else {
 				return false;
@@ -80,9 +80,9 @@ public class SirenOfShameSingleStateHostSerialChannelController
 	public ESirenOfShameAlarmLevel getCurrentAlarmLevel() {
 
 		try {
-			sendCommand(COMMAND__GET_CURRENT_ALARM_LEVEL);
+			sendMessage(COMMAND__GET_CURRENT_ALARM_LEVEL);
 
-			final String currentState = readResponse();
+			final String currentState = readMessage();
 			return ESirenOfShameAlarmLevel.valueOf(currentState);
 		} catch (final Exception ex) {
 			LOG.error(ex.getMessage());
@@ -120,8 +120,8 @@ public class SirenOfShameSingleStateHostSerialChannelController
 
 		final ESirenOfShameAlarmLevel from = getCurrentAlarmLevel();
 
-		sendCommand(commandMessage);
-		readResponse();
+		sendMessage(commandMessage);
+		readMessage();
 
 		final ESirenOfShameAlarmLevel to = getCurrentAlarmLevel();
 

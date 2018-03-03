@@ -9,11 +9,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import app.arduino.sirenofshame.frontend.javafx.utils.JenkinsApiJsonParser;
 import app.arduino.sirenofshame.singlestate.service.host.api.SirenOfShameSingleStateHostControllerEventsListener;
 import app.arduino.sirenofshame.singlestate.service.host.api.type.ESirenOfShameAlarmLevel;
 import app.arduino.sirenofshame.singlestate.service.host.impl.serialchannel.SirenOfShameSingleStateHostSerialChannelController;
 import app.sirenofshame.common.host.service.jenkins.client.http.JenkinsHttpClientConfig;
+import app.sirenofshame.common.host.service.jenkins.client.http.parser.JenkinsApiJsonParser;
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScanner;
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScannerConfig;
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScannerEventsListener;
@@ -79,7 +79,7 @@ public class SirenOfShameJavaFXController implements AutoCloseable {
 			@Override
 			public void onAfterResourceResponse(final String resourcePath, final Map<String, Object> jsonRootNode) {
 
-				final Collection<Map<String, Object>> jsonJobNodes = JenkinsApiJsonParser.extractJobsNode(jsonRootNode);
+				final Collection<Map<String, Object>> jsonJobNodes = JenkinsApiJsonParser.extractJobNodes(jsonRootNode);
 				final Set<String> jobsStatesSummary = JenkinsApiJsonParser.collectJobsStates(jsonJobNodes,
 						JENKINS_JOB_NAMES_TO_MONITOR__REGEX);
 

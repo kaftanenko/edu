@@ -7,79 +7,121 @@ import static app.arduino.sirenofshame.common.service.host.util.SerialChannelUti
 import static app.arduino.sirenofshame.common.service.host.util.SerialChannelUtils.writeBytes;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Logger;
 
+import app.arduino.sirenofshame.common.service.host.event.SerialChannelEventsListener;
 import app.arduino.sirenofshame.common.service.host.util.SerialChannelLogManager;
 import dk.thibaut.serial.SerialChannel;
 
 public abstract class AbstractSerialChannelHostController {
 
-	// ... constants
+    // ... constants
 
-	private static final String EXPECTING_WELCOME_MESSAGE = "Wellcome to the \"Siren Of Shame\"!";
+    private static final String EXPECTING_WELCOME_MESSAGE = "Wellcome to the \"Siren Of Shame\"!";
 
-	// ... dependencies
+    // ... dependencies
 
-	protected static final Logger LOG = SerialChannelLogManager.getLogger();
+    protected static final Logger LOG = SerialChannelLogManager.getLogger();
 
-	// ... properties
+    // ... properties
 
-	protected SerialChannel serialChannel;
-	protected String serialChannelPortName;
+    protected SerialChannel serialChannel;
+    private String serialChannelPortName;
 
-	// ... business methods
+    private final List<SerialChannelEventsListener> eventsListeners = new ArrayList<>();
 
-	public void connect() {
+    // ... business methods
 
-		try {
+    public void connect() {
 
-			serialChannelPortName = findSerialChannelByWellcomeMessage(EXPECTING_WELCOME_MESSAGE);
-			serialChannel = openSerialChannel(serialChannelPortName);
-			readResponse(); // ... read welcome message
-		} catch (final Exception ex) {
-			throw handleFatalException(ex);
-		}
-	}
+        try {
 
-	public void disconnect() {
+            serialChannelPortName = findSerialChannelByWellcomeMessage(EXPECTING_WELCOME_MESSAGE);
+            serialChannel = openSerialChannel(serialChannelPortName);
+            readMessage(); // ... read welcome message
+        } catch (final Exception ex) {
+            throw handleFatalException(ex);
+        }
+    }
 
-		try {
+    public void disconnect() {
 
-			closeSerialChannel(serialChannel);
-		} catch (final Exception ex) {
-			throw handleFatalException(ex);
-		}
-	}
+        try {
 
-	public String getPortName() {
+            closeSerialChannel(serialChannel);
+        } catch (final Exception ex) {
+            throw handleFatalException(ex);
+        }
+    }
 
-		return serialChannelPortName;
-	}
+    public String getPortName() {
 
-	// ... helper methods
+        return serialChannelPortName;
+    }
 
-	protected void sendCommand(final String commandMessage) {
+    // ... helper methods
 
-		try {
-			writeBytes(serialChannel, commandMessage);
-		} catch (final IOException ex) {
-			throw handleFatalException(ex);
-		}
-	}
+    protected void sendMessage(final String message) {
 
-	protected String readResponse() {
+        try {
+            writeBytes(serialChannel, message);
+            notifyEventListenersAboutSentMessage(message);
+        } catch (final IOException ex) {
+            throw handleFatalException(ex);
+        }
+    }
 
-		try {
-			return readBytes(serialChannel);
-		} catch (final IOException ex) {
-			throw handleFatalException(ex);
-		}
-	}
+    protected String readMessage() {
 
-	protected static RuntimeException handleFatalException(final Exception ex) {
+        try {
 
-		throw new RuntimeException(ex);
-	}
+            final String message = readBytes(serialChannel);
+
+            if (StringUtils.isNotBlank(message)) {
+                notifyEventListenersAboutReceivedMessage(message);
+            }
+
+            return message;
+        } catch (final IOException ex) {
+            throw handleFatalException(ex);
+        }
+    }
+
+    protected static RuntimeException handleFatalException(final Exception ex) {
+
+        throw new RuntimeException(ex);
+    }
+
+    // ... events management methods
+
+    protected void notifyEventListenersAboutSentMessage(final String message) {
+
+        for (final SerialChannelEventsListener eventsListener : eventsListeners) {
+
+            eventsListener.onMessageSent(message);
+        }
+    }
+
+    protected void notifyEventListenersAboutReceivedMessage(final String message) {
+
+        for (final SerialChannelEventsListener eventsListener : eventsListeners) {
+
+            eventsListener.onMessageReceived(message);
+        }
+    }
+
+    public void subscribe(final SerialChannelEventsListener eventsListener) {
+
+        eventsListeners.add(eventsListener);
+    }
+
+    public void unsubscribe(final SerialChannelEventsListener eventsListener) {
+
+        eventsListeners.remove(eventsListener);
+    }
 
 }
