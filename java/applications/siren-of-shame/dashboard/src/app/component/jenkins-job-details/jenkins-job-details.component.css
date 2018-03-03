@@ -1,0 +1,20 @@
+
+.jenkins-job-details {
+
+    border: solid 1px;
+    margin: 3px;
+    padding: 3px;    
+}
+
+.disabled {
+    background-color: rgba(127,127,127,0.3);
+}
+.red {
+    background-color: rgba(255,0,0,0.3);
+}
+.yellow {
+    background-color: rgba(251, 255, 0, 0.3);
+}
+.greenblue {
+    background-color: rgba(0,255,0,0.3);
+}

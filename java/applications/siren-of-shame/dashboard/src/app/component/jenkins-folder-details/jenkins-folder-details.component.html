@@ -1,0 +1,11 @@
+<div class="group-details">
+
+  Folder: {{getGroupName()}}
+
+  <app-jenkins-job-details *ngFor="let job of getWorkflowJobs()" [jobDetails]="job">
+  </app-jenkins-job-details>
+  <br>
+  <app-jenkins-folder-details *ngFor="let folder of getFolders()" [groupDetails]="folder">
+  </app-jenkins-folder-details>
+
+</div>

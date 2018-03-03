@@ -1,0 +1,10 @@
+
+.group-details {
+
+    float: left;
+
+    margin: 3px;
+    padding: 3px;    
+    
+    border: solid 1px;
+}
