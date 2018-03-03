@@ -1,304 +1,21 @@
 {
-	"_class": "com.cloudbees.hudson.plugins.folder.Folder",
-	"actions": [
+	"_class": "hudson.model.Hudson",
+	"assignedLabels": [
 		{
 			
-		},
-		{
-			
-		},
-		{
-			"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
 		}
 	],
-	"description": "",
-	"displayName": "mais",
-	"displayNameOrNull": null,
-	"fullDisplayName": "mais",
-	"fullName": "mais",
-	"name": "mais",
-	"url": "http://svs-jci01:8080/job/mais/",
-	"healthReport": [],
+	"mode": "NORMAL",
+	"nodeDescription": "the master Jenkins node",
+	"nodeName": "",
+	"numExecutors": 3,
+	"description": null,
 	"jobs": [
 		{
-			"_class": "com.cloudbees.hudson.plugins.folder.Folder",
-			"actions": [
-				{
-					
-				},
-				{
-					
-				},
-				{
-					"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
-				}
-			],
-			"description": null,
-			"displayName": "build-jobs",
-			"displayNameOrNull": null,
-			"fullDisplayName": "mais » build-jobs",
-			"fullName": "mais/build-jobs",
-			"name": "build-jobs",
-			"url": "http://svs-jci01:8080/job/mais/job/build-jobs/",
-			"healthReport": [
-				{
-					"description": "Worst health: mais » build-jobs » feature-branches » mais-app-unit-test-pipeline_b_feature05: Build-Stabilität: 4 der letzten 5 Builds schlug fehl.",
-					"iconClassName": "icon-health-00to19",
-					"iconUrl": "health-00to19.png",
-					"score": 20
-				}
-			],
-			"jobs": [
-				{
-					"_class": "com.cloudbees.hudson.plugins.folder.Folder",
-					"actions": [
-						{
-							
-						},
-						{
-							
-						},
-						{
-							"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
-						}
-					],
-					"description": "",
-					"displayName": "feature-branches",
-					"displayNameOrNull": "feature-branches",
-					"fullDisplayName": "mais » build-jobs » feature-branches",
-					"fullName": "mais/build-jobs/fb",
-					"name": "fb",
-					"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/",
-					"healthReport": [
-						{
-							"description": "Worst health: mais » build-jobs » feature-branches » mais-app-unit-test-pipeline_b_feature05: Build-Stabilität: 4 der letzten 5 Builds schlug fehl.",
-							"iconClassName": "icon-health-00to19",
-							"iconUrl": "health-00to19.png",
-							"score": 20
-						}
-					],
-					"jobs": [
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "mais-app-it-pl_b_feature01",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-it-pl_b_feature01/",
-							"color": "yellow"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "mais-app-it-pl_b_feature02",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-it-pl_b_feature02/",
-							"color": "yellow"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "mais-app-it-pl_b_feature03",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-it-pl_b_feature03/",
-							"color": "yellow"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "mais-app-it-pl_b_feature04",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-it-pl_b_feature04/",
-							"color": "yellow_anime"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "mais-app-it-pl_b_feature05",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-it-pl_b_feature05/",
-							"color": "red"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "mais-app-it-pl_b_feature06",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-it-pl_b_feature06/",
-							"color": "yellow"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "mais-app-unit-test-pipeline_b_feature01",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-unit-test-pipeline_b_feature01/",
-							"color": "yellow"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "mais-app-unit-test-pipeline_b_feature02",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-unit-test-pipeline_b_feature02/",
-							"color": "yellow"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "mais-app-unit-test-pipeline_b_feature03",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-unit-test-pipeline_b_feature03/",
-							"color": "yellow"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "mais-app-unit-test-pipeline_b_feature04",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-unit-test-pipeline_b_feature04/",
-							"color": "yellow_anime"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "mais-app-unit-test-pipeline_b_feature05",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-unit-test-pipeline_b_feature05/",
-							"color": "red"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "mais-app-unit-test-pipeline_b_feature06",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-unit-test-pipeline_b_feature06/",
-							"color": "disabled"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "mais-app-unit-test-pipeline_b_feature07",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-unit-test-pipeline_b_feature07/",
-							"color": "yellow"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "mais-app-unit-test-pipeline_b_feature08",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-unit-test-pipeline_b_feature08/",
-							"color": "yellow"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "svs-app-print_b_feature01",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/svs-app-print_b_feature01/",
-							"color": "blue"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "svs-app-print_b_feature02",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/svs-app-print_b_feature02/",
-							"color": "disabled"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "svs-app-print_b_feature03",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/svs-app-print_b_feature03/",
-							"color": "blue"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "svs-app-print_b_feature06",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/svs-app-print_b_feature06/",
-							"color": "blue"
-						}
-					],
-					"primaryView": {
-						"_class": "hudson.model.AllView",
-						"name": "All",
-						"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/"
-					},
-					"views": [
-						{
-							"_class": "hudson.model.AllView",
-							"name": "All",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/"
-						}
-					]
-				},
-				{
-					"_class": "com.cloudbees.hudson.plugins.folder.Folder",
-					"name": "hf-b",
-					"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/hf-b/"
-				},
-				{
-					"_class": "com.cloudbees.hudson.plugins.folder.Folder",
-					"actions": [
-						{
-							
-						},
-						{
-							
-						},
-						{
-							"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
-						}
-					],
-					"description": "Branch für die Integration der Feature-Branches",
-					"displayName": "integration-branch",
-					"displayNameOrNull": "integration-branch",
-					"fullDisplayName": "mais » build-jobs » integration-branch",
-					"fullName": "mais/build-jobs/inte-b",
-					"name": "inte-b",
-					"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/inte-b/",
-					"healthReport": [
-						{
-							"description": "Worst health: mais » build-jobs » integration-branch » mais-app-it-pl_b_integration: Testergebnis: 16 Tests von 1.281 Tests fehlgeschlagen.",
-							"iconClassName": "icon-health-80plus",
-							"iconUrl": "health-80plus.png",
-							"score": 98
-						}
-					],
-					"jobs": [
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "mais-app-it-pl_b_integration",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/inte-b/job/mais-app-it-pl_b_integration/",
-							"color": "yellow"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "mais-app-ut-pl_b_integration",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/inte-b/job/mais-app-ut-pl_b_integration/",
-							"color": "yellow"
-						},
-						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "svs-app-print-pl_b_integration",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/inte-b/job/svs-app-print-pl_b_integration/",
-							"color": "blue"
-						}
-					],
-					"primaryView": {
-						"_class": "hudson.model.AllView",
-						"name": "All",
-						"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/inte-b/"
-					},
-					"views": [
-						{
-							"_class": "hudson.model.AllView",
-							"name": "All",
-							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/inte-b/"
-						}
-					]
-				},
-				{
-					"_class": "com.cloudbees.hudson.plugins.folder.Folder",
-					"name": "rk",
-					"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/rk/"
-				},
-				{
-					"_class": "com.cloudbees.hudson.plugins.folder.Folder",
-					"name": "trunk",
-					"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/trunk/"
-				}
-			],
-			"primaryView": {
-				"_class": "hudson.model.AllView",
-				"name": "All",
-				"url": "http://svs-jci01:8080/job/mais/job/build-jobs/"
-			},
-			"views": [
-				{
-					"_class": "hudson.model.AllView",
-					"name": "All",
-					"url": "http://svs-jci01:8080/job/mais/job/build-jobs/"
-				},
-				{
-					"_class": "hudson.model.ListView",
-					"name": "mais-app",
-					"url": "http://svs-jci01:8080/job/mais/job/build-jobs/view/mais-app/"
-				},
-				{
-					"_class": "hudson.model.ListView",
-					"name": "rechenkerne",
-					"url": "http://svs-jci01:8080/job/mais/job/build-jobs/view/rechenkerne/"
-				}
-			]
+			"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+			"name": "DbConnectivityTest",
+			"url": "http://svs-jci01:8080/job/DbConnectivityTest/",
+			"color": "disabled"
 		},
 		{
 			"_class": "com.cloudbees.hudson.plugins.folder.Folder",
@@ -313,32 +30,522 @@
 					"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
 				}
 			],
-			"description": null,
-			"displayName": "deploy-jobs",
+			"description": "",
+			"displayName": "mais",
 			"displayNameOrNull": null,
-			"fullDisplayName": "mais » deploy-jobs",
-			"fullName": "mais/deploy-jobs",
-			"name": "deploy-jobs",
-			"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/",
-			"healthReport": [
-				{
-					"description": "Worst health: mais » deploy-jobs » ci - Continuous Integration » deploy_print_ci_psh: Build-Stabilität: In letzter Zeit schlugen alle Builds fehl.",
-					"iconClassName": "icon-health-00to19",
-					"iconUrl": "health-00to19.png",
-					"score": 0
-				}
-			],
+			"fullDisplayName": "mais",
+			"fullName": "mais",
+			"name": "mais",
+			"url": "http://svs-jci01:8080/job/mais/",
+			"healthReport": [],
 			"jobs": [
 				{
-					"_class": "hudson.model.FreeStyleProject",
-					"name": "_deploy_soapUI_mock_service",
-					"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/_deploy_soapUI_mock_service/",
-					"color": "blue"
-				},
-				{
 					"_class": "com.cloudbees.hudson.plugins.folder.Folder",
-					"name": "ci",
-					"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/ci/"
+					"actions": [
+						{
+							
+						},
+						{
+							
+						},
+						{
+							"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+						}
+					],
+					"description": null,
+					"displayName": "build-jobs",
+					"displayNameOrNull": null,
+					"fullDisplayName": "mais » build-jobs",
+					"fullName": "mais/build-jobs",
+					"name": "build-jobs",
+					"url": "http://svs-jci01:8080/job/mais/job/build-jobs/",
+					"healthReport": [
+						{
+							"description": "Worst health: mais » build-jobs » feature-branches » mais-app-it-pl_b_feature02: Build stability: All recent builds failed.",
+							"iconClassName": "icon-health-00to19",
+							"iconUrl": "health-00to19.png",
+							"score": 0
+						}
+					],
+					"jobs": [
+						{
+							"_class": "com.cloudbees.hudson.plugins.folder.Folder",
+							"actions": [
+								{
+									
+								},
+								{
+									
+								},
+								{
+									"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+								}
+							],
+							"description": "",
+							"displayName": "feature-branches",
+							"displayNameOrNull": "feature-branches",
+							"fullDisplayName": "mais » build-jobs » feature-branches",
+							"fullName": "mais/build-jobs/fb",
+							"name": "fb",
+							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/",
+							"healthReport": [
+								{
+									"description": "Worst health: mais » build-jobs » feature-branches » mais-app-it-pl_b_feature02: Build stability: All recent builds failed.",
+									"iconClassName": "icon-health-00to19",
+									"iconUrl": "health-00to19.png",
+									"score": 0
+								}
+							],
+							"jobs": [
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-it-pl_b_feature01",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-it-pl_b_feature01/",
+									"color": "yellow"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-it-pl_b_feature02",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-it-pl_b_feature02/",
+									"color": "red"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-it-pl_b_feature03",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-it-pl_b_feature03/",
+									"color": "yellow"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-it-pl_b_feature04",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-it-pl_b_feature04/",
+									"color": "yellow"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-it-pl_b_feature05",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-it-pl_b_feature05/",
+									"color": "red"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-it-pl_b_feature06",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-it-pl_b_feature06/",
+									"color": "yellow"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-unit-test-pipeline_b_feature01",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-unit-test-pipeline_b_feature01/",
+									"color": "red"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-unit-test-pipeline_b_feature02",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-unit-test-pipeline_b_feature02/",
+									"color": "red"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-unit-test-pipeline_b_feature03",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-unit-test-pipeline_b_feature03/",
+									"color": "red"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-unit-test-pipeline_b_feature04",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-unit-test-pipeline_b_feature04/",
+									"color": "blue_anime"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-unit-test-pipeline_b_feature05",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-unit-test-pipeline_b_feature05/",
+									"color": "yellow"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-unit-test-pipeline_b_feature06",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-unit-test-pipeline_b_feature06/",
+									"color": "yellow"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-unit-test-pipeline_b_feature07",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-unit-test-pipeline_b_feature07/",
+									"color": "red"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-unit-test-pipeline_b_feature08",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/mais-app-unit-test-pipeline_b_feature08/",
+									"color": "red"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "svs-app-print_b_feature01",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/svs-app-print_b_feature01/",
+									"color": "blue"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "svs-app-print_b_feature02",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/svs-app-print_b_feature02/",
+									"color": "disabled"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "svs-app-print_b_feature03",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/svs-app-print_b_feature03/",
+									"color": "blue"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "svs-app-print_b_feature06",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/job/svs-app-print_b_feature06/",
+									"color": "blue"
+								}
+							],
+							"primaryView": {
+								"_class": "hudson.model.AllView",
+								"name": "All",
+								"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/"
+							},
+							"views": [
+								{
+									"_class": "hudson.model.AllView",
+									"name": "All",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/"
+								},
+								{
+									"_class": "com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView",
+									"name": "My Dashboard",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/fb/view/My%20Dashboard/"
+								}
+							]
+						},
+						{
+							"_class": "com.cloudbees.hudson.plugins.folder.Folder",
+							"actions": [
+								{
+									
+								},
+								{
+									
+								},
+								{
+									"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+								}
+							],
+							"description": "",
+							"displayName": "hotfix-branch",
+							"displayNameOrNull": "hotfix-branch",
+							"fullDisplayName": "mais » build-jobs » hotfix-branch",
+							"fullName": "mais/build-jobs/hf-b",
+							"name": "hf-b",
+							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/hf-b/",
+							"healthReport": [
+								{
+									"description": "Worst health: mais » build-jobs » hotfix-branch » mais-app-it-pl_b_hotfix: Build stability: 1 out of the last 3 builds failed.",
+									"iconClassName": "icon-health-60to79",
+									"iconUrl": "health-60to79.png",
+									"score": 66
+								}
+							],
+							"jobs": [
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-it-pl_b_hotfix",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/hf-b/job/mais-app-it-pl_b_hotfix/",
+									"color": "blue"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-ut-pl_b_hotfix",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/hf-b/job/mais-app-ut-pl_b_hotfix/",
+									"color": "blue_anime"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "svs-app-print_b_hotfix",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/hf-b/job/svs-app-print_b_hotfix/",
+									"color": "blue"
+								}
+							],
+							"primaryView": {
+								"_class": "hudson.model.AllView",
+								"name": "All",
+								"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/hf-b/"
+							},
+							"views": [
+								{
+									"_class": "hudson.model.AllView",
+									"name": "All",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/hf-b/"
+								}
+							]
+						},
+						{
+							"_class": "com.cloudbees.hudson.plugins.folder.Folder",
+							"actions": [
+								{
+									
+								},
+								{
+									
+								},
+								{
+									"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+								}
+							],
+							"description": "Branch für die Integration der Feature-Branches",
+							"displayName": "integration-branch",
+							"displayNameOrNull": "integration-branch",
+							"fullDisplayName": "mais » build-jobs » integration-branch",
+							"fullName": "mais/build-jobs/inte-b",
+							"name": "inte-b",
+							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/inte-b/",
+							"healthReport": [
+								{
+									"description": "Worst health: mais » build-jobs » integration-branch » mais-app-it-pl_b_integration: Test Result: 16 tests failing out of a total of 1.281 tests.",
+									"iconClassName": "icon-health-80plus",
+									"iconUrl": "health-80plus.png",
+									"score": 98
+								}
+							],
+							"jobs": [
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-it-pl_b_integration",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/inte-b/job/mais-app-it-pl_b_integration/",
+									"color": "disabled"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-ut-pl_b_integration",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/inte-b/job/mais-app-ut-pl_b_integration/",
+									"color": "disabled"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "svs-app-print-pl_b_integration",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/inte-b/job/svs-app-print-pl_b_integration/",
+									"color": "disabled"
+								}
+							],
+							"primaryView": {
+								"_class": "hudson.model.AllView",
+								"name": "All",
+								"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/inte-b/"
+							},
+							"views": [
+								{
+									"_class": "hudson.model.AllView",
+									"name": "All",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/inte-b/"
+								}
+							]
+						},
+						{
+							"_class": "com.cloudbees.hudson.plugins.folder.Folder",
+							"actions": [
+								{
+									
+								},
+								{
+									
+								},
+								{
+									"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+								}
+							],
+							"description": "",
+							"displayName": "rechenkerne",
+							"displayNameOrNull": "rechenkerne",
+							"fullDisplayName": "mais » build-jobs » rechenkerne",
+							"fullName": "mais/build-jobs/rk",
+							"name": "rk",
+							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/rk/",
+							"healthReport": [
+								{
+									"description": "Worst health: mais » build-jobs » rechenkerne » feature-branches » rk-internal-leben-rkv_ci_b_integration: Build stability: 1 out of the last 2 builds failed.",
+									"iconClassName": "icon-health-40to59",
+									"iconUrl": "health-40to59.png",
+									"score": 50
+								}
+							],
+							"jobs": [
+								{
+									"_class": "com.cloudbees.hudson.plugins.folder.Folder",
+									"actions": [
+										{
+											
+										},
+										{
+											
+										},
+										{
+											"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+										}
+									],
+									"description": "",
+									"displayName": "feature-branches",
+									"displayNameOrNull": "feature-branches",
+									"fullDisplayName": "mais » build-jobs » rechenkerne » feature-branches",
+									"fullName": "mais/build-jobs/rk/fb",
+									"name": "fb",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/rk/job/fb/",
+									"healthReport": [
+										{
+											"description": "Worst health: mais » build-jobs » rechenkerne » feature-branches » rk-internal-leben-rkv_ci_b_integration: Build stability: 1 out of the last 2 builds failed.",
+											"iconClassName": "icon-health-40to59",
+											"iconUrl": "health-40to59.png",
+											"score": 50
+										}
+									],
+									"jobs": [
+										{
+											"_class": "hudson.maven.MavenModuleSet",
+											"name": "rk-internal-leben-rkv_ci_b_feature01",
+											"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/rk/job/fb/job/rk-internal-leben-rkv_ci_b_feature01/",
+											"color": "disabled"
+										},
+										{
+											"_class": "hudson.maven.MavenModuleSet",
+											"name": "rk-internal-leben-rkv_ci_b_integration",
+											"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/rk/job/fb/job/rk-internal-leben-rkv_ci_b_integration/",
+											"color": "red"
+										}
+									],
+									"primaryView": {
+										"_class": "hudson.model.AllView",
+										"name": "All",
+										"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/rk/job/fb/"
+									},
+									"views": [
+										{
+											"_class": "hudson.model.AllView",
+											"name": "All",
+											"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/rk/job/fb/"
+										}
+									]
+								},
+								{
+									"_class": "hudson.maven.MavenModuleSet",
+									"name": "rk-internal-common_ci_trunk",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/rk/job/rk-internal-common_ci_trunk/",
+									"color": "blue"
+								},
+								{
+									"_class": "hudson.maven.MavenModuleSet",
+									"name": "rk-internal-leben-common_ci_trunk",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/rk/job/rk-internal-leben-common_ci_trunk/",
+									"color": "blue"
+								},
+								{
+									"_class": "hudson.maven.MavenModuleSet",
+									"name": "rk-internal-leben-rkv_ci_trunk",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/rk/job/rk-internal-leben-rkv_ci_trunk/",
+									"color": "blue"
+								}
+							],
+							"primaryView": {
+								"_class": "hudson.model.AllView",
+								"name": "All",
+								"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/rk/"
+							},
+							"views": [
+								{
+									"_class": "hudson.model.AllView",
+									"name": "All",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/rk/"
+								}
+							]
+						},
+						{
+							"_class": "com.cloudbees.hudson.plugins.folder.Folder",
+							"actions": [
+								{
+									
+								},
+								{
+									
+								},
+								{
+									"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+								}
+							],
+							"description": "Build-Jobs für den Produktions-Branch (trunk)",
+							"displayName": "produktions-branch",
+							"displayNameOrNull": "produktions-branch",
+							"fullDisplayName": "mais » build-jobs » produktions-branch",
+							"fullName": "mais/build-jobs/trunk",
+							"name": "trunk",
+							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/trunk/",
+							"healthReport": [
+								{
+									"description": "Worst health: mais » build-jobs » produktions-branch » mais-app-integration-test-pipeline: Build stability: 1 out of the last 2 builds failed.",
+									"iconClassName": "icon-health-40to59",
+									"iconUrl": "health-40to59.png",
+									"score": 50
+								}
+							],
+							"jobs": [
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-integration-test-pipeline",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/trunk/job/mais-app-integration-test-pipeline/",
+									"color": "red_anime"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "mais-app-unit-test-pipeline",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/trunk/job/mais-app-unit-test-pipeline/",
+									"color": "blue_anime"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "svs-app-print",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/trunk/job/svs-app-print/",
+									"color": "blue"
+								}
+							],
+							"primaryView": {
+								"_class": "hudson.model.AllView",
+								"name": "All",
+								"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/trunk/"
+							},
+							"views": [
+								{
+									"_class": "hudson.model.AllView",
+									"name": "All",
+									"url": "http://svs-jci01:8080/job/mais/job/build-jobs/job/trunk/"
+								}
+							]
+						}
+					],
+					"primaryView": {
+						"_class": "hudson.model.AllView",
+						"name": "All",
+						"url": "http://svs-jci01:8080/job/mais/job/build-jobs/"
+					},
+					"views": [
+						{
+							"_class": "hudson.model.AllView",
+							"name": "All",
+							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/"
+						},
+						{
+							"_class": "hudson.model.ListView",
+							"name": "mais-app",
+							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/view/mais-app/"
+						},
+						{
+							"_class": "hudson.model.ListView",
+							"name": "rechenkerne",
+							"url": "http://svs-jci01:8080/job/mais/job/build-jobs/view/rechenkerne/"
+						}
+					]
 				},
 				{
 					"_class": "com.cloudbees.hudson.plugins.folder.Folder",
@@ -353,109 +560,558 @@
 							"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
 						}
 					],
-					"description": "Deployment-Jobs für die Featureumgebungen der Impaq",
-					"displayName": "feature-impaq - Feature Impaq Umgebung",
-					"displayNameOrNull": "feature-impaq - Feature Impaq Umgebung",
-					"fullDisplayName": "mais » deploy-jobs » feature-impaq - Feature Impaq Umgebung",
-					"fullName": "mais/deploy-jobs/feature-impaq",
-					"name": "feature-impaq",
-					"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-impaq/",
+					"description": null,
+					"displayName": "deploy-jobs",
+					"displayNameOrNull": null,
+					"fullDisplayName": "mais » deploy-jobs",
+					"fullName": "mais/deploy-jobs",
+					"name": "deploy-jobs",
+					"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/",
 					"healthReport": [
 						{
-							"description": "Worst health: mais » deploy-jobs » feature-impaq - Feature Impaq Umgebung » deploy_mais_frontend_feature_impaq: Build-Stabilität: 1 der letzten 3 Builds schlug fehl.",
-							"iconClassName": "icon-health-60to79",
-							"iconUrl": "health-60to79.png",
-							"score": 66
+							"description": "Worst health: mais » deploy-jobs » ci - Continuous Integration » deploy_print_ci_psh: Build stability: All recent builds failed.",
+							"iconClassName": "icon-health-00to19",
+							"iconUrl": "health-00to19.png",
+							"score": 0
 						}
 					],
 					"jobs": [
 						{
 							"_class": "hudson.model.FreeStyleProject",
-							"name": "deploy_mais_frontend_feature_impaq",
-							"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-impaq/job/deploy_mais_frontend_feature_impaq/",
+							"name": "_deploy_soapUI_mock_service",
+							"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/_deploy_soapUI_mock_service/",
 							"color": "blue"
 						},
 						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "deploy_mais_services_feature_impaq",
-							"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-impaq/job/deploy_mais_services_feature_impaq/",
-							"color": "blue"
+							"_class": "com.cloudbees.hudson.plugins.folder.Folder",
+							"actions": [
+								{
+									
+								},
+								{
+									
+								},
+								{
+									"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+								}
+							],
+							"description": "Order für die Deployment-Jobs für die continuous integration Umgebung",
+							"displayName": "ci - Continuous Integration",
+							"displayNameOrNull": "ci - Continuous Integration",
+							"fullDisplayName": "mais » deploy-jobs » ci - Continuous Integration",
+							"fullName": "mais/deploy-jobs/ci",
+							"name": "ci",
+							"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/ci/",
+							"healthReport": [
+								{
+									"description": "Worst health: mais » deploy-jobs » ci - Continuous Integration » deploy_print_ci_psh: Build stability: All recent builds failed.",
+									"iconClassName": "icon-health-00to19",
+									"iconUrl": "health-00to19.png",
+									"score": 0
+								}
+							],
+							"jobs": [
+								{
+									"_class": "hudson.model.FreeStyleProject",
+									"name": "deploy_backend_ci",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/ci/job/deploy_backend_ci/",
+									"color": "disabled"
+								},
+								{
+									"_class": "hudson.model.FreeStyleProject",
+									"name": "deploy_frontend_ci",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/ci/job/deploy_frontend_ci/",
+									"color": "disabled"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "deploy_print_ci",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/ci/job/deploy_print_ci/",
+									"color": "blue"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "deploy_print_ci_psh",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/ci/job/deploy_print_ci_psh/",
+									"color": "red"
+								}
+							],
+							"primaryView": {
+								"_class": "hudson.model.AllView",
+								"name": "All",
+								"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/ci/"
+							},
+							"views": [
+								{
+									"_class": "hudson.model.AllView",
+									"name": "All",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/ci/"
+								}
+							]
 						},
 						{
-							"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
-							"name": "deploy_print_feature_impaq",
-							"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-impaq/job/deploy_print_feature_impaq/",
-							"color": "blue"
+							"_class": "com.cloudbees.hudson.plugins.folder.Folder",
+							"actions": [
+								{
+									
+								},
+								{
+									
+								},
+								{
+									"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+								}
+							],
+							"description": "Deployment-Jobs für die Featureumgebungen der Impaq",
+							"displayName": "feature-impaq - Feature Impaq Umgebung",
+							"displayNameOrNull": "feature-impaq - Feature Impaq Umgebung",
+							"fullDisplayName": "mais » deploy-jobs » feature-impaq - Feature Impaq Umgebung",
+							"fullName": "mais/deploy-jobs/feature-impaq",
+							"name": "feature-impaq",
+							"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-impaq/",
+							"healthReport": [],
+							"jobs": [
+								{
+									"_class": "hudson.model.FreeStyleProject",
+									"name": "deploy_mais_frontend_feature_impaq",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-impaq/job/deploy_mais_frontend_feature_impaq/",
+									"color": "blue"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "deploy_mais_services_feature_impaq",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-impaq/job/deploy_mais_services_feature_impaq/",
+									"color": "blue"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "deploy_print_feature_impaq",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-impaq/job/deploy_print_feature_impaq/",
+									"color": "blue"
+								}
+							],
+							"primaryView": {
+								"_class": "hudson.model.AllView",
+								"name": "All",
+								"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-impaq/"
+							},
+							"views": [
+								{
+									"_class": "hudson.model.AllView",
+									"name": "All",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-impaq/"
+								}
+							]
+						},
+						{
+							"_class": "com.cloudbees.hudson.plugins.folder.Folder",
+							"actions": [
+								{
+									
+								},
+								{
+									
+								},
+								{
+									"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+								}
+							],
+							"description": "Deployment-Jobs für die Featureumgebungen der SVS",
+							"displayName": "feature-svs - Feature SVS Umgebung",
+							"displayNameOrNull": "feature-svs - Feature SVS Umgebung",
+							"fullDisplayName": "mais » deploy-jobs » feature-svs - Feature SVS Umgebung",
+							"fullName": "mais/deploy-jobs/feature-svs",
+							"name": "feature-svs",
+							"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-svs/",
+							"healthReport": [],
+							"jobs": [
+								{
+									"_class": "hudson.model.FreeStyleProject",
+									"name": "deploy_mais_frontend_feature_svs",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-svs/job/deploy_mais_frontend_feature_svs/",
+									"color": "blue"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "deploy_mais_services_feature_svs",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-svs/job/deploy_mais_services_feature_svs/",
+									"color": "blue"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "deploy_print_feature_svs",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-svs/job/deploy_print_feature_svs/",
+									"color": "blue"
+								}
+							],
+							"primaryView": {
+								"_class": "hudson.model.AllView",
+								"name": "All",
+								"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-svs/"
+							},
+							"views": [
+								{
+									"_class": "hudson.model.AllView",
+									"name": "All",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-svs/"
+								}
+							]
+						},
+						{
+							"_class": "com.cloudbees.hudson.plugins.folder.Folder",
+							"actions": [
+								{
+									
+								},
+								{
+									
+								},
+								{
+									"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+								}
+							],
+							"description": "",
+							"displayName": "hotfix - Hotfix Umgebung",
+							"displayNameOrNull": "hotfix - Hotfix Umgebung",
+							"fullDisplayName": "mais » deploy-jobs » hotfix - Hotfix Umgebung",
+							"fullName": "mais/deploy-jobs/hotfix",
+							"name": "hotfix",
+							"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/hotfix/",
+							"healthReport": [],
+							"jobs": [
+								{
+									"_class": "hudson.model.FreeStyleProject",
+									"name": "deploy_frontend_hotfix",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/hotfix/job/deploy_frontend_hotfix/",
+									"color": "blue"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "deploy_mais_services_hotfix",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/hotfix/job/deploy_mais_services_hotfix/",
+									"color": "blue"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "deploy_print_hotfix",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/hotfix/job/deploy_print_hotfix/",
+									"color": "blue"
+								}
+							],
+							"primaryView": {
+								"_class": "hudson.model.AllView",
+								"name": "All",
+								"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/hotfix/"
+							},
+							"views": [
+								{
+									"_class": "hudson.model.AllView",
+									"name": "All",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/hotfix/"
+								}
+							]
+						},
+						{
+							"_class": "com.cloudbees.hudson.plugins.folder.Folder",
+							"actions": [
+								{
+									
+								},
+								{
+									
+								},
+								{
+									"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+								}
+							],
+							"description": "Ordner für die Deployment-Jobs für die Integrationstests",
+							"displayName": "it-impaq - Integrationsumgebung Impaq",
+							"displayNameOrNull": "it-impaq - Integrationsumgebung Impaq",
+							"fullDisplayName": "mais » deploy-jobs » it-impaq - Integrationsumgebung Impaq",
+							"fullName": "mais/deploy-jobs/it",
+							"name": "it",
+							"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/it/",
+							"healthReport": [
+								{
+									"description": "Worst health: mais » deploy-jobs » it-impaq - Integrationsumgebung Impaq » deploy_mais_services_it_impaq: Build stability: 2 out of the last 4 builds failed.",
+									"iconClassName": "icon-health-40to59",
+									"iconUrl": "health-40to59.png",
+									"score": 50
+								}
+							],
+							"jobs": [
+								{
+									"_class": "hudson.model.FreeStyleProject",
+									"name": "deploy_mais_frontend_it_impaq",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/it/job/deploy_mais_frontend_it_impaq/",
+									"color": "blue"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "deploy_mais_services_it_impaq",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/it/job/deploy_mais_services_it_impaq/",
+									"color": "blue"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "deploy_print_it-impaq",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/it/job/deploy_print_it-impaq/",
+									"color": "blue"
+								}
+							],
+							"primaryView": {
+								"_class": "hudson.model.AllView",
+								"name": "All",
+								"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/it/"
+							},
+							"views": [
+								{
+									"_class": "hudson.model.AllView",
+									"name": "All",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/it/"
+								}
+							]
+						},
+						{
+							"_class": "com.cloudbees.hudson.plugins.folder.Folder",
+							"actions": [
+								{
+									
+								},
+								{
+									
+								},
+								{
+									"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+								}
+							],
+							"description": "",
+							"displayName": "prod - Produktionsumgebung",
+							"displayNameOrNull": "prod - Produktionsumgebung",
+							"fullDisplayName": "mais » deploy-jobs » prod - Produktionsumgebung",
+							"fullName": "mais/deploy-jobs/prod",
+							"name": "prod",
+							"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/prod/",
+							"healthReport": [],
+							"jobs": [
+								{
+									"_class": "hudson.model.FreeStyleProject",
+									"name": "deploy_frontend_prod",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/prod/job/deploy_frontend_prod/",
+									"color": "blue"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "deploy_mais_services_prod",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/prod/job/deploy_mais_services_prod/",
+									"color": "blue"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "deploy_print_prod",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/prod/job/deploy_print_prod/",
+									"color": "blue"
+								}
+							],
+							"primaryView": {
+								"_class": "hudson.model.AllView",
+								"name": "All",
+								"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/prod/"
+							},
+							"views": [
+								{
+									"_class": "hudson.model.AllView",
+									"name": "All",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/prod/"
+								}
+							]
+						},
+						{
+							"_class": "com.cloudbees.hudson.plugins.folder.Folder",
+							"actions": [
+								{
+									
+								},
+								{
+									
+								},
+								{
+									"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+								}
+							],
+							"description": "Deployment Jobs für IT-SVS Profil",
+							"displayName": "it-svs - Integrationsumgebung SVS",
+							"displayNameOrNull": "it-svs - Integrationsumgebung SVS",
+							"fullDisplayName": "mais » deploy-jobs » it-svs - Integrationsumgebung SVS",
+							"fullName": "mais/deploy-jobs/svs",
+							"name": "svs",
+							"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/svs/",
+							"healthReport": [],
+							"jobs": [
+								{
+									"_class": "hudson.model.FreeStyleProject",
+									"name": "deploy_frontend_it-svs",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/svs/job/deploy_frontend_it-svs/",
+									"color": "blue"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "deploy_mais_services_it_svs",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/svs/job/deploy_mais_services_it_svs/",
+									"color": "blue"
+								},
+								{
+									"_class": "org.jenkinsci.plugins.workflow.job.WorkflowJob",
+									"name": "deploy_print_it-svs",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/svs/job/deploy_print_it-svs/",
+									"color": "blue"
+								}
+							],
+							"primaryView": {
+								"_class": "hudson.model.AllView",
+								"name": "All",
+								"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/svs/"
+							},
+							"views": [
+								{
+									"_class": "hudson.model.AllView",
+									"name": "All",
+									"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/svs/"
+								}
+							]
 						}
 					],
 					"primaryView": {
 						"_class": "hudson.model.AllView",
 						"name": "All",
-						"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-impaq/"
+						"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/"
 					},
 					"views": [
 						{
 							"_class": "hudson.model.AllView",
 							"name": "All",
-							"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-impaq/"
+							"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/"
 						}
 					]
-				},
-				{
-					"_class": "com.cloudbees.hudson.plugins.folder.Folder",
-					"name": "feature-svs",
-					"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/feature-svs/"
-				},
-				{
-					"_class": "com.cloudbees.hudson.plugins.folder.Folder",
-					"name": "hotfix",
-					"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/hotfix/"
-				},
-				{
-					"_class": "com.cloudbees.hudson.plugins.folder.Folder",
-					"name": "it",
-					"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/it/"
-				},
-				{
-					"_class": "com.cloudbees.hudson.plugins.folder.Folder",
-					"name": "prod",
-					"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/prod/"
-				},
-				{
-					"_class": "com.cloudbees.hudson.plugins.folder.Folder",
-					"name": "svs",
-					"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/job/svs/"
 				}
 			],
 			"primaryView": {
 				"_class": "hudson.model.AllView",
 				"name": "All",
-				"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/"
+				"url": "http://svs-jci01:8080/job/mais/"
 			},
 			"views": [
 				{
 					"_class": "hudson.model.AllView",
 					"name": "All",
-					"url": "http://svs-jci01:8080/job/mais/job/deploy-jobs/"
+					"url": "http://svs-jci01:8080/job/mais/"
+				},
+				{
+					"_class": "hudson.model.ProxyView",
+					"name": "mais-app",
+					"url": "http://svs-jci01:8080/job/mais/view/mais-app/"
+				}
+			]
+		},
+		{
+			"_class": "com.cloudbees.hudson.plugins.folder.Folder",
+			"actions": [
+				{
+					
+				},
+				{
+					
+				},
+				{
+					"_class": "com.cloudbees.plugins.credentials.ViewCredentialsAction"
+				}
+			],
+			"description": "",
+			"displayName": "trashcan-builds",
+			"displayNameOrNull": null,
+			"fullDisplayName": "trashcan-builds",
+			"fullName": "trashcan-builds",
+			"name": "trashcan-builds",
+			"url": "http://svs-jci01:8080/job/trashcan-builds/",
+			"healthReport": [
+				{
+					"description": "Worst health: trashcan-builds » deploy_backend_it_impaq: Build stability: 1 out of the last 5 builds failed.",
+					"iconClassName": "icon-health-60to79",
+					"iconUrl": "health-60to79.png",
+					"score": 80
+				}
+			],
+			"jobs": [
+				{
+					"_class": "hudson.model.FreeStyleProject",
+					"name": "angular-frontend",
+					"url": "http://svs-jci01:8080/job/trashcan-builds/job/angular-frontend/",
+					"color": "blue"
+				},
+				{
+					"_class": "hudson.model.FreeStyleProject",
+					"name": "deploy_backend_it_impaq",
+					"url": "http://svs-jci01:8080/job/trashcan-builds/job/deploy_backend_it_impaq/",
+					"color": "disabled"
+				},
+				{
+					"_class": "hudson.model.FreeStyleProject",
+					"name": "deploy_backend_it_svs",
+					"url": "http://svs-jci01:8080/job/trashcan-builds/job/deploy_backend_it_svs/",
+					"color": "disabled"
+				},
+				{
+					"_class": "hudson.model.FreeStyleProject",
+					"name": "mais-app-integration-test",
+					"url": "http://svs-jci01:8080/job/trashcan-builds/job/mais-app-integration-test/",
+					"color": "disabled"
+				},
+				{
+					"_class": "hudson.model.FreeStyleProject",
+					"name": "mais-app-unit-test",
+					"url": "http://svs-jci01:8080/job/trashcan-builds/job/mais-app-unit-test/",
+					"color": "disabled"
+				}
+			],
+			"primaryView": {
+				"_class": "hudson.model.AllView",
+				"name": "All",
+				"url": "http://svs-jci01:8080/job/trashcan-builds/"
+			},
+			"views": [
+				{
+					"_class": "hudson.model.AllView",
+					"name": "All",
+					"url": "http://svs-jci01:8080/job/trashcan-builds/"
 				}
 			]
 		}
 	],
+	"overallLoad": {
+		
+	},
 	"primaryView": {
 		"_class": "hudson.model.AllView",
-		"name": "All",
-		"url": "http://svs-jci01:8080/job/mais/"
+		"name": "all",
+		"url": "http://svs-jci01:8080/"
 	},
+	"quietingDown": false,
+	"slaveAgentPort": 8001,
+	"unlabeledLoad": {
+		"_class": "jenkins.model.UnlabeledLoadStatistics"
+	},
+	"useCrumbs": true,
+	"useSecurity": true,
 	"views": [
 		{
-			"_class": "hudson.model.AllView",
-			"name": "All",
-			"url": "http://svs-jci01:8080/job/mais/"
+			"_class": "com.smartcodeltd.jenkinsci.plugins.buildmonitor.BuildMonitorView",
+			"name": "Build Monitor",
+			"url": "http://svs-jci01:8080/view/Build%20Monitor/"
 		},
 		{
-			"_class": "hudson.model.ProxyView",
-			"name": "mais-app",
-			"url": "http://svs-jci01:8080/job/mais/view/mais-app/"
+			"_class": "hudson.model.AllView",
+			"name": "all",
+			"url": "http://svs-jci01:8080/"
 		}
 	]
 }
