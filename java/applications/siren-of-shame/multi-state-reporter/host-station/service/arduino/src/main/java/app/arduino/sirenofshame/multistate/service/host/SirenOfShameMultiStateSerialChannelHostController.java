@@ -1,10 +1,15 @@
 package app.arduino.sirenofshame.multistate.service.host;
 
-import app.arduino.sirenofshame.common.service.host.AbstractSerialChannelHostController;
+import app.arduino.sirenofshame.common.service.host.SerialChannelHostController;
 
-public class SirenOfShameMultiStateSerialChannelHostController extends AbstractSerialChannelHostController {
+public class SirenOfShameMultiStateSerialChannelHostController extends SerialChannelHostController {
 
   // ... constants
+
+  public SirenOfShameMultiStateSerialChannelHostController() {
+
+    super(true);
+  }
 
   private static final String COMMAND__CLEAR = "CLEAR";
   private static final String COMMAND__RESPONSE_SUCCEEDED = "SUCCEEDED";

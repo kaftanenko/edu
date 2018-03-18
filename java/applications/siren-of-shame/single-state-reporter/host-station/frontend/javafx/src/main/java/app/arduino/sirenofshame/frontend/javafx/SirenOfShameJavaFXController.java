@@ -100,7 +100,6 @@ public class SirenOfShameJavaFXController implements AutoCloseable {
           highestState = ESirenOfShameAlarmLevel.UNDEFINED;
         }
         sirenOfShameJavaFXController.updateAlarmLevelTo(highestState);
-        sirenOfShameJavaFXController.updateJenkinsStateInfo(jsonJobNodes);
       }
     };
     jenkinsApiJsonScanner.subscribe(scannerEventsListener);
@@ -120,7 +119,7 @@ public class SirenOfShameJavaFXController implements AutoCloseable {
 
     sirenOfShameController.connect();
 
-    final String portName = sirenOfShameController.getPortName();
+    final String portName = sirenOfShameController.getConnectedToPortName();
     final ESirenOfShameAlarmLevel alarmLevel = sirenOfShameController.getCurrentAlarmLevel();
 
     gui.onConnected(portName, alarmLevel);
@@ -145,11 +144,6 @@ public class SirenOfShameJavaFXController implements AutoCloseable {
       // sirenOfShameController.setAlarmLevelTo(newAlarmLevel);
       gui.onAlarmLevelChanged(newAlarmLevel);
     }
-  }
-
-  protected void updateJenkinsStateInfo(final Collection<Map<String, Object>> jsonJobNodes) {
-
-    sirenOfShameController.updateJenkinsStateInfo(jsonJobNodes);
   }
 
   public void showPropertiesDialog() {

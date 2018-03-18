@@ -3,14 +3,14 @@ package app.arduino.sirenofshame.singlestate.service.host.impl.common;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.arduino.sirenofshame.common.service.host.AbstractSerialChannelHostController;
+import app.arduino.sirenofshame.common.service.host.SerialChannelHostController;
 import app.arduino.sirenofshame.singlestate.service.host.api.SirenOfShameSingleStateHostController;
 import app.arduino.sirenofshame.singlestate.service.host.api.SirenOfShameSingleStateHostControllerEventsListener;
 import app.arduino.sirenofshame.singlestate.service.host.api.type.ESirenOfShameAlarmLevel;
 import app.arduino.sirenofshame.singlestate.service.host.api.type.SirenOfShameSingleStateHostControllerConfig;
 
 public abstract class AbstractSirenOfShameHostController //
-    extends AbstractSerialChannelHostController //
+    extends SerialChannelHostController //
     implements SirenOfShameSingleStateHostController //
 {
 
@@ -23,6 +23,8 @@ public abstract class AbstractSirenOfShameHostController //
   // ... constructors
 
   public AbstractSirenOfShameHostController(final SirenOfShameSingleStateHostControllerConfig configuration) {
+
+    super(false);
 
     this.configuration = configuration;
     this.eventsListeners = new ArrayList<>();

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import dk.thibaut.serial.SerialChannel;
@@ -18,16 +19,17 @@ public class SerialChannelUtils {
 
   // ... constants
 
-  private static final SerialConfig SERIAL_PORT_CONFIG = new SerialConfig( //
+  private static final SerialConfig DEFAULT__SERIAL_PORT_CONFIG = new SerialConfig( //
       BaudRate.B9600, //
       Parity.NONE, //
       StopBits.ONE, //
       DataBits.D8 //
   );
-  private static final int SERIAL_PORT_DELAY_BEFORE_FIRST_READ_IN_MS__100 = 100;
-  private static final int SERIAL_PORT_TIMEOUT_IN_MS__1000 = 1000;
+  private static final int DEFAULT__SERIAL_PORT_TIMEOUT_IN_MS__1000 = 1000;
 
-  private static final Logger LOG = SerialChannelLogManager.getSerialPortChannelLogger();
+  // ... dependencies
+
+  private static final Logger LOG = LogManager.getLogger(SerialChannelUtils.class);
 
   // ... business methods
 
@@ -35,15 +37,19 @@ public class SerialChannelUtils {
 
     final SerialPort port = SerialPort.open(portName);
 
-    port.setConfig(SERIAL_PORT_CONFIG);
-    port.setTimeout(SERIAL_PORT_TIMEOUT_IN_MS__1000);
+    port.setConfig(DEFAULT__SERIAL_PORT_CONFIG);
+    port.setTimeout(DEFAULT__SERIAL_PORT_TIMEOUT_IN_MS__1000);
 
     LOG.info("Try to open the serial port \"" + portName + "\" ...");
 
     final SerialChannel serialChannel = port.getChannel();
-    delayThreadFor(SERIAL_PORT_DELAY_BEFORE_FIRST_READ_IN_MS__100);
 
-    LOG.info("... succeeded.");
+    if (serialChannel.isOpen()) {
+
+      LOG.info("... succeeded.");
+    } else {
+      LOG.info("... failed.");
+    }
 
     return serialChannel;
   }
@@ -57,7 +63,19 @@ public class SerialChannelUtils {
     LOG.info("... succeeded.");
   }
 
-  public static String findSerialChannelByWellcomeMessage(final String expectingWelcomeMessage) {
+  public static String findSerialChannelByWellcomeMessage(final String expectingWellcomeMessage) {
+
+    final long maxReadAttemptsCount = 1;
+    final long delayBetweenReadAttempts = 0;
+
+    return findSerialChannelByWellcomeMessage(expectingWellcomeMessage, maxReadAttemptsCount, delayBetweenReadAttempts);
+  }
+
+  public static String findSerialChannelByWellcomeMessage( //
+      final String expectingWellcomeMessage, //
+      final long maxReadAttemptsCount, //
+      final long delayBetweenReadAttempts //
+  ) {
 
     final List<String> portsNames = SerialPort.getAvailablePortsNames();
 
@@ -65,21 +83,25 @@ public class SerialChannelUtils {
 
     for (final String portName : portsNames) {
 
-      try {
+      for (int attemptIndex = 0; attemptIndex < maxReadAttemptsCount; attemptIndex++) {
 
-        final SerialChannel serialChannel = openSerialChannel(portName);
-        final String welcomeMessage = readBytes(serialChannel);
-        serialChannel.close();
+        try {
 
-        if (welcomeMessage.startsWith(expectingWelcomeMessage)) {
+          final SerialChannel serialChannel = openSerialChannel(portName);
+          final String wellcomeMessage = readBytes(serialChannel);
+          serialChannel.close();
 
-          LOG.info("... the port responded with expected wellcome message.");
-          return portName;
-        } else {
-          LOG.info("... the port didn't respond with expected wellcome message.");
+          if (wellcomeMessage.startsWith(expectingWellcomeMessage)) {
+
+            LOG.info(String.format("... the port responded with expected wellcome message (#%d).", attemptIndex));
+            return portName;
+          } else {
+            LOG.info(String.format("... the port didn't respond with expected wellcome message (#%d).", attemptIndex));
+            Thread.sleep(delayBetweenReadAttempts);
+          }
+        } catch (final Exception ex) {
+          LOG.error("... " + ex.getMessage(), ex);
         }
-      } catch (final Exception ex) {
-        LOG.error("... " + ex.getMessage());
       }
     }
 
@@ -96,7 +118,7 @@ public class SerialChannelUtils {
 
     final String message = (new String(messageBuffer.array())).trim();
 
-    LOG.info("... rx: (" + readBytes + " bytes) \"" + message + "\"");
+    LOG.info(String.format("... rx: (%d bytes) \"%s\"", readBytes, message));
 
     return message;
   }
@@ -107,20 +129,7 @@ public class SerialChannelUtils {
     final int writtenBytes = channel.write(messageBuffer);
     channel.flush(true, true);
 
-    // delayThreadFor(SERIAL_PORT_DELAY_AFTER_WRITE_IN_MS__100);
-
-    LOG.info("... tx: (" + writtenBytes + " bytes) \"" + message + "\"");
-  }
-
-  // ... helper methods
-
-  private static void delayThreadFor(final long timeInMs) {
-
-    try {
-      Thread.sleep(timeInMs);
-    } catch (final InterruptedException ex) {
-      LOG.error(ex);
-    }
+    LOG.info(String.format("... tx: (%d bytes) \"%s\"", writtenBytes, message));
   }
 
 }

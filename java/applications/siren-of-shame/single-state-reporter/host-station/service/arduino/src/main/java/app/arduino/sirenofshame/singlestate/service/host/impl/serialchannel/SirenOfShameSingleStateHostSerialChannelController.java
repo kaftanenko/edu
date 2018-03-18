@@ -1,8 +1,5 @@
 package app.arduino.sirenofshame.singlestate.service.host.impl.serialchannel;
 
-import java.util.Collection;
-import java.util.Map;
-
 import app.arduino.sirenofshame.singlestate.service.host.api.type.ESirenOfShameAlarmLevel;
 import app.arduino.sirenofshame.singlestate.service.host.api.type.SirenOfShameSingleStateHostControllerConfig;
 import app.arduino.sirenofshame.singlestate.service.host.impl.common.AbstractSirenOfShameHostController;
@@ -60,10 +57,12 @@ public class SirenOfShameSingleStateHostSerialChannelController extends Abstract
     }
   }
 
-  public boolean isConnected() throws Exception {
+  @Override
+  public boolean isConnected() {
 
     try {
-      if (serialChannel != null && serialChannel.isOpen()) {
+
+      if (super.isConnected()) {
 
         sendMessage(COMMAND__PING);
         final String responseMessage = readMessage();
@@ -75,6 +74,8 @@ public class SirenOfShameSingleStateHostSerialChannelController extends Abstract
       throw handleFatalException(ex);
     }
   }
+
+  // ...
 
   @Override
   public ESirenOfShameAlarmLevel getCurrentAlarmLevel() {
@@ -126,10 +127,6 @@ public class SirenOfShameSingleStateHostSerialChannelController extends Abstract
     final ESirenOfShameAlarmLevel to = getCurrentAlarmLevel();
 
     notifyEventsListenersAboutStateChange(from, to);
-  }
-
-  public void updateJenkinsStateInfo(final Collection<Map<String, Object>> jsonJobNodes) {
-
   }
 
 }

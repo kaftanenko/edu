@@ -11,13 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import app.arduino.sirenofshame.common.service.host.event.SerialChannelEventsListener;
-import app.arduino.sirenofshame.common.service.host.util.SerialChannelLogManager;
+import app.arduino.sirenofshame.common.service.host.event.SerialChannelEventsListenerRunnable;
 import dk.thibaut.serial.SerialChannel;
 
-public abstract class AbstractSerialChannelHostController {
+public class SerialChannelHostController {
 
   // ... constants
 
@@ -25,24 +26,49 @@ public abstract class AbstractSerialChannelHostController {
 
   // ... dependencies
 
-  protected static final Logger LOG = SerialChannelLogManager.getLogger();
+  protected final Logger LOG = LogManager.getLogger(this);
 
   // ... properties
 
-  protected SerialChannel serialChannel;
-  private String serialChannelPortName;
+  protected SerialChannel connectedToSerialChannel;
+  private String connectedToSerialChannelPortName;
 
+  private final boolean useEventsListeningThread;
+  private boolean keepEventsListeningThreadRunning;
   private final List<SerialChannelEventsListener> eventsListeners = new ArrayList<>();
+
+  // ... constructors
+
+  public SerialChannelHostController(final boolean useEventsListeningThread) {
+
+    this.useEventsListeningThread = useEventsListeningThread;
+  }
 
   // ... business methods
 
   public void connect() {
 
+    final String dynamicSerialChannelPortName = //
+        findSerialChannelByWellcomeMessage(EXPECTING_WELCOME_MESSAGE);
+    connect(dynamicSerialChannelPortName);
+  }
+
+  public void connect(final String serialChannelPortName) {
+
     try {
 
-      serialChannelPortName = findSerialChannelByWellcomeMessage(EXPECTING_WELCOME_MESSAGE);
-      serialChannel = openSerialChannel(serialChannelPortName);
-      readMessage(); // ... read welcome message
+      this.connectedToSerialChannelPortName = serialChannelPortName;
+      this.connectedToSerialChannel = openSerialChannel(serialChannelPortName);
+
+      if (useEventsListeningThread) {
+
+        keepEventsListeningThreadRunning = true;
+
+        final Thread eventsListeningThread = new Thread(new SerialChannelEventsListenerRunnable(this));
+        eventsListeningThread.start();
+      } else {
+        keepEventsListeningThreadRunning = false;
+      }
     } catch (final Exception ex) {
       throw handleFatalException(ex);
     }
@@ -50,36 +76,46 @@ public abstract class AbstractSerialChannelHostController {
 
   public void disconnect() {
 
+    keepEventsListeningThreadRunning = false;
+
     try {
 
-      closeSerialChannel(serialChannel);
+      closeSerialChannel(connectedToSerialChannel);
     } catch (final Exception ex) {
       throw handleFatalException(ex);
     }
   }
 
-  public String getPortName() {
+  public String getConnectedToPortName() {
 
-    return serialChannelPortName;
+    return connectedToSerialChannelPortName;
   }
 
-  // ... helper methods
+  public boolean isConnected() {
 
-  protected void sendMessage(final String message) {
+    return connectedToSerialChannel != null && connectedToSerialChannel.isOpen();
+  }
+
+  public boolean isKeepEventsListeningThreadRunning() {
+
+    return keepEventsListeningThreadRunning;
+  }
+
+  public void sendMessage(final String message) {
 
     try {
-      writeBytes(serialChannel, message);
+      writeBytes(connectedToSerialChannel, message);
       notifyEventListenersAboutSentMessage(message);
     } catch (final IOException ex) {
       throw handleFatalException(ex);
     }
   }
 
-  protected String readMessage() {
+  public String readMessage() {
 
     try {
 
-      final String message = readBytes(serialChannel);
+      final String message = readBytes(connectedToSerialChannel);
 
       if (StringUtils.isNotBlank(message)) {
         notifyEventListenersAboutReceivedMessage(message);
@@ -91,6 +127,8 @@ public abstract class AbstractSerialChannelHostController {
     }
   }
 
+  // ... helper methods
+
   protected static RuntimeException handleFatalException(final Exception ex) {
 
     throw new RuntimeException(ex);
@@ -98,7 +136,7 @@ public abstract class AbstractSerialChannelHostController {
 
   // ... events management methods
 
-  protected void notifyEventListenersAboutSentMessage(final String message) {
+  private void notifyEventListenersAboutSentMessage(final String message) {
 
     for (final SerialChannelEventsListener eventsListener : eventsListeners) {
 
@@ -106,7 +144,7 @@ public abstract class AbstractSerialChannelHostController {
     }
   }
 
-  protected void notifyEventListenersAboutReceivedMessage(final String message) {
+  private void notifyEventListenersAboutReceivedMessage(final String message) {
 
     for (final SerialChannelEventsListener eventsListener : eventsListeners) {
 
