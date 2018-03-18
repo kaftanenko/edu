@@ -5,14 +5,14 @@ import org.apache.logging.log4j.Logger;
 
 public class JenkinsClientLogManager {
 
-	// ... dependencies
+  // ... dependencies
 
-	private static final Logger JENKINS_CLIENT_LOG = LogManager.getLogger("JENKINS_CLIENT");
+  private static final Logger JENKINS_CLIENT_LOG = LogManager.getLogger("JENKINS_CLIENT");
 
-	// ... business methods
+  // ... business methods
 
-	public static Logger getLogger() {
+  public static Logger getLogger() {
 
-		return JENKINS_CLIENT_LOG;
-	}
+    return JENKINS_CLIENT_LOG;
+  }
 }

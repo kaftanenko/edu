@@ -2,24 +2,24 @@ package app.arduino.sirenofshame.frontend.javafx.exception.util;
 
 public class ErrorHelper {
 
-	// ... business methods
+  // ... business methods
 
-	public static RuntimeException handleFatalException(final Exception ex) {
+  public static RuntimeException handleFatalException(final Exception ex) {
 
-		throw new RuntimeException(ex);
-	}
+    throw new RuntimeException(ex);
+  }
 
-	public static RuntimeException handleFatalException(final String message) {
+  public static RuntimeException handleFatalException(final String message) {
 
-		throw new RuntimeException(message);
-	}
+    throw new RuntimeException(message);
+  }
 
-	public static RuntimeException handleValueIsNotSupportedYetException(final String attributeName,
-			final Object attributeValue) {
+  public static RuntimeException handleValueIsNotSupportedYetException(final String attributeName,
+      final Object attributeValue) {
 
-		final String errorMessage = "The value \"" + attributeValue + "\" of the attribute \"" + attributeName
-				+ "\" is not supported yet.";
-		throw handleFatalException(errorMessage);
-	}
+    final String errorMessage = "The value \"" + attributeValue + "\" of the attribute \"" + attributeName
+        + "\" is not supported yet.";
+    throw handleFatalException(errorMessage);
+  }
 
 }

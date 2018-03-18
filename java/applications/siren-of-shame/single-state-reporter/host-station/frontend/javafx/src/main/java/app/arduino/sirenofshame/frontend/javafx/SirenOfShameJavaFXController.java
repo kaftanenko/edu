@@ -20,141 +20,141 @@ import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsA
 
 public class SirenOfShameJavaFXController implements AutoCloseable {
 
-	// ... constants
+  // ... constants
 
-	private static final String JENKINS_RESOURCE_PATH__MAIS__BUILD_JOBS = "/job/mais/job/build-jobs/job/inte-b/";
-	private static final Pattern JENKINS_JOB_NAMES_TO_MONITOR__REGEX = Pattern.compile(".+integration");
-	protected static final long JENKINS_POLLING_PERIOD__IN_SEC__15 = 15;
+  private static final String JENKINS_RESOURCE_PATH__MAIS__BUILD_JOBS = "/job/mais/job/build-jobs/job/inte-b/";
+  private static final Pattern JENKINS_JOB_NAMES_TO_MONITOR__REGEX = Pattern.compile(".+integration");
+  protected static final long JENKINS_POLLING_PERIOD__IN_SEC__15 = 15;
 
-	// ... properties
+  // ... properties
 
-	private final SirenOfShameJavaFXApplication gui;
-	private final SirenOfShameSingleStateHostSerialChannelController sirenOfShameController;
+  private final SirenOfShameJavaFXApplication gui;
+  private final SirenOfShameSingleStateHostSerialChannelController sirenOfShameController;
 
-	private final JenkinsApiJsonResourceScanner jenkinsApiJsonScanner;
-	private Thread jenkinsApiJsonScannerThread;
+  private final JenkinsApiJsonResourceScanner jenkinsApiJsonScanner;
+  private Thread jenkinsApiJsonScannerThread;
 
-	// ... constructors
+  // ... constructors
 
-	public SirenOfShameJavaFXController(final SirenOfShameJavaFXApplication gui) {
+  public SirenOfShameJavaFXController(final SirenOfShameJavaFXApplication gui) {
 
-		this.gui = gui;
+    this.gui = gui;
 
-		this.sirenOfShameController = initSirenOfShameController(gui);
+    this.sirenOfShameController = initSirenOfShameController(gui);
 
-		jenkinsApiJsonScanner = initJenkinsApiJsonresourceScanner(this);
-	}
+    jenkinsApiJsonScanner = initJenkinsApiJsonresourceScanner(this);
+  }
 
-	private static SirenOfShameSingleStateHostSerialChannelController initSirenOfShameController(
-			final SirenOfShameJavaFXApplication gui) {
+  private static SirenOfShameSingleStateHostSerialChannelController initSirenOfShameController(
+      final SirenOfShameJavaFXApplication gui) {
 
-		final SirenOfShameSingleStateHostSerialChannelController sirenOfShameController = new SirenOfShameSingleStateHostSerialChannelController();
+    final SirenOfShameSingleStateHostSerialChannelController sirenOfShameController = new SirenOfShameSingleStateHostSerialChannelController();
 
-		final SirenOfShameSingleStateHostControllerEventsListener eventsListener = new SirenOfShameSingleStateHostControllerEventsListener() {
-			@Override
-			public void onStateChanged(final ESirenOfShameAlarmLevel from, final ESirenOfShameAlarmLevel to) {
-				gui.onAlarmLevelChanged(to);
-			}
-		};
-		sirenOfShameController.subscribe(eventsListener);
+    final SirenOfShameSingleStateHostControllerEventsListener eventsListener = new SirenOfShameSingleStateHostControllerEventsListener() {
+      @Override
+      public void onStateChanged(final ESirenOfShameAlarmLevel from, final ESirenOfShameAlarmLevel to) {
+        gui.onAlarmLevelChanged(to);
+      }
+    };
+    sirenOfShameController.subscribe(eventsListener);
 
-		return sirenOfShameController;
-	}
+    return sirenOfShameController;
+  }
 
-	private static JenkinsApiJsonResourceScanner initJenkinsApiJsonresourceScanner(
-			final SirenOfShameJavaFXController sirenOfShameJavaFXController) {
+  private static JenkinsApiJsonResourceScanner initJenkinsApiJsonresourceScanner(
+      final SirenOfShameJavaFXController sirenOfShameJavaFXController) {
 
-		final JenkinsHttpClientConfig config = JenkinsHttpClientConfig.of(HOST_URL, AUTH_USERNAME, AUTH_PASSWORD);
-		final JenkinsApiJsonResourceScannerConfig jenkinsJobsStateScannerConfig = JenkinsApiJsonResourceScannerConfig
-				.of(config, JENKINS_POLLING_PERIOD__IN_SEC__15 * 1000, JENKINS_RESOURCE_PATH__MAIS__BUILD_JOBS);
-		final JenkinsApiJsonResourceScanner jenkinsApiJsonScanner = new JenkinsApiJsonResourceScanner(
-				jenkinsJobsStateScannerConfig);
+    final JenkinsHttpClientConfig config = JenkinsHttpClientConfig.of(HOST_URL, AUTH_USERNAME, AUTH_PASSWORD);
+    final JenkinsApiJsonResourceScannerConfig jenkinsJobsStateScannerConfig = JenkinsApiJsonResourceScannerConfig
+        .of(config, JENKINS_POLLING_PERIOD__IN_SEC__15 * 1000, JENKINS_RESOURCE_PATH__MAIS__BUILD_JOBS);
+    final JenkinsApiJsonResourceScanner jenkinsApiJsonScanner = new JenkinsApiJsonResourceScanner(
+        jenkinsJobsStateScannerConfig);
 
-		final JenkinsApiJsonResourceScannerEventsListener scannerEventsListener = new JenkinsApiJsonResourceScannerEventsListener() {
+    final JenkinsApiJsonResourceScannerEventsListener scannerEventsListener = new JenkinsApiJsonResourceScannerEventsListener() {
 
-			@Override
-			public void onBeforeResourceRequest(final String resourcePath) {
-			}
+      @Override
+      public void onBeforeResourceRequest(final String resourcePath) {
+      }
 
-			@Override
-			public void onAfterResourceResponse(final String resourcePath, final Map<String, Object> jsonRootNode) {
+      @Override
+      public void onAfterResourceResponse(final String resourcePath, final Map<String, Object> jsonRootNode) {
 
-				final Collection<Map<String, Object>> jsonJobNodes = JenkinsApiJsonParser.extractJobNodes(jsonRootNode);
-				final Set<String> jobsStatesSummary = JenkinsApiJsonParser.collectJobsStates(jsonJobNodes,
-						JENKINS_JOB_NAMES_TO_MONITOR__REGEX);
+        final Collection<Map<String, Object>> jsonJobNodes = JenkinsApiJsonParser.extractJobNodes(jsonRootNode);
+        final Set<String> jobsStatesSummary = JenkinsApiJsonParser.collectJobsStates(jsonJobNodes,
+            JENKINS_JOB_NAMES_TO_MONITOR__REGEX);
 
-				final ESirenOfShameAlarmLevel highestState;
-				if (jobsStatesSummary.contains("red")) {
-					highestState = ESirenOfShameAlarmLevel.RED;
-				} else if (jobsStatesSummary.contains("red_anime")) {
-					highestState = ESirenOfShameAlarmLevel.RED_EXPECTING_UPDATE;
-				} else if (jobsStatesSummary.contains("yellow") || jobsStatesSummary.contains("aborted")) {
-					highestState = ESirenOfShameAlarmLevel.YELLOW;
-				} else if (jobsStatesSummary.contains("yellow_anime") || jobsStatesSummary.contains("aborted_anime")) {
-					highestState = ESirenOfShameAlarmLevel.YELLOW_EXPECTING_UPDATE;
-				} else if (jobsStatesSummary.contains("blue_anime")) {
-					highestState = ESirenOfShameAlarmLevel.GREENBLUE_EXPECTING_UPDATE;
-				} else if (jobsStatesSummary.contains("blue")) {
-					highestState = ESirenOfShameAlarmLevel.GREENBLUE;
-				} else {
-					highestState = ESirenOfShameAlarmLevel.UNDEFINED;
-				}
-				sirenOfShameJavaFXController.updateAlarmLevelTo(highestState);
-				sirenOfShameJavaFXController.updateJenkinsStateInfo(jsonJobNodes);
-			}
-		};
-		jenkinsApiJsonScanner.subscribe(scannerEventsListener);
+        final ESirenOfShameAlarmLevel highestState;
+        if (jobsStatesSummary.contains("red")) {
+          highestState = ESirenOfShameAlarmLevel.RED;
+        } else if (jobsStatesSummary.contains("red_anime")) {
+          highestState = ESirenOfShameAlarmLevel.RED_EXPECTING_UPDATE;
+        } else if (jobsStatesSummary.contains("yellow") || jobsStatesSummary.contains("aborted")) {
+          highestState = ESirenOfShameAlarmLevel.YELLOW;
+        } else if (jobsStatesSummary.contains("yellow_anime") || jobsStatesSummary.contains("aborted_anime")) {
+          highestState = ESirenOfShameAlarmLevel.YELLOW_EXPECTING_UPDATE;
+        } else if (jobsStatesSummary.contains("blue_anime")) {
+          highestState = ESirenOfShameAlarmLevel.GREENBLUE_EXPECTING_UPDATE;
+        } else if (jobsStatesSummary.contains("blue")) {
+          highestState = ESirenOfShameAlarmLevel.GREENBLUE;
+        } else {
+          highestState = ESirenOfShameAlarmLevel.UNDEFINED;
+        }
+        sirenOfShameJavaFXController.updateAlarmLevelTo(highestState);
+        sirenOfShameJavaFXController.updateJenkinsStateInfo(jsonJobNodes);
+      }
+    };
+    jenkinsApiJsonScanner.subscribe(scannerEventsListener);
 
-		return jenkinsApiJsonScanner;
-	}
+    return jenkinsApiJsonScanner;
+  }
 
-	@Override
-	public void close() throws Exception {
+  @Override
+  public void close() throws Exception {
 
-		jenkinsApiJsonScannerThread.interrupt();
-	}
+    jenkinsApiJsonScannerThread.interrupt();
+  }
 
-	// ... business methods
+  // ... business methods
 
-	public void connect() {
+  public void connect() {
 
-		sirenOfShameController.connect();
+    sirenOfShameController.connect();
 
-		final String portName = sirenOfShameController.getPortName();
-		final ESirenOfShameAlarmLevel alarmLevel = sirenOfShameController.getCurrentAlarmLevel();
+    final String portName = sirenOfShameController.getPortName();
+    final ESirenOfShameAlarmLevel alarmLevel = sirenOfShameController.getCurrentAlarmLevel();
 
-		gui.onConnected(portName, alarmLevel);
+    gui.onConnected(portName, alarmLevel);
 
-		jenkinsApiJsonScannerThread = new Thread(jenkinsApiJsonScanner);
-		jenkinsApiJsonScannerThread.start();
-	}
+    jenkinsApiJsonScannerThread = new Thread(jenkinsApiJsonScanner);
+    jenkinsApiJsonScannerThread.start();
+  }
 
-	public void disconnect() {
+  public void disconnect() {
 
-		jenkinsApiJsonScannerThread.interrupt();
-		sirenOfShameController.disconnect();
+    jenkinsApiJsonScannerThread.interrupt();
+    sirenOfShameController.disconnect();
 
-		gui.onDisconnected();
-	}
+    gui.onDisconnected();
+  }
 
-	public void updateAlarmLevelTo(final ESirenOfShameAlarmLevel newAlarmLevel) {
+  public void updateAlarmLevelTo(final ESirenOfShameAlarmLevel newAlarmLevel) {
 
-		final ESirenOfShameAlarmLevel currentState = sirenOfShameController.getCurrentAlarmLevel();
-		if (currentState != newAlarmLevel) {
+    final ESirenOfShameAlarmLevel currentState = sirenOfShameController.getCurrentAlarmLevel();
+    if (currentState != newAlarmLevel) {
 
-			// sirenOfShameController.setAlarmLevelTo(newAlarmLevel);
-			gui.onAlarmLevelChanged(newAlarmLevel);
-		}
-	}
+      // sirenOfShameController.setAlarmLevelTo(newAlarmLevel);
+      gui.onAlarmLevelChanged(newAlarmLevel);
+    }
+  }
 
-	protected void updateJenkinsStateInfo(final Collection<Map<String, Object>> jsonJobNodes) {
+  protected void updateJenkinsStateInfo(final Collection<Map<String, Object>> jsonJobNodes) {
 
-		sirenOfShameController.updateJenkinsStateInfo(jsonJobNodes);
-	}
+    sirenOfShameController.updateJenkinsStateInfo(jsonJobNodes);
+  }
 
-	public void showPropertiesDialog() {
+  public void showPropertiesDialog() {
 
-		gui.showPropertiesDialog();
-	}
+    gui.showPropertiesDialog();
+  }
 
 }

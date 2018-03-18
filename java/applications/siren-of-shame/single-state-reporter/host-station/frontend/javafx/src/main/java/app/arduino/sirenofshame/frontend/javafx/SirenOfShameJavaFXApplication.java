@@ -16,109 +16,109 @@ import javafx.stage.Stage;
 
 public class SirenOfShameJavaFXApplication extends Application {
 
-	// ... constants
+  // ... constants
 
-	private static final int DEFAULT_SCENE_WIDTH_IN_PX__270 = 270;
-	private static final int DEFAULT_SCENE_HEIGHT_IN_PX__440 = 440;
+  private static final int DEFAULT_SCENE_WIDTH_IN_PX__270 = 270;
+  private static final int DEFAULT_SCENE_HEIGHT_IN_PX__440 = 440;
 
-	private final String CSS_REFERENCE = this.getClass().getResource("/style/index.css").toExternalForm();
+  private final String CSS_REFERENCE = this.getClass().getResource("/style/index.css").toExternalForm();
 
-	// ... properties
+  // ... properties
 
-	private ToolBarComponent toolBarComponent;
-	private ControlBoardComponent controlBoardComponent;
-	private StatusLineComponent statusLineComponent;
-	private PropertiesDialogStage propertiesDialogStage;
+  private ToolBarComponent toolBarComponent;
+  private ControlBoardComponent controlBoardComponent;
+  private StatusLineComponent statusLineComponent;
+  private PropertiesDialogStage propertiesDialogStage;
 
-	private SirenOfShameJavaFXController sirenOfShameJavaFXController;
+  private SirenOfShameJavaFXController sirenOfShameJavaFXController;
 
-	// ... life cycle methods
+  // ... life cycle methods
 
-	@Override
-	public void init() throws Exception {
+  @Override
+  public void init() throws Exception {
 
-		super.init();
+    super.init();
 
-		sirenOfShameJavaFXController = new SirenOfShameJavaFXController(this);
-	}
+    sirenOfShameJavaFXController = new SirenOfShameJavaFXController(this);
+  }
 
-	@Override
-	public void start(final Stage window) throws Exception {
+  @Override
+  public void start(final Stage window) throws Exception {
 
-		// ...
+    // ...
 
-		propertiesDialogStage = new PropertiesDialogStage();
+    propertiesDialogStage = new PropertiesDialogStage();
 
-		// ...
+    // ...
 
-		final BorderPane rootNode = new BorderPane();
+    final BorderPane rootNode = new BorderPane();
 
-		toolBarComponent = new ToolBarComponent(sirenOfShameJavaFXController);
-		rootNode.setTop(toolBarComponent);
+    toolBarComponent = new ToolBarComponent(sirenOfShameJavaFXController);
+    rootNode.setTop(toolBarComponent);
 
-		controlBoardComponent = new ControlBoardComponent(sirenOfShameJavaFXController);
-		rootNode.setCenter(controlBoardComponent);
+    controlBoardComponent = new ControlBoardComponent(sirenOfShameJavaFXController);
+    rootNode.setCenter(controlBoardComponent);
 
-		statusLineComponent = new StatusLineComponent();
-		rootNode.setBottom(statusLineComponent);
+    statusLineComponent = new StatusLineComponent();
+    rootNode.setBottom(statusLineComponent);
 
-		// ...
+    // ...
 
-		toolBarComponent.setConnectionState(EConnectionState.DISCONNECTED);
-		statusLineComponent.setStatusTextTo(UIMessage.STATUS_DISCONNECTED.getText());
+    toolBarComponent.setConnectionState(EConnectionState.DISCONNECTED);
+    statusLineComponent.setStatusTextTo(UIMessage.STATUS_DISCONNECTED.getText());
 
-		final Scene scene = new Scene(rootNode, DEFAULT_SCENE_WIDTH_IN_PX__270, DEFAULT_SCENE_HEIGHT_IN_PX__440);
-		scene.getStylesheets().clear();
-		scene.getStylesheets().add(CSS_REFERENCE);
+    final Scene scene = new Scene(rootNode, DEFAULT_SCENE_WIDTH_IN_PX__270, DEFAULT_SCENE_HEIGHT_IN_PX__440);
+    scene.getStylesheets().clear();
+    scene.getStylesheets().add(CSS_REFERENCE);
 
-		window.setScene(scene);
+    window.setScene(scene);
 
-		window.setTitle(UIMessage.APP_TITLE.getText());
-		window.getIcons().add(new Image(UIImage.APPLICATION_LOGO_36.getAsStream()));
+    window.setTitle(UIMessage.APP_TITLE.getText());
+    window.getIcons().add(new Image(UIImage.APPLICATION_LOGO_36.getAsStream()));
 
-		resetApplicationState();
+    resetApplicationState();
 
-		window.setResizable(false);
-		window.show();
-	}
+    window.setResizable(false);
+    window.show();
+  }
 
-	@Override
-	public void stop() throws Exception {
+  @Override
+  public void stop() throws Exception {
 
-		super.stop();
-	}
+    super.stop();
+  }
 
-	// ... GUI components management methods
+  // ... GUI components management methods
 
-	public void showPropertiesDialog() {
-		propertiesDialogStage.showAndWait();
-	}
+  public void showPropertiesDialog() {
+    propertiesDialogStage.showAndWait();
+  }
 
-	private void resetApplicationState() {
+  private void resetApplicationState() {
 
-		toolBarComponent.setConnectionState(EConnectionState.DISCONNECTED);
-		toolBarComponent.resetStateSelection();
-		controlBoardComponent.resetAlarmLevelSelection();
-		statusLineComponent.setStatusTextTo("Disconnected");
-	}
+    toolBarComponent.setConnectionState(EConnectionState.DISCONNECTED);
+    toolBarComponent.resetStateSelection();
+    controlBoardComponent.resetAlarmLevelSelection();
+    statusLineComponent.setStatusTextTo("Disconnected");
+  }
 
-	public void onConnected(final String portName, final ESirenOfShameAlarmLevel state) {
+  public void onConnected(final String portName, final ESirenOfShameAlarmLevel state) {
 
-		toolBarComponent.setConnectionState(EConnectionState.CONNECTED);
-		toolBarComponent.updateStateSelection(state);
-		controlBoardComponent.updateAlarmLevelSelection(state);
-		statusLineComponent.setStatusTextTo("Connected to the port " + portName);
-	}
+    toolBarComponent.setConnectionState(EConnectionState.CONNECTED);
+    toolBarComponent.updateStateSelection(state);
+    controlBoardComponent.updateAlarmLevelSelection(state);
+    statusLineComponent.setStatusTextTo("Connected to the port " + portName);
+  }
 
-	public void onDisconnected() {
+  public void onDisconnected() {
 
-		resetApplicationState();
-	}
+    resetApplicationState();
+  }
 
-	public void onAlarmLevelChanged(final ESirenOfShameAlarmLevel state) {
+  public void onAlarmLevelChanged(final ESirenOfShameAlarmLevel state) {
 
-		toolBarComponent.updateStateSelection(state);
-		controlBoardComponent.updateAlarmLevelSelection(state);
-	}
+    toolBarComponent.updateStateSelection(state);
+    controlBoardComponent.updateAlarmLevelSelection(state);
+  }
 
 }

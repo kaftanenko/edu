@@ -7,8 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import app.sirenofshame.common.host.service.jenkins.client.util.JenkinsClientLogManager;
 
-public class DefaultJenkinsApiJsonResourceScannerEventsListener
-    implements JenkinsApiJsonResourceScannerEventsListener {
+public class DefaultJenkinsApiJsonResourceScannerEventsListener implements JenkinsApiJsonResourceScannerEventsListener {
 
   // ... dependencies
 

@@ -12,37 +12,37 @@ import javafx.stage.Stage;
 
 public class PropertiesDialogStage extends Stage {
 
-	public PropertiesDialogStage() {
+  public PropertiesDialogStage() {
 
-		setTitle("Einstellungen");
-		initModality(Modality.APPLICATION_MODAL);
+    setTitle("Einstellungen");
+    initModality(Modality.APPLICATION_MODAL);
 
-		final GridPane dialogPane = new GridPane();
+    final GridPane dialogPane = new GridPane();
 
-		dialogPane.add(new Label("Jenkins URL"), 1, 1);
-		dialogPane.add(new TextField(), 2, 1);
+    dialogPane.add(new Label("Jenkins URL"), 1, 1);
+    dialogPane.add(new TextField(), 2, 1);
 
-		dialogPane.add(new Label("Nutzername"), 1, 2);
-		dialogPane.add(new TextField(), 2, 2);
+    dialogPane.add(new Label("Nutzername"), 1, 2);
+    dialogPane.add(new TextField(), 2, 2);
 
-		dialogPane.add(new Label("Password"), 1, 3);
-		dialogPane.add(new PasswordField(), 2, 3);
+    dialogPane.add(new Label("Password"), 1, 3);
+    dialogPane.add(new PasswordField(), 2, 3);
 
-		final FlowPane buttonPane = new FlowPane();
+    final FlowPane buttonPane = new FlowPane();
 
-		final Button buttonOk = new Button("Ok");
-		buttonOk.setOnAction(e -> this.close());
-		buttonPane.getChildren().add(buttonOk);
+    final Button buttonOk = new Button("Ok");
+    buttonOk.setOnAction(e -> this.close());
+    buttonPane.getChildren().add(buttonOk);
 
-		final Button buttonCancel = new Button("Cancel");
-		buttonCancel.setOnAction(e -> this.close());
-		buttonPane.getChildren().add(buttonCancel);
+    final Button buttonCancel = new Button("Cancel");
+    buttonCancel.setOnAction(e -> this.close());
+    buttonPane.getChildren().add(buttonCancel);
 
-		dialogPane.add(buttonPane, 1, 4, 2, 1);
+    dialogPane.add(buttonPane, 1, 4, 2, 1);
 
-		final Scene scene = new Scene(dialogPane);
+    final Scene scene = new Scene(dialogPane);
 
-		setScene(scene);
-	}
+    setScene(scene);
+  }
 
 }

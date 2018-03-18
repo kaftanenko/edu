@@ -4,16 +4,16 @@ import app.arduino.sirenofshame.singlestate.service.host.api.type.ESirenOfShameA
 
 public interface SirenOfShameSingleStateHostController {
 
-	// ... business methods
+  // ... business methods
 
-	public ESirenOfShameAlarmLevel getCurrentAlarmLevel();
+  public ESirenOfShameAlarmLevel getCurrentAlarmLevel();
 
-	void setAlarmLevelTo(ESirenOfShameAlarmLevel alarmLevel);
+  void setAlarmLevelTo(ESirenOfShameAlarmLevel alarmLevel);
 
-	// ... events management methods
+  // ... events management methods
 
-	public void subscribe(SirenOfShameSingleStateHostControllerEventsListener eventsListener);
+  public void subscribe(SirenOfShameSingleStateHostControllerEventsListener eventsListener);
 
-	public void unsubscribe(SirenOfShameSingleStateHostControllerEventsListener eventsListener);
+  public void unsubscribe(SirenOfShameSingleStateHostControllerEventsListener eventsListener);
 
 }

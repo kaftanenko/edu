@@ -4,67 +4,67 @@ import java.util.ResourceBundle;
 
 public enum UIMessage {
 
-	// ... enumeration values
+  // ... enumeration values
 
-	APP_TITLE("sirenofshame.app-title"),
+  APP_TITLE("sirenofshame.app-title"),
 
-	EMPTY("sirenofshame.common.empty"),
+  EMPTY("sirenofshame.common.empty"),
 
-	ACTION_COMMON_CONNECT("sirenofshame.common.connect"),
-	ACTION_COMMON_DISCONNECT("sirenofshame.common.disconnect"),
+  ACTION_COMMON_CONNECT("sirenofshame.common.connect"),
+  ACTION_COMMON_DISCONNECT("sirenofshame.common.disconnect"),
 
-	STATUS_CONNECTED_TO("sirenofshame.common.status.connected-to"),
-	STATUS_DISCONNECTED("sirenofshame.common.status.disconnected"), //
+  STATUS_CONNECTED_TO("sirenofshame.common.status.connected-to"),
+  STATUS_DISCONNECTED("sirenofshame.common.status.disconnected"), //
 
-	BUTTON_SET_TO_ALARM_LEVEL("sirenofshame.common.button.set-to-alarm-level."),//
-	;
+  BUTTON_SET_TO_ALARM_LEVEL("sirenofshame.common.button.set-to-alarm-level."),//
+  ;
 
-	// ... constants
+  // ... constants
 
-	private static final String RESOURCE_PATH_LANG_MESSAGES_PROPERTIES = "text.messages";
+  private static final String RESOURCE_PATH_LANG_MESSAGES_PROPERTIES = "text.messages";
 
-	// ... properties
+  // ... properties
 
-	private static ResourceBundle messagesBundle = ResourceBundle.getBundle(RESOURCE_PATH_LANG_MESSAGES_PROPERTIES);
+  private static ResourceBundle messagesBundle = ResourceBundle.getBundle(RESOURCE_PATH_LANG_MESSAGES_PROPERTIES);
 
-	// ... business methods
+  // ... business methods
 
-	private String messageKey;
+  private String messageKey;
 
-	// ... constructors
+  // ... constructors
 
-	private UIMessage(final String messageKey) {
+  private UIMessage(final String messageKey) {
 
-		this.messageKey = messageKey;
-	}
+    this.messageKey = messageKey;
+  }
 
-	// ... business methods
+  // ... business methods
 
-	public String getKey() {
+  public String getKey() {
 
-		return messageKey;
-	}
+    return messageKey;
+  }
 
-	public String getText() {
+  public String getText() {
 
-		return getMessageText(messageKey);
-	}
+    return getMessageText(messageKey);
+  }
 
-	public String getText(final String keyPostfix) {
+  public String getText(final String keyPostfix) {
 
-		return getMessageText(messageKey + keyPostfix);
-	}
+    return getMessageText(messageKey + keyPostfix);
+  }
 
-	// ... helper methods
+  // ... helper methods
 
-	public static String getMessageText(final String messageKey) {
+  public static String getMessageText(final String messageKey) {
 
-		return messagesBundle.getString(messageKey);
-	}
+    return messagesBundle.getString(messageKey);
+  }
 
-	public static ResourceBundle getBundle() {
+  public static ResourceBundle getBundle() {
 
-		return messagesBundle;
-	}
+    return messagesBundle;
+  }
 
 }

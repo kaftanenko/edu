@@ -4,40 +4,40 @@ import app.sirenofshame.common.host.service.jenkins.client.http.JenkinsHttpClien
 
 public class JenkinsApiJsonResourceScannerConfig {
 
-	// ... properties
+  // ... properties
 
-	private final JenkinsHttpClientConfig jenkinsHttpClientConfig;
-	private final long pollingTaktDurationInMs;
-	private final String resourcePath;
+  private final JenkinsHttpClientConfig jenkinsHttpClientConfig;
+  private final long pollingTaktDurationInMs;
+  private final String resourcePath;
 
-	// ... constructors
+  // ... constructors
 
-	private JenkinsApiJsonResourceScannerConfig(final JenkinsHttpClientConfig jenkinsHttpClientConfig,
-			final long pollingTaktDurationInMs, final String resourcePath) {
+  private JenkinsApiJsonResourceScannerConfig(final JenkinsHttpClientConfig jenkinsHttpClientConfig,
+      final long pollingTaktDurationInMs, final String resourcePath) {
 
-		this.jenkinsHttpClientConfig = jenkinsHttpClientConfig;
-		this.pollingTaktDurationInMs = pollingTaktDurationInMs;
-		this.resourcePath = resourcePath;
-	}
+    this.jenkinsHttpClientConfig = jenkinsHttpClientConfig;
+    this.pollingTaktDurationInMs = pollingTaktDurationInMs;
+    this.resourcePath = resourcePath;
+  }
 
-	public static JenkinsApiJsonResourceScannerConfig of(final JenkinsHttpClientConfig jenkinsHttpClientConfig,
-			final long pollingTaktDurationInMs, final String resourcePath) {
+  public static JenkinsApiJsonResourceScannerConfig of(final JenkinsHttpClientConfig jenkinsHttpClientConfig,
+      final long pollingTaktDurationInMs, final String resourcePath) {
 
-		return new JenkinsApiJsonResourceScannerConfig(jenkinsHttpClientConfig, pollingTaktDurationInMs, resourcePath);
-	}
+    return new JenkinsApiJsonResourceScannerConfig(jenkinsHttpClientConfig, pollingTaktDurationInMs, resourcePath);
+  }
 
-	// ... getter methods
+  // ... getter methods
 
-	public JenkinsHttpClientConfig getJenkinsHttpClientConfig() {
-		return jenkinsHttpClientConfig;
-	}
+  public JenkinsHttpClientConfig getJenkinsHttpClientConfig() {
+    return jenkinsHttpClientConfig;
+  }
 
-	public long getPollingTaktDurationInMs() {
-		return pollingTaktDurationInMs;
-	}
+  public long getPollingTaktDurationInMs() {
+    return pollingTaktDurationInMs;
+  }
 
-	public String getResourcePath() {
-		return resourcePath;
-	}
+  public String getResourcePath() {
+    return resourcePath;
+  }
 
 }

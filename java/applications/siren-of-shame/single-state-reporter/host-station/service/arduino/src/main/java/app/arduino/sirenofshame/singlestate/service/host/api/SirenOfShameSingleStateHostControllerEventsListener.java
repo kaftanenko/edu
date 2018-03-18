@@ -4,8 +4,8 @@ import app.arduino.sirenofshame.singlestate.service.host.api.type.ESirenOfShameA
 
 public interface SirenOfShameSingleStateHostControllerEventsListener {
 
-	// ... events handler methods
+  // ... events handler methods
 
-	public void onStateChanged(ESirenOfShameAlarmLevel from, ESirenOfShameAlarmLevel to);
+  public void onStateChanged(ESirenOfShameAlarmLevel from, ESirenOfShameAlarmLevel to);
 
 }

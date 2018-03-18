@@ -5,12 +5,12 @@ import app.arduino.sirenofshame.singlestate.service.host.api.type.SirenOfShameSi
 
 public class DefaultSirenOfShameSingleStateHostControllerConfig implements SirenOfShameSingleStateHostControllerConfig {
 
-	// ... business methods
+  // ... business methods
 
-	@Override
-	public ESirenOfShameAlarmLevel getInitialState() {
+  @Override
+  public ESirenOfShameAlarmLevel getInitialState() {
 
-		return ESirenOfShameAlarmLevel.GREENBLUE;
-	}
+    return ESirenOfShameAlarmLevel.GREENBLUE;
+  }
 
 }

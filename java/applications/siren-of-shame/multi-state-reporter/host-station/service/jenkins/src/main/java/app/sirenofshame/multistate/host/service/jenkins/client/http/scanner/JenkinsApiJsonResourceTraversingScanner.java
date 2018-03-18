@@ -17,60 +17,60 @@ import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsA
 
 public class JenkinsApiJsonResourceTraversingScanner extends JenkinsApiJsonResourceScanner {
 
-    // ... constructors
+  // ... constructors
 
-    public JenkinsApiJsonResourceTraversingScanner(final JenkinsApiJsonResourceScannerConfig config) {
+  public JenkinsApiJsonResourceTraversingScanner(final JenkinsApiJsonResourceScannerConfig config) {
 
-        super(config);
+    super(config);
+  }
+
+  @Override
+  protected Map<String, Object> callJsonApi(final String resourcePath) {
+
+    final Map<String, Object> resource = super.callJsonApi(resourcePath);
+
+    final Collection<Map<String, Object>> jobNodes = JenkinsApiJsonParser.extractJobNodes(resource);
+    for (final Map<String, Object> node : jobNodes) {
+
+      final EJenkinsApiNodeType nodeType = JenkinsApiJsonParser.getNodeType(node);
+      switch (nodeType) {
+
+        case FOLDER:
+
+          final String subfolderResourcePath = getResourcePath(node);
+          final Map<String, Object> subfolderDetails = callJsonApi(subfolderResourcePath);
+
+          JenkinsApiJsonParser.replaceNodeContent(node, subfolderDetails);
+          break;
+        default: // ... nothing to do, no further node types must be
+                 // handled here.
+      }
     }
+    return resource;
+  }
 
-    @Override
-    protected Map<String, Object> callJsonApi(final String resourcePath) {
+  protected Map<String, Object> callJsonApiWithMockData() {
 
-        final Map<String, Object> resource = super.callJsonApi(resourcePath);
+    try {
+      final File file = new File(this.getClass().getResource("jenkins-info-mock-data.json").toURI());
+      final String bodyAsString = FileUtils.readFileToString(file);
 
-        final Collection<Map<String, Object>> jobNodes = JenkinsApiJsonParser.extractJobNodes(resource);
-        for (final Map<String, Object> node : jobNodes) {
-
-            final EJenkinsApiNodeType nodeType = JenkinsApiJsonParser.getNodeType(node);
-            switch (nodeType) {
-
-                case FOLDER:
-
-                    final String subfolderResourcePath = getResourcePath(node);
-                    final Map<String, Object> subfolderDetails = callJsonApi(subfolderResourcePath);
-
-                    JenkinsApiJsonParser.replaceNodeContent(node, subfolderDetails);
-                    break;
-                default: // ... nothing to do, no further node types must be
-                         // handled here.
-            }
-        }
-        return resource;
+      final Map<String, Object> jsonContentAsMap = //
+          new ObjectMapper().readValue(bodyAsString, new TypeReference<Map<String, Object>>() {
+          });
+      return jsonContentAsMap;
+    } catch (final Exception ex) {
+      throw new RuntimeException(ex);
     }
+  }
 
-    protected Map<String, Object> callJsonApiWithMockData() {
+  private String getResourcePath(final Map<String, Object> node) {
 
-        try {
-            final File file = new File(this.getClass().getResource("jenkins-info-mock-data.json").toURI());
-            final String bodyAsString = FileUtils.readFileToString(file);
+    final String nodeUrl = JenkinsApiJsonParser.getNodeUrl(node);
+    final String hostUrl = config.getJenkinsHttpClientConfig().getHostUrl();
 
-            final Map<String, Object> jsonContentAsMap = //
-                    new ObjectMapper().readValue(bodyAsString, new TypeReference<Map<String, Object>>() {
-                    });
-            return jsonContentAsMap;
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    private String getResourcePath(final Map<String, Object> node) {
-
-        final String nodeUrl = JenkinsApiJsonParser.getNodeUrl(node);
-        final String hostUrl = config.getJenkinsHttpClientConfig().getHostUrl();
-
-        final String resourcePath = StringUtils.substringAfter(nodeUrl, hostUrl);
-        return resourcePath;
-    }
+    final String resourcePath = StringUtils.substringAfter(nodeUrl, hostUrl);
+    return resourcePath;
+  }
 
 }

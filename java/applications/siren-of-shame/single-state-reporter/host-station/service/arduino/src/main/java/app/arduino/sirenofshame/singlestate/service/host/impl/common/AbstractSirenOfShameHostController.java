@@ -10,47 +10,47 @@ import app.arduino.sirenofshame.singlestate.service.host.api.type.ESirenOfShameA
 import app.arduino.sirenofshame.singlestate.service.host.api.type.SirenOfShameSingleStateHostControllerConfig;
 
 public abstract class AbstractSirenOfShameHostController //
-		extends AbstractSerialChannelHostController //
-		implements SirenOfShameSingleStateHostController //
+    extends AbstractSerialChannelHostController //
+    implements SirenOfShameSingleStateHostController //
 {
 
-	// ... properties
+  // ... properties
 
-	protected final SirenOfShameSingleStateHostControllerConfig configuration;
+  protected final SirenOfShameSingleStateHostControllerConfig configuration;
 
-	private final List<SirenOfShameSingleStateHostControllerEventsListener> eventsListeners;
+  private final List<SirenOfShameSingleStateHostControllerEventsListener> eventsListeners;
 
-	// ... constructors
+  // ... constructors
 
-	public AbstractSirenOfShameHostController(final SirenOfShameSingleStateHostControllerConfig configuration) {
+  public AbstractSirenOfShameHostController(final SirenOfShameSingleStateHostControllerConfig configuration) {
 
-		this.configuration = configuration;
-		this.eventsListeners = new ArrayList<>();
-	}
+    this.configuration = configuration;
+    this.eventsListeners = new ArrayList<>();
+  }
 
-	// ... events management methods
+  // ... events management methods
 
-	protected void notifyEventsListenersAboutStateChange( //
-			final ESirenOfShameAlarmLevel from, //
-			final ESirenOfShameAlarmLevel to //
-	) {
+  protected void notifyEventsListenersAboutStateChange( //
+      final ESirenOfShameAlarmLevel from, //
+      final ESirenOfShameAlarmLevel to //
+  ) {
 
-		for (final SirenOfShameSingleStateHostControllerEventsListener eventsListener : eventsListeners) {
+    for (final SirenOfShameSingleStateHostControllerEventsListener eventsListener : eventsListeners) {
 
-			eventsListener.onStateChanged(from, to);
-		}
-	}
+      eventsListener.onStateChanged(from, to);
+    }
+  }
 
-	@Override
-	public void subscribe(final SirenOfShameSingleStateHostControllerEventsListener eventsListener) {
+  @Override
+  public void subscribe(final SirenOfShameSingleStateHostControllerEventsListener eventsListener) {
 
-		eventsListeners.add(eventsListener);
-	}
+    eventsListeners.add(eventsListener);
+  }
 
-	@Override
-	public void unsubscribe(final SirenOfShameSingleStateHostControllerEventsListener eventsListener) {
+  @Override
+  public void unsubscribe(final SirenOfShameSingleStateHostControllerEventsListener eventsListener) {
 
-		eventsListeners.remove(eventsListener);
-	}
+    eventsListeners.remove(eventsListener);
+  }
 
 }
