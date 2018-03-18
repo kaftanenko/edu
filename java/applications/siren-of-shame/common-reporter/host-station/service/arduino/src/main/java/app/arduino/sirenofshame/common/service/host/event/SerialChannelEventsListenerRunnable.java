@@ -43,7 +43,7 @@ public class SerialChannelEventsListenerRunnable implements Runnable {
 
       try {
 
-        serialChannelHostController.readMessage();
+        serialChannelHostController.receiveMessage();
         Thread.sleep(serialChannelPollingTaktInMs);
       } catch (final InterruptedException ex) {
         LOG.error("The events listener thread interrupted.", ex);

@@ -1,10 +1,12 @@
 package app.arduino.sirenofshame.common.service.host;
 
 import static app.arduino.sirenofshame.common.service.host.util.SerialChannelUtils.closeSerialChannel;
-import static app.arduino.sirenofshame.common.service.host.util.SerialChannelUtils.findSerialChannelByWellcomeMessage;
+import static app.arduino.sirenofshame.common.service.host.util.SerialChannelUtils.detectSerialPortName;
 import static app.arduino.sirenofshame.common.service.host.util.SerialChannelUtils.openSerialChannel;
-import static app.arduino.sirenofshame.common.service.host.util.SerialChannelUtils.readBytes;
-import static app.arduino.sirenofshame.common.service.host.util.SerialChannelUtils.writeBytes;
+import static app.arduino.sirenofshame.common.service.host.util.SerialChannelUtils.readData;
+import static app.arduino.sirenofshame.common.service.host.util.SerialChannelUtils.readMessage;
+import static app.arduino.sirenofshame.common.service.host.util.SerialChannelUtils.writeData;
+import static app.arduino.sirenofshame.common.service.host.util.SerialChannelUtils.writeMessage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,8 +50,7 @@ public class SerialChannelHostController {
 
   public void connect() {
 
-    final String dynamicSerialChannelPortName = //
-        findSerialChannelByWellcomeMessage(EXPECTING_WELCOME_MESSAGE);
+    final String dynamicSerialChannelPortName = detectSerialPortName(EXPECTING_WELCOME_MESSAGE);
     connect(dynamicSerialChannelPortName);
   }
 
@@ -101,21 +102,47 @@ public class SerialChannelHostController {
     return keepEventsListeningThreadRunning;
   }
 
+  public void sendData(final byte[] data) {
+
+    try {
+      writeData(connectedToSerialChannel, data);
+      notifyEventListenersAboutSentData(data);
+    } catch (final IOException ex) {
+      throw handleFatalException(ex);
+    }
+  }
+
   public void sendMessage(final String message) {
 
     try {
-      writeBytes(connectedToSerialChannel, message);
+      writeMessage(connectedToSerialChannel, message);
       notifyEventListenersAboutSentMessage(message);
     } catch (final IOException ex) {
       throw handleFatalException(ex);
     }
   }
 
-  public String readMessage() {
+  public byte[] receiveData() {
 
     try {
 
-      final String message = readBytes(connectedToSerialChannel);
+      final byte[] data = readData(connectedToSerialChannel);
+
+      if (data.length > 0) {
+        notifyEventListenersAboutReceivedData(data);
+      }
+
+      return data;
+    } catch (final IOException ex) {
+      throw handleFatalException(ex);
+    }
+  }
+
+  public String receiveMessage() {
+
+    try {
+
+      final String message = readMessage(connectedToSerialChannel);
 
       if (StringUtils.isNotBlank(message)) {
         notifyEventListenersAboutReceivedMessage(message);
@@ -136,20 +163,32 @@ public class SerialChannelHostController {
 
   // ... events management methods
 
-  private void notifyEventListenersAboutSentMessage(final String message) {
+  private void notifyEventListenersAboutReceivedData(final byte[] data) {
 
-    for (final SerialChannelEventsListener eventsListener : eventsListeners) {
-
-      eventsListener.onMessageSent(message);
-    }
+    eventsListeners //
+        .stream() //
+        .forEach(eventsListener -> eventsListener.onDataReceived(data));
   }
 
   private void notifyEventListenersAboutReceivedMessage(final String message) {
 
-    for (final SerialChannelEventsListener eventsListener : eventsListeners) {
+    eventsListeners //
+        .stream() //
+        .forEach(eventsListener -> eventsListener.onMessageReceived(message));
+  }
 
-      eventsListener.onMessageReceived(message);
-    }
+  private void notifyEventListenersAboutSentData(final byte[] data) {
+
+    eventsListeners //
+        .stream() //
+        .forEach(eventsListener -> eventsListener.onDataSent(data));
+  }
+
+  private void notifyEventListenersAboutSentMessage(final String message) {
+
+    eventsListeners //
+        .stream() //
+        .forEach(eventsListener -> eventsListener.onMessageSent(message));
   }
 
   public void subscribe(final SerialChannelEventsListener eventsListener) {

@@ -2,6 +2,7 @@ package app.arduino.sirenofshame.common.service.host.util;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -63,32 +64,32 @@ public class SerialChannelUtils {
     LOG.info("... succeeded.");
   }
 
-  public static String findSerialChannelByWellcomeMessage(final String expectingWellcomeMessage) {
+  public static String detectSerialPortName(final String expectingWellcomeMessage) {
 
     final long maxReadAttemptsCount = 1;
     final long delayBetweenReadAttempts = 0;
 
-    return findSerialChannelByWellcomeMessage(expectingWellcomeMessage, maxReadAttemptsCount, delayBetweenReadAttempts);
+    return detectSerialPortName(expectingWellcomeMessage, maxReadAttemptsCount, delayBetweenReadAttempts);
   }
 
-  public static String findSerialChannelByWellcomeMessage( //
+  public static String detectSerialPortName( //
       final String expectingWellcomeMessage, //
       final long maxReadAttemptsCount, //
       final long delayBetweenReadAttempts //
   ) {
 
-    final List<String> portsNames = SerialPort.getAvailablePortsNames();
+    final List<String> portNames = SerialPort.getAvailablePortsNames();
 
     LOG.info("Try to negotiate appropriate serial channel by expected wellcome message...");
 
-    for (final String portName : portsNames) {
+    for (final String portName : portNames) {
 
       for (int attemptIndex = 0; attemptIndex < maxReadAttemptsCount; attemptIndex++) {
 
         try {
 
           final SerialChannel serialChannel = openSerialChannel(portName);
-          final String wellcomeMessage = readBytes(serialChannel);
+          final String wellcomeMessage = readMessage(serialChannel);
           serialChannel.close();
 
           if (wellcomeMessage.startsWith(expectingWellcomeMessage)) {
@@ -111,25 +112,60 @@ public class SerialChannelUtils {
     throw new RuntimeException(errorMessage);
   }
 
-  public static String readBytes(final SerialChannel channel) throws IOException {
+  public static byte[] readData(final SerialChannel channel) throws IOException {
 
-    final ByteBuffer messageBuffer = ByteBuffer.allocate(1024);
-    final int readBytes = channel.read(messageBuffer);
+    final byte[] readData = readBytes(channel);
 
-    final String message = (new String(messageBuffer.array())).trim();
+    LOG.info(String.format("... rx: (%d bytes)", readData.length));
 
-    LOG.info(String.format("... rx: (%d bytes) \"%s\"", readBytes, message));
+    return readData;
+  }
+
+  public static String readMessage(final SerialChannel channel) throws IOException {
+
+    final byte[] readData = readBytes(channel);
+
+    final String message = (new String(readData)).trim();
+    LOG.info(String.format("... rx: (%d bytes) \"%s\"", readData.length, message));
 
     return message;
   }
 
-  public static void writeBytes(final SerialChannel channel, final String message) throws IOException {
+  private static byte[] readBytes(final SerialChannel channel) throws IOException {
 
-    final ByteBuffer messageBuffer = ByteBuffer.wrap(message.getBytes());
-    final int writtenBytes = channel.write(messageBuffer);
+    final ByteBuffer messageBuffer = ByteBuffer.allocate(1_000_000);
+
+    final int readBytesCount = channel.read(messageBuffer);
+    final byte[] readData = Arrays.copyOf(messageBuffer.array(), readBytesCount);
+
+    return readData;
+  }
+
+  // ...
+
+  public static void writeData(final SerialChannel channel, final byte[] data) throws IOException {
+
+    final int writtenBytes = writeBytes(channel, data);
+
+    LOG.info(String.format("... tx: (%d bytes)", writtenBytes));
+  }
+
+  public static void writeMessage(final SerialChannel channel, final String message) throws IOException {
+
+    final byte[] messageBytes = message.getBytes();
+    final int writtenBytesCount = writeBytes(channel, messageBytes);
+
+    LOG.info(String.format("... tx: (%d bytes) \"%s\"", writtenBytesCount, message));
+  }
+
+  private static int writeBytes(final SerialChannel channel, final byte[] messageBytes) throws IOException {
+
+    final ByteBuffer messageBuffer = ByteBuffer.wrap(messageBytes);
+
+    final int writtenBytesCount = channel.write(messageBuffer);
     channel.flush(true, true);
 
-    LOG.info(String.format("... tx: (%d bytes) \"%s\"", writtenBytes, message));
+    return writtenBytesCount;
   }
 
 }

@@ -65,7 +65,7 @@ public class SirenOfShameSingleStateHostSerialChannelController extends Abstract
       if (super.isConnected()) {
 
         sendMessage(COMMAND__PING);
-        final String responseMessage = readMessage();
+        final String responseMessage = receiveMessage();
         return COMMAND__PING_RESPONSE_SUCCEEDED.equals(responseMessage);
       } else {
         return false;
@@ -83,7 +83,7 @@ public class SirenOfShameSingleStateHostSerialChannelController extends Abstract
     try {
       sendMessage(COMMAND__GET_CURRENT_ALARM_LEVEL);
 
-      final String currentState = readMessage();
+      final String currentState = receiveMessage();
       return ESirenOfShameAlarmLevel.valueOf(currentState);
     } catch (final Exception ex) {
       LOG.error(ex.getMessage());
@@ -122,7 +122,7 @@ public class SirenOfShameSingleStateHostSerialChannelController extends Abstract
     final ESirenOfShameAlarmLevel from = getCurrentAlarmLevel();
 
     sendMessage(commandMessage);
-    readMessage();
+    receiveMessage();
 
     final ESirenOfShameAlarmLevel to = getCurrentAlarmLevel();
 
