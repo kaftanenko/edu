@@ -1,14 +1,9 @@
 package app.sirenofshame.multistate.host.service.jenkins.client.http.scanner;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import app.sirenofshame.common.host.service.jenkins.client.http.parser.EJenkinsApiNodeType;
 import app.sirenofshame.common.host.service.jenkins.client.http.parser.JenkinsApiJsonParser;
@@ -23,6 +18,8 @@ public class JenkinsApiJsonResourceTraversingScanner extends JenkinsApiJsonResou
 
     super(config);
   }
+
+  // ... business methods
 
   @Override
   protected Map<String, Object> callJsonApi(final String resourcePath) {
@@ -49,20 +46,7 @@ public class JenkinsApiJsonResourceTraversingScanner extends JenkinsApiJsonResou
     return resource;
   }
 
-  protected Map<String, Object> callJsonApiWithMockData() {
-
-    try {
-      final File file = new File(this.getClass().getResource("jenkins-info-mock-data.json").toURI());
-      final String bodyAsString = FileUtils.readFileToString(file);
-
-      final Map<String, Object> jsonContentAsMap = //
-          new ObjectMapper().readValue(bodyAsString, new TypeReference<Map<String, Object>>() {
-          });
-      return jsonContentAsMap;
-    } catch (final Exception ex) {
-      throw new RuntimeException(ex);
-    }
-  }
+  // ... helper methods
 
   private String getResourcePath(final Map<String, Object> node) {
 
