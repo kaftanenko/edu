@@ -2,6 +2,7 @@ package app.arduino.sirenofshame.common.service.host.util;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,12 +22,14 @@ public class SerialChannelUtils {
   // ... constants
 
   private static final SerialConfig DEFAULT__SERIAL_PORT_CONFIG = new SerialConfig( //
-      BaudRate.B9600, //
+      BaudRate.B115200, //
       Parity.NONE, //
       StopBits.ONE, //
       DataBits.D8 //
   );
   private static final int DEFAULT__SERIAL_PORT_TIMEOUT_IN_MS__1000 = 1000;
+
+  private static final int DEFAULT__CHUNK_SIZE__64_000 = 64000;
 
   // ... dependencies
 
@@ -125,13 +128,13 @@ public class SerialChannelUtils {
 
     final byte[] readData = readBytes(channel);
 
-    final String message = (new String(readData)).trim();
+    final String message = (new String(readData, Charset.forName("UTF8"))).trim();
     LOG.info(String.format("... rx: (%d bytes) \"%s\"", readData.length, message));
 
     return message;
   }
 
-  private static byte[] readBytes(final SerialChannel channel) throws IOException {
+  private static synchronized byte[] readBytes(final SerialChannel channel) throws IOException {
 
     final ByteBuffer messageBuffer = ByteBuffer.allocate(1_000_000);
 
@@ -146,24 +149,41 @@ public class SerialChannelUtils {
   public static void writeData(final SerialChannel channel, final byte[] data) throws IOException {
 
     final int writtenBytes = writeBytes(channel, data);
-
     LOG.info(String.format("... tx: (%d bytes)", writtenBytes));
+
+    channel.flush(true, true);
   }
 
   public static void writeMessage(final SerialChannel channel, final String message) throws IOException {
 
     final byte[] messageBytes = message.getBytes();
     final int writtenBytesCount = writeBytes(channel, messageBytes);
-
     LOG.info(String.format("... tx: (%d bytes) \"%s\"", writtenBytesCount, message));
+
+    channel.flush(true, true);
   }
 
-  private static int writeBytes(final SerialChannel channel, final byte[] messageBytes) throws IOException {
+  private static synchronized int writeBytes(final SerialChannel channel, final byte[] messageBytes)
+      throws IOException {
 
-    final ByteBuffer messageBuffer = ByteBuffer.wrap(messageBytes);
+    final int bytesToWriteAmount = messageBytes.length;
+    int writtenBytesCount = 0;
 
-    final int writtenBytesCount = channel.write(messageBuffer);
-    channel.flush(true, true);
+    int chunkIndex = 0;
+    while (writtenBytesCount < bytesToWriteAmount) {
+
+      final int startPos = chunkIndex * DEFAULT__CHUNK_SIZE__64_000;
+      final int currentChunkSize = Math.min(DEFAULT__CHUNK_SIZE__64_000, bytesToWriteAmount - writtenBytesCount);
+      final byte[] currentChunkData = Arrays.copyOfRange(messageBytes, startPos, startPos + currentChunkSize);
+
+      final ByteBuffer messageBuffer = ByteBuffer.wrap(currentChunkData);
+
+      writtenBytesCount += channel.write(messageBuffer);
+      LOG.info(String.format("... tx: (chunk: #%d, chunk size: %d bytes, amount: %d bytes)", //
+          chunkIndex, currentChunkSize, writtenBytesCount));
+
+      chunkIndex++;
+    }
 
     return writtenBytesCount;
   }
