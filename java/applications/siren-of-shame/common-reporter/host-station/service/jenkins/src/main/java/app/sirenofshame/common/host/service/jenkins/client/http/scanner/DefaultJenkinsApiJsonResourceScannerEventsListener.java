@@ -3,15 +3,16 @@ package app.sirenofshame.common.host.service.jenkins.client.http.scanner;
 import java.util.Calendar;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import app.sirenofshame.common.host.service.jenkins.client.util.JenkinsClientLogManager;
-
-public class DefaultJenkinsApiJsonResourceScannerEventsListener implements JenkinsApiJsonResourceScannerEventsListener {
+public class DefaultJenkinsApiJsonResourceScannerEventsListener //
+    implements JenkinsApiJsonResourceScannerEventsListener //
+{
 
   // ... dependencies
 
-  private static final Logger LOG = JenkinsClientLogManager.getLogger();
+  private final Logger LOG = LogManager.getLogger(this);
 
   // ... events handler methods
 

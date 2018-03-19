@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import app.sirenofshame.common.host.service.jenkins.client.http.JenkinsHttpClient;
-import app.sirenofshame.common.host.service.jenkins.client.util.JenkinsClientLogManager;
 
 public class JenkinsApiJsonResourceScanner implements Runnable {
 
   // ... dependencies
 
-  private static final Logger LOG = JenkinsClientLogManager.getLogger();
+  protected final Logger LOG = LogManager.getLogger(this);
 
   // ... properties
 
