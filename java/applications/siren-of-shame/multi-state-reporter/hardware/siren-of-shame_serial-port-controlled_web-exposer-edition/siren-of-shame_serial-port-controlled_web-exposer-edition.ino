@@ -17,6 +17,8 @@ const String COMMAND_POST = "POST";
 const String COMMAND_PUT = "PUT";
 const String COMMAND_PING = "PING";
 
+const char COMMAND_LINE_END_SIGN = '\n';
+
 const String COMMAND_RESULT_RESPONSE_FAILED = "FAILED";
 const String COMMAND_RESULT_RESPONSE_SUCCEEDED = "SUCCEEDED";
 
@@ -134,6 +136,8 @@ void setup()
 
     server.begin();
     DBG_OUTPUT_PORT.println("HTTP server: ... started.");
+
+    Serial.setTimeout(2000);
   }
 }
 
@@ -144,49 +148,50 @@ void loop()
 
   if (isAvailable_SerialPort_Message()) {
 
-    String commandMessage = read_SerialPort_Message();
+    String commandLine = read_SerialPort_Message();
 
-    if (commandMessage == COMMAND_PING) {
+    if (commandLine == COMMAND_PING) {
 
-      println_SerialPort_Message(commandMessage + ": " + COMMAND_RESULT_RESPONSE_SUCCEEDED);
-    } else if (commandMessage.startsWith(COMMAND_DELETE)) {
+      println_SerialPort_Message(commandLine + ": " + COMMAND_RESULT_RESPONSE_SUCCEEDED);
+    } else if (commandLine.startsWith(COMMAND_DELETE)) {
 
-      String path = extractPathArgFrom(commandMessage, COMMAND_DELETE);
-      int handledBytes = handleDeleteResource_Over_SerialPort(path);
+      String resourcePath = extractResourcePathArg(commandLine, COMMAND_DELETE);
+      int handledBytes = handleDeleteResource_Over_SerialPort(resourcePath);
 
-      println_SerialPort_Message(commandMessage + ": (deleted " + handledBytes + " Bytes)");
-    } else if (commandMessage.startsWith(COMMAND_GET)) {
+      println_SerialPort_Message(commandLine + ": (deleted " + handledBytes + " Bytes)");
+    } else if (commandLine.startsWith(COMMAND_GET)) {
 
-      String path = extractPathArgFrom(commandMessage, COMMAND_GET);
-      int handledBytes = handleUploadResource_Over_SerialPort(path);
+      String resourcePath = extractResourcePathArg(commandLine, COMMAND_GET);
+      int handledBytes = handleUploadResource_Over_SerialPort(resourcePath);
 
-      println_SerialPort_Message(commandMessage + ": (uploaded " + handledBytes + " Bytes)");
-    } else if (commandMessage.startsWith(COMMAND_POST)) {
+      println_SerialPort_Message(commandLine + ": (uploaded " + handledBytes + " bytes)");
+    } else if (commandLine.startsWith(COMMAND_POST)) {
 
-      String path = extractPathArgFrom(commandMessage, COMMAND_POST);
-      int handledBytes = handleDownloadResource_Over_SerialPort(path);
-      println_SerialPort_Message(commandMessage + ": (downloaded " + handledBytes + " Bytes)");
-    } else if (commandMessage.startsWith(COMMAND_PUT)) {
+      String resourcePath = extractResourcePathArg(commandLine, COMMAND_POST);
+      delay(50);
+      int handledBytes = handleDownloadResource_Over_SerialPort(resourcePath);
 
-      String path = extractPathArgFrom(commandMessage, COMMAND_PUT);
-      int handledBytes = handleCreateResource_Over_SerialPort(path);
+      println_SerialPort_Message(commandLine + ": (downloaded " + handledBytes + " bytes)");
+    } else if (commandLine.startsWith(COMMAND_PUT)) {
 
-      println_SerialPort_Message(commandMessage + ": (created " + handledBytes + " Bytes)");
+      String resourcePath = extractResourcePathArg(commandLine, COMMAND_PUT);
+      int handledBytes = handleCreateResource_Over_SerialPort(resourcePath);
+
+      println_SerialPort_Message(commandLine + ": (created " + handledBytes + " bytes)");
     } else {
 
-      println_SerialPort_Message(commandMessage);
+      println_SerialPort_Message(commandLine);
     }
   }
-  Serial.flush();
 
   server.handleClient();
 }
 
 // ... business methods: Serial Port
 
-String extractPathArgFrom(String commandMessage, String command) {
+String extractResourcePathArg(String commandLine, String command) {
 
-  return commandMessage.substring(command.length() + 1);
+  return commandLine.substring(command.length() + 1);
 }
 
 int handleCreateResource_Over_SerialPort(String resourcePath) {
@@ -225,11 +230,15 @@ int handleDeleteResource_Over_SerialPort(String resourcePath) {
 int handleDownloadResource_Over_SerialPort(String targetPath) {
 
   int handledBytes = 0;
-  delay(50);
+
+  handleDeleteResource_Over_SerialPort(targetPath);
 
   File targetFile = SD.open(targetPath.c_str(), FILE_WRITE);
   while (Serial.available()) {
-    handledBytes += targetFile.write(Serial.read());
+    String content = Serial.readString();
+    targetFile.print(content);
+    handledBytes += content.length();
+    //   handledBytes += targetFile.write(Serial.read());
   }
   targetFile.close();
 
@@ -546,12 +555,7 @@ bool isAvailable_SerialPort_Message() {
 
 String read_SerialPort_Message() {
 
-  String message = "";
-  while (Serial.available() > 0) {
-    message += char(Serial.read());
-    delay(10);
-  }
-  return message;
+  return Serial.readStringUntil(COMMAND_LINE_END_SIGN);
 }
 
 void print_SerialPort_Message(String message) {
@@ -562,5 +566,6 @@ void print_SerialPort_Message(String message) {
 void println_SerialPort_Message(String message) {
 
   Serial.println(message);
+  Serial.flush();
 }
 

@@ -2,6 +2,9 @@ package app.arduino.sirenofshame.multistate.frontend;
 
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -10,11 +13,15 @@ import app.sirenofshame.common.host.service.jenkins.client.http.JenkinsHttpClien
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScanner;
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScannerConfig;
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScannerEventsListener;
-import app.sirenofshame.multistate.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceTraversingScanner;
+import app.sirenofshame.multistate.host.service.jenkins.client.http.scanner.DummyJenkinsApiJsonResourceTraversingScanner;
 
 public class SirenOfShameMultiStateControllerLauncher {
 
   // ... dependencies
+
+  private static final Logger LOG = LogManager.getLogger(SirenOfShameMultiStateControllerLauncher.class);
+
+  // ... launch methods
 
   public static void main(final String[] args) {
 
@@ -31,7 +38,7 @@ public class SirenOfShameMultiStateControllerLauncher {
         pollingTaktDurationInMs, resourcePath);
 
     final SirenOfShameMultiStateSerialChannelHostController serialChannelController = new SirenOfShameMultiStateSerialChannelHostController();
-    serialChannelController.connect();
+    serialChannelController.connect("COM11");
 
     final JenkinsApiJsonResourceScannerEventsListener eventsListener = new JenkinsApiJsonResourceScannerEventsListener() {
 
@@ -44,15 +51,18 @@ public class SirenOfShameMultiStateControllerLauncher {
       public void onAfterResourceResponse(final String resourcePath, final Map<String, Object> jsonRootNode) {
 
         try {
-          final String message = new ObjectMapper().writeValueAsString(jsonRootNode);
-          serialChannelController.uploadResource(message);
+
+          final byte[] data = new ObjectMapper().writeValueAsBytes(jsonRootNode);
+          serialChannelController.uploadResource(resourcePath + "jenkins.jsn", data);
         } catch (final JsonProcessingException ex) {
-          throw new RuntimeException(ex);
+          LOG.error(ex);
         }
       }
     };
 
-    final JenkinsApiJsonResourceScanner jenkinsScanner = new JenkinsApiJsonResourceTraversingScanner(config);
+    // final JenkinsApiJsonResourceScanner jenkinsScanner = new
+    // JenkinsApiJsonResourceTraversingScanner(config);
+    final JenkinsApiJsonResourceScanner jenkinsScanner = new DummyJenkinsApiJsonResourceTraversingScanner(config);
     jenkinsScanner.subscribe(eventsListener);
     jenkinsScanner.run();
   }
