@@ -13,7 +13,7 @@ import app.sirenofshame.common.host.service.jenkins.client.http.JenkinsHttpClien
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScanner;
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScannerConfig;
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScannerEventsListener;
-import app.sirenofshame.multistate.host.service.jenkins.client.http.scanner.DummyJenkinsApiJsonResourceTraversingScanner;
+import app.sirenofshame.multistate.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceTraversingScanner;
 
 public class SirenOfShameMultiStateControllerLauncher {
 
@@ -38,7 +38,7 @@ public class SirenOfShameMultiStateControllerLauncher {
         pollingTaktDurationInMs, resourcePath);
 
     final SirenOfShameMultiStateSerialChannelHostController serialChannelController = new SirenOfShameMultiStateSerialChannelHostController();
-    serialChannelController.connect("COM11");
+    serialChannelController.connect("COM5");
 
     final JenkinsApiJsonResourceScannerEventsListener eventsListener = new JenkinsApiJsonResourceScannerEventsListener() {
 
@@ -52,7 +52,7 @@ public class SirenOfShameMultiStateControllerLauncher {
 
         try {
 
-          final byte[] data = new ObjectMapper().writeValueAsBytes(jsonRootNode);
+          final String data = new ObjectMapper().writeValueAsString(jsonRootNode);
           serialChannelController.uploadResource(resourcePath + "jenkins.jsn", data);
         } catch (final JsonProcessingException ex) {
           LOG.error(ex);
@@ -60,9 +60,7 @@ public class SirenOfShameMultiStateControllerLauncher {
       }
     };
 
-    // final JenkinsApiJsonResourceScanner jenkinsScanner = new
-    // JenkinsApiJsonResourceTraversingScanner(config);
-    final JenkinsApiJsonResourceScanner jenkinsScanner = new DummyJenkinsApiJsonResourceTraversingScanner(config);
+    final JenkinsApiJsonResourceScanner jenkinsScanner = new JenkinsApiJsonResourceTraversingScanner(config);
     jenkinsScanner.subscribe(eventsListener);
     jenkinsScanner.run();
   }
