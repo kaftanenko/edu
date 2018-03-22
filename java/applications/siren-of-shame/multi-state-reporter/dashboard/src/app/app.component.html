@@ -1,5 +1,11 @@
 <div id="header" class="row">
-    <h2 class="h2">Jenkins Dashboard</h2>
+    <div class="col-sm-8 col-xs-12">
+        <h2 class="h2">Jenkins Dashboard</h2>
+    </div>
+    <div class="col-sm-4 col-xs-12 text-right">
+        <strong>Zuletzt aktualisiert:</strong>
+        {{jenkinsStateInfoTimestamp | date:'dd.MMM yyyy hh:mm:ss'}}
+    </div>
 </div>
 
 <div id="header" class="row">
@@ -8,8 +14,4 @@
         [folderDetails]="jenkinsStateInfo"
     >
     </app-jenkins-folder-details>
-</div>
-
-<div id="status-bar" class="row">
-    <strong>Zuletzt aktualisiert:</strong> {{jenkinsStateInfoTimestamp}}
 </div>

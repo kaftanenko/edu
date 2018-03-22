@@ -1,4 +1,4 @@
-package app.sirenofshame.multistate.host.service.jenkins.client.http.scanner;
+package app.sirenofshame.multistate.host.service.jenkins.client.http.scanner.mock;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,13 +12,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScanner;
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScannerConfig;
 
-public class DummyJenkinsApiJsonResourceTraversingScanner //
+public class JenkinsApiJsonResourceTraversingScannerMock
     extends JenkinsApiJsonResourceScanner //
 {
 
   // ... constructors
 
-  public DummyJenkinsApiJsonResourceTraversingScanner(final JenkinsApiJsonResourceScannerConfig config) {
+  public JenkinsApiJsonResourceTraversingScannerMock(final JenkinsApiJsonResourceScannerConfig config) {
 
     super(config);
   }
