@@ -62,6 +62,15 @@ public class SirenOfShameMultiStateSerialChannelHostController extends SerialCha
     return responseMessage.contains(COMMAND__RESPONSE_SUCCEEDED);
   }
 
+  public boolean uploadResource(final String resourcePath, final String resourceContent) {
+
+    sendCommand(COMMAND__POST, resourcePath);
+    sendMessage(resourceContent);
+
+    final String responseMessage = receiveMessage();
+    return responseMessage.contains(COMMAND__RESPONSE_SUCCEEDED);
+  }
+
   // ... helper methods
 
   private void sendCommand(final String commandDelete, final String resourcePath) {
