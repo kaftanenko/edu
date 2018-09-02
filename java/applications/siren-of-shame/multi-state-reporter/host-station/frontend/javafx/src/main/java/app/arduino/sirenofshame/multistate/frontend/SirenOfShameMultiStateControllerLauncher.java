@@ -2,6 +2,9 @@ package app.arduino.sirenofshame.multistate.frontend;
 
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,47 +17,52 @@ import app.sirenofshame.multistate.host.service.jenkins.client.http.scanner.Jenk
 
 public class SirenOfShameMultiStateControllerLauncher {
 
-    // ... dependencies
+  // ... dependencies
 
-    public static void main(final String[] args) {
+  private static final Logger LOG = LogManager.getLogger(SirenOfShameMultiStateControllerLauncher.class);
 
-        final String hostUrl = JenkinsHttpClientConstants.HOST_URL;
-        final String username = JenkinsHttpClientConstants.AUTH_USERNAME;
-        final String password = JenkinsHttpClientConstants.AUTH_PASSWORD;
+  // ... launch methods
 
-        final JenkinsHttpClientConfig jenkinsHttpClientConfig = JenkinsHttpClientConfig.of(hostUrl, username, password);
+  public static void main(final String[] args) {
 
-        final long pollingTaktDurationInMs = 10000; // ... 10 sec.
-        final String resourcePath = "/";
+    final String hostUrl = JenkinsHttpClientConstants.HOST_URL;
+    final String username = JenkinsHttpClientConstants.AUTH_USERNAME;
+    final String password = JenkinsHttpClientConstants.AUTH_PASSWORD;
 
-        final JenkinsApiJsonResourceScannerConfig config = JenkinsApiJsonResourceScannerConfig
-                .of(jenkinsHttpClientConfig, pollingTaktDurationInMs, resourcePath);
+    final JenkinsHttpClientConfig jenkinsHttpClientConfig = JenkinsHttpClientConfig.of(hostUrl, username, password);
 
-        final SirenOfShameMultiStateSerialChannelHostController serialChannelController = new SirenOfShameMultiStateSerialChannelHostController();
-        serialChannelController.connect();
+    final long pollingTaktDurationInMs = 10000; // ... 10 sec.
+    final String resourcePath = "/";
 
-        final JenkinsApiJsonResourceScannerEventsListener eventsListener = new JenkinsApiJsonResourceScannerEventsListener() {
+    final JenkinsApiJsonResourceScannerConfig config = JenkinsApiJsonResourceScannerConfig.of(jenkinsHttpClientConfig,
+        pollingTaktDurationInMs, resourcePath);
 
-            @Override
-            public void onBeforeResourceRequest(final String resourcePath) {
-                // ... not interesting in.
-            }
+    final SirenOfShameMultiStateSerialChannelHostController serialChannelController = new SirenOfShameMultiStateSerialChannelHostController();
+    serialChannelController.connect("COM5");
 
-            @Override
-            public void onAfterResourceResponse(final String resourcePath, final Map<String, Object> jsonRootNode) {
+    final JenkinsApiJsonResourceScannerEventsListener eventsListener = new JenkinsApiJsonResourceScannerEventsListener() {
 
-                try {
-                    final String message = new ObjectMapper().writeValueAsString(jsonRootNode);
-                    serialChannelController.uploadResource(message);
-                } catch (final JsonProcessingException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        };
+      @Override
+      public void onBeforeResourceRequest(final String resourcePath) {
+        // ... not interesting in.
+      }
 
-        final JenkinsApiJsonResourceScanner jenkinsScanner = new JenkinsApiJsonResourceTraversingScanner(config);
-        jenkinsScanner.subscribe(eventsListener);
-        jenkinsScanner.run();
-    }
+      @Override
+      public void onAfterResourceResponse(final String resourcePath, final Map<String, Object> jsonRootNode) {
+
+        try {
+
+          final String data = new ObjectMapper().writeValueAsString(jsonRootNode);
+          serialChannelController.uploadResource(resourcePath + "jenkins.jsn", data);
+        } catch (final JsonProcessingException ex) {
+          LOG.error(ex);
+        }
+      }
+    };
+
+    final JenkinsApiJsonResourceScanner jenkinsScanner = new JenkinsApiJsonResourceTraversingScanner(config);
+    jenkinsScanner.subscribe(eventsListener);
+    jenkinsScanner.run();
+  }
 
 }

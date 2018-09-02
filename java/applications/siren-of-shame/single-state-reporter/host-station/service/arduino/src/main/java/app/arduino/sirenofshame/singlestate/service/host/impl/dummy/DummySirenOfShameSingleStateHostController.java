@@ -6,38 +6,38 @@ import app.arduino.sirenofshame.singlestate.service.host.impl.common.AbstractSir
 
 public class DummySirenOfShameSingleStateHostController extends AbstractSirenOfShameHostController {
 
-	// ... properties
+  // ... properties
 
-	private ESirenOfShameAlarmLevel currentState;
+  private ESirenOfShameAlarmLevel currentState;
 
-	// ... constructors
+  // ... constructors
 
-	public DummySirenOfShameSingleStateHostController() {
+  public DummySirenOfShameSingleStateHostController() {
 
-		this(new DefaultSirenOfShameSingleStateHostControllerConfig());
-	}
+    this(new DefaultSirenOfShameSingleStateHostControllerConfig());
+  }
 
-	public DummySirenOfShameSingleStateHostController(final SirenOfShameSingleStateHostControllerConfig configuration) {
+  public DummySirenOfShameSingleStateHostController(final SirenOfShameSingleStateHostControllerConfig configuration) {
 
-		super(configuration);
-		this.currentState = this.configuration.getInitialState();
-	}
+    super(configuration);
+    this.currentState = this.configuration.getInitialState();
+  }
 
-	// ... business methods
+  // ... business methods
 
-	@Override
-	public ESirenOfShameAlarmLevel getCurrentAlarmLevel() {
+  @Override
+  public ESirenOfShameAlarmLevel getCurrentAlarmLevel() {
 
-		return this.currentState;
-	}
+    return this.currentState;
+  }
 
-	@Override
-	public void setAlarmLevelTo(final ESirenOfShameAlarmLevel state) {
+  @Override
+  public void setAlarmLevelTo(final ESirenOfShameAlarmLevel state) {
 
-		final ESirenOfShameAlarmLevel fromState = this.currentState;
-		this.currentState = state;
+    final ESirenOfShameAlarmLevel fromState = this.currentState;
+    this.currentState = state;
 
-		notifyEventsListenersAboutStateChange(fromState, currentState);
-	}
+    notifyEventsListenersAboutStateChange(fromState, currentState);
+  }
 
 }

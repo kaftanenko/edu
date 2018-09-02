@@ -2,17 +2,17 @@ package app.arduino.sirenofshame.singlestate.service.host.api.type;
 
 public enum ESirenOfShameAlarmLevel {
 
-	// ... constants
+  // ... constants
 
-	RED, //
-	RED_EXPECTING_UPDATE, //
+  RED, //
+  RED_EXPECTING_UPDATE, //
 
-	YELLOW, //
-	YELLOW_EXPECTING_UPDATE, //
+  YELLOW, //
+  YELLOW_EXPECTING_UPDATE, //
 
-	GREENBLUE, //
-	GREENBLUE_EXPECTING_UPDATE, //
+  GREENBLUE, //
+  GREENBLUE_EXPECTING_UPDATE, //
 
-	UNDEFINED;
+  UNDEFINED;
 
 }

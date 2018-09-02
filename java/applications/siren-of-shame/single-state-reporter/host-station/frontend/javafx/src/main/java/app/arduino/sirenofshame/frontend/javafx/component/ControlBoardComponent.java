@@ -13,69 +13,68 @@ import javafx.scene.layout.VBox;
 
 public class ControlBoardComponent extends VBox {
 
-	// ... properties
+  // ... properties
 
-	private final Map<ESirenOfShameAlarmLevel, Button> buttonsSetAlarmLevelTo = new HashMap<>();
+  private final Map<ESirenOfShameAlarmLevel, Button> buttonsSetAlarmLevelTo = new HashMap<>();
 
-	// ... constructors
+  // ... constructors
 
-	public ControlBoardComponent(final SirenOfShameJavaFXController sirenOfShameController) {
+  public ControlBoardComponent(final SirenOfShameJavaFXController sirenOfShameController) {
 
-		setSpacing(5);
-		setPadding(new Insets(5));
+    setSpacing(5);
+    setPadding(new Insets(5));
 
-		for (final ESirenOfShameAlarmLevel alarmLevel : ESirenOfShameAlarmLevel.values()) {
+    for (final ESirenOfShameAlarmLevel alarmLevel : ESirenOfShameAlarmLevel.values()) {
 
-			if (alarmLevel == ESirenOfShameAlarmLevel.UNDEFINED) {
-				continue;
-			}
+      if (alarmLevel == ESirenOfShameAlarmLevel.UNDEFINED) {
+        continue;
+      }
 
-			final String buttonDisplayText = UIMessage.BUTTON_SET_TO_ALARM_LEVEL
-					.getText(alarmLevel.name().toLowerCase());
-			final Button newButtonSetAlarmLevelTo = new Button(buttonDisplayText);
-			newButtonSetAlarmLevelTo.setOnAction(e -> {
-				sirenOfShameController.updateAlarmLevelTo(alarmLevel);
-			});
+      final String buttonDisplayText = UIMessage.BUTTON_SET_TO_ALARM_LEVEL.getText(alarmLevel.name().toLowerCase());
+      final Button newButtonSetAlarmLevelTo = new Button(buttonDisplayText);
+      newButtonSetAlarmLevelTo.setOnAction(e -> {
+        sirenOfShameController.updateAlarmLevelTo(alarmLevel);
+      });
 
-			newButtonSetAlarmLevelTo.setMinWidth(270);
-			newButtonSetAlarmLevelTo.getStyleClass().removeAll();
-			newButtonSetAlarmLevelTo.getStyleClass().add("buttonSetAlarmLevelTo");
+      newButtonSetAlarmLevelTo.setMinWidth(270);
+      newButtonSetAlarmLevelTo.getStyleClass().removeAll();
+      newButtonSetAlarmLevelTo.getStyleClass().add("buttonSetAlarmLevelTo");
 
-			final String bgColor;
-			switch (alarmLevel) {
-			case RED:
-			case RED_EXPECTING_UPDATE:
-				bgColor = "red";
-				break;
-			case YELLOW:
-			case YELLOW_EXPECTING_UPDATE:
-				bgColor = "yellow";
-				break;
-			case GREENBLUE:
-			case GREENBLUE_EXPECTING_UPDATE:
-				bgColor = "blue";
-				break;
-			default:
-				throw ErrorHelper.handleValueIsNotSupportedYetException("alarLevel", alarmLevel);
-			}
-			newButtonSetAlarmLevelTo.setStyle("-fx-text-fill: " + bgColor);
+      final String bgColor;
+      switch (alarmLevel) {
+        case RED:
+        case RED_EXPECTING_UPDATE:
+          bgColor = "red";
+          break;
+        case YELLOW:
+        case YELLOW_EXPECTING_UPDATE:
+          bgColor = "yellow";
+          break;
+        case GREENBLUE:
+        case GREENBLUE_EXPECTING_UPDATE:
+          bgColor = "blue";
+          break;
+        default:
+          throw ErrorHelper.handleValueIsNotSupportedYetException("alarLevel", alarmLevel);
+      }
+      newButtonSetAlarmLevelTo.setStyle("-fx-text-fill: " + bgColor);
 
-			buttonsSetAlarmLevelTo.put(alarmLevel, newButtonSetAlarmLevelTo);
-			getChildren().add(newButtonSetAlarmLevelTo);
-		}
+      buttonsSetAlarmLevelTo.put(alarmLevel, newButtonSetAlarmLevelTo);
+      getChildren().add(newButtonSetAlarmLevelTo);
+    }
 
-	}
+  }
 
-	// ... business methods
+  // ... business methods
 
-	public void resetAlarmLevelSelection() {
+  public void resetAlarmLevelSelection() {
 
-		buttonsSetAlarmLevelTo.values().stream().forEach(b -> b.setDisable(true));
-	}
+    buttonsSetAlarmLevelTo.values().stream().forEach(b -> b.setDisable(true));
+  }
 
-	public void updateAlarmLevelSelection(final ESirenOfShameAlarmLevel alarmLevel) {
+  public void updateAlarmLevelSelection(final ESirenOfShameAlarmLevel alarmLevel) {
 
-		buttonsSetAlarmLevelTo.values().stream().forEach(b -> b.setDisable(false));
-	}
+    buttonsSetAlarmLevelTo.values().stream().forEach(b -> b.setDisable(false));
+  }
 
 }

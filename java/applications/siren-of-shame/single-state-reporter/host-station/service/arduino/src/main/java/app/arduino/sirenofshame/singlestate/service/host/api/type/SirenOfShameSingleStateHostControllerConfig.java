@@ -2,8 +2,8 @@ package app.arduino.sirenofshame.singlestate.service.host.api.type;
 
 public interface SirenOfShameSingleStateHostControllerConfig {
 
-	// ... business methods
+  // ... business methods
 
-	public ESirenOfShameAlarmLevel getInitialState();
+  public ESirenOfShameAlarmLevel getInitialState();
 
 }

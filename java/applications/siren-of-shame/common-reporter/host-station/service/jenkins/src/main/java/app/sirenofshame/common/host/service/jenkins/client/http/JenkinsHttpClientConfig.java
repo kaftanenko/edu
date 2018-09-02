@@ -2,50 +2,50 @@ package app.sirenofshame.common.host.service.jenkins.client.http;
 
 public class JenkinsHttpClientConfig {
 
-	// ... properties
+  // ... properties
 
-	private String hostUrl;
-	private String username;
-	private String password;
+  private String hostUrl;
+  private String username;
+  private String password;
 
-	// ... constructors
+  // ... constructors
 
-	private JenkinsHttpClientConfig(final String hostUrl, final String username, final String password) {
+  private JenkinsHttpClientConfig(final String hostUrl, final String username, final String password) {
 
-		this.hostUrl = hostUrl;
-		this.username = username;
-		this.password = password;
-	}
+    this.hostUrl = hostUrl;
+    this.username = username;
+    this.password = password;
+  }
 
-	public static JenkinsHttpClientConfig of(final String hostUrl, final String username, final String password) {
+  public static JenkinsHttpClientConfig of(final String hostUrl, final String username, final String password) {
 
-		return new JenkinsHttpClientConfig(hostUrl, username, password);
-	}
+    return new JenkinsHttpClientConfig(hostUrl, username, password);
+  }
 
-	// ... getter/setter methods
+  // ... getter/setter methods
 
-	public String getHostUrl() {
-		return hostUrl;
-	}
+  public String getHostUrl() {
+    return hostUrl;
+  }
 
-	public void setHostUrl(final String hostUrl) {
-		this.hostUrl = hostUrl;
-	}
+  public void setHostUrl(final String hostUrl) {
+    this.hostUrl = hostUrl;
+  }
 
-	public String getUsername() {
-		return username;
-	}
+  public String getUsername() {
+    return username;
+  }
 
-	public void setUsername(final String username) {
-		this.username = username;
-	}
+  public void setUsername(final String username) {
+    this.username = username;
+  }
 
-	public String getPassword() {
-		return password;
-	}
+  public String getPassword() {
+    return password;
+  }
 
-	public void setPassword(final String password) {
-		this.password = password;
-	}
+  public void setPassword(final String password) {
+    this.password = password;
+  }
 
 }

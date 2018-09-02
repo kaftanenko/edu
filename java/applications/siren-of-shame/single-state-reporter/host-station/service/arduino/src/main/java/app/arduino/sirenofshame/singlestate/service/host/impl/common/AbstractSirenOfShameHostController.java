@@ -3,54 +3,56 @@ package app.arduino.sirenofshame.singlestate.service.host.impl.common;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.arduino.sirenofshame.common.service.host.AbstractSerialChannelHostController;
+import app.arduino.sirenofshame.common.service.host.SerialChannelHostController;
 import app.arduino.sirenofshame.singlestate.service.host.api.SirenOfShameSingleStateHostController;
 import app.arduino.sirenofshame.singlestate.service.host.api.SirenOfShameSingleStateHostControllerEventsListener;
 import app.arduino.sirenofshame.singlestate.service.host.api.type.ESirenOfShameAlarmLevel;
 import app.arduino.sirenofshame.singlestate.service.host.api.type.SirenOfShameSingleStateHostControllerConfig;
 
 public abstract class AbstractSirenOfShameHostController //
-		extends AbstractSerialChannelHostController //
-		implements SirenOfShameSingleStateHostController //
+    extends SerialChannelHostController //
+    implements SirenOfShameSingleStateHostController //
 {
 
-	// ... properties
+  // ... properties
 
-	protected final SirenOfShameSingleStateHostControllerConfig configuration;
+  protected final SirenOfShameSingleStateHostControllerConfig configuration;
 
-	private final List<SirenOfShameSingleStateHostControllerEventsListener> eventsListeners;
+  private final List<SirenOfShameSingleStateHostControllerEventsListener> eventsListeners;
 
-	// ... constructors
+  // ... constructors
 
-	public AbstractSirenOfShameHostController(final SirenOfShameSingleStateHostControllerConfig configuration) {
+  public AbstractSirenOfShameHostController(final SirenOfShameSingleStateHostControllerConfig configuration) {
 
-		this.configuration = configuration;
-		this.eventsListeners = new ArrayList<>();
-	}
+    super(false);
 
-	// ... events management methods
+    this.configuration = configuration;
+    this.eventsListeners = new ArrayList<>();
+  }
 
-	protected void notifyEventsListenersAboutStateChange( //
-			final ESirenOfShameAlarmLevel from, //
-			final ESirenOfShameAlarmLevel to //
-	) {
+  // ... events management methods
 
-		for (final SirenOfShameSingleStateHostControllerEventsListener eventsListener : eventsListeners) {
+  protected void notifyEventsListenersAboutStateChange( //
+      final ESirenOfShameAlarmLevel from, //
+      final ESirenOfShameAlarmLevel to //
+  ) {
 
-			eventsListener.onStateChanged(from, to);
-		}
-	}
+    for (final SirenOfShameSingleStateHostControllerEventsListener eventsListener : eventsListeners) {
 
-	@Override
-	public void subscribe(final SirenOfShameSingleStateHostControllerEventsListener eventsListener) {
+      eventsListener.onStateChanged(from, to);
+    }
+  }
 
-		eventsListeners.add(eventsListener);
-	}
+  @Override
+  public void subscribe(final SirenOfShameSingleStateHostControllerEventsListener eventsListener) {
 
-	@Override
-	public void unsubscribe(final SirenOfShameSingleStateHostControllerEventsListener eventsListener) {
+    eventsListeners.add(eventsListener);
+  }
 
-		eventsListeners.remove(eventsListener);
-	}
+  @Override
+  public void unsubscribe(final SirenOfShameSingleStateHostControllerEventsListener eventsListener) {
+
+    eventsListeners.remove(eventsListener);
+  }
 
 }

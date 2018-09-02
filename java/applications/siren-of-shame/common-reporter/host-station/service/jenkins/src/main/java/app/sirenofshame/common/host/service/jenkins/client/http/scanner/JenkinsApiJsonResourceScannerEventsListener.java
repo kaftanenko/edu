@@ -4,10 +4,10 @@ import java.util.Map;
 
 public interface JenkinsApiJsonResourceScannerEventsListener {
 
-	// ... events handler methods
+  // ... events handler methods
 
-	public void onBeforeResourceRequest(String resourcePath);
+  public void onBeforeResourceRequest(String resourcePath);
 
-	public void onAfterResourceResponse(String resourcePath, Map<String, Object> jsonRootNode);
+  public void onAfterResourceResponse(String resourcePath, Map<String, Object> jsonRootNode);
 
 }

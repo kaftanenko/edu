@@ -6,29 +6,29 @@ import javafx.scene.layout.HBox;
 
 public class StatusLineComponent extends HBox {
 
-	// ... properties
+  // ... properties
 
-	private final Label labelStatusLine;
+  private final Label labelStatusLine;
 
-	// ... constructors
+  // ... constructors
 
-	public StatusLineComponent() {
+  public StatusLineComponent() {
 
-		setSpacing(5);
-		setPadding(new Insets(5));
+    setSpacing(5);
+    setPadding(new Insets(5));
 
-		getStyleClass().removeAll();
-		getStyleClass().add("status-line");
+    getStyleClass().removeAll();
+    getStyleClass().add("status-line");
 
-		labelStatusLine = new Label();
-		getChildren().add(labelStatusLine);
-	}
+    labelStatusLine = new Label();
+    getChildren().add(labelStatusLine);
+  }
 
-	// ... business methods
+  // ... business methods
 
-	public void setStatusTextTo(final String statusText) {
+  public void setStatusTextTo(final String statusText) {
 
-		labelStatusLine.setText(statusText);
-	}
+    labelStatusLine.setText(statusText);
+  }
 
 }
