@@ -13,7 +13,7 @@ import app.sirenofshame.common.host.service.jenkins.client.http.JenkinsHttpClien
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScanner;
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScannerConfig;
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScannerEventsListener;
-import app.sirenofshame.multistate.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceTraversingScanner;
+import app.sirenofshame.multistate.host.service.jenkins.client.http.scanner.mock.JenkinsApiJsonResourceTraversingScannerMock;
 
 public class SirenOfShameMultiStateControllerLauncher {
 
@@ -38,7 +38,7 @@ public class SirenOfShameMultiStateControllerLauncher {
         pollingTaktDurationInMs, resourcePath);
 
     final SirenOfShameMultiStateSerialChannelHostController serialChannelController = new SirenOfShameMultiStateSerialChannelHostController();
-    serialChannelController.connect("COM5");
+    serialChannelController.connect("COM9");
 
     final JenkinsApiJsonResourceScannerEventsListener eventsListener = new JenkinsApiJsonResourceScannerEventsListener() {
 
@@ -60,7 +60,7 @@ public class SirenOfShameMultiStateControllerLauncher {
       }
     };
 
-    final JenkinsApiJsonResourceScanner jenkinsScanner = new JenkinsApiJsonResourceTraversingScanner(config);
+    final JenkinsApiJsonResourceScanner jenkinsScanner = new JenkinsApiJsonResourceTraversingScannerMock(config);
     jenkinsScanner.subscribe(eventsListener);
     jenkinsScanner.run();
   }
