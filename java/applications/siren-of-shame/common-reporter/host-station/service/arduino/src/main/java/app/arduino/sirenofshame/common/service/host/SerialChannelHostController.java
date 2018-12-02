@@ -70,6 +70,8 @@ public class SerialChannelHostController {
       } else {
         keepEventsListeningThreadRunning = false;
       }
+      
+      notifyEventListenersAboutConnectionTo(serialChannelPortName);
     } catch (final Exception ex) {
       throw handleFatalException(ex);
     }
@@ -82,6 +84,7 @@ public class SerialChannelHostController {
     try {
 
       closeSerialChannel(connectedToSerialChannel);
+      notifyEventListenersAboutDisconnectionFrom(connectedToSerialChannelPortName);
     } catch (final Exception ex) {
       throw handleFatalException(ex);
     }
@@ -154,14 +157,46 @@ public class SerialChannelHostController {
     }
   }
 
+  // ... events management methods
+
+  public void subscribe(final SerialChannelEventsListener eventsListener) {
+
+    eventsListeners.add(eventsListener);
+  }
+
+  public void unsubscribe(final SerialChannelEventsListener eventsListener) {
+
+    eventsListeners.remove(eventsListener);
+  }
+
   // ... helper methods
 
-  protected static RuntimeException handleFatalException(final Exception ex) {
+  protected RuntimeException handleFatalException(final Exception ex) {
 
+    notifyEventListenersAboutException(ex);
     throw new RuntimeException(ex);
   }
 
-  // ... events management methods
+  private void notifyEventListenersAboutException(final Throwable throwable) {
+
+    eventsListeners //
+        .stream() //
+        .forEach(eventsListener -> eventsListener.onException(throwable));
+  }
+
+  private void notifyEventListenersAboutConnectionTo(final String portName) {
+
+    eventsListeners //
+        .stream() //
+        .forEach(eventsListener -> eventsListener.onConnectedTo(portName));
+  }
+
+  private void notifyEventListenersAboutDisconnectionFrom(final String portName) {
+
+    eventsListeners //
+        .stream() //
+        .forEach(eventsListener -> eventsListener.onDisconnectedFrom(portName));
+  }
 
   private void notifyEventListenersAboutReceivedData(final byte[] data) {
 
@@ -190,15 +225,5 @@ public class SerialChannelHostController {
         .stream() //
         .forEach(eventsListener -> eventsListener.onMessageSent(message));
   }
-
-  public void subscribe(final SerialChannelEventsListener eventsListener) {
-
-    eventsListeners.add(eventsListener);
-  }
-
-  public void unsubscribe(final SerialChannelEventsListener eventsListener) {
-
-    eventsListeners.remove(eventsListener);
-  }
-
+  
 }
