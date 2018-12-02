@@ -1,13 +1,17 @@
 package app.arduino.sirenofshame.frontend.javafx;
 
+import java.util.Optional;
+
 import app.arduino.sirenofshame.frontend.javafx.component.ControlBoardComponent;
 import app.arduino.sirenofshame.frontend.javafx.component.StatusLineComponent;
 import app.arduino.sirenofshame.frontend.javafx.component.ToolBarComponent;
+import app.arduino.sirenofshame.frontend.javafx.config.ConfigurationService;
+import app.arduino.sirenofshame.frontend.javafx.dialog.SettingsDialog;
 import app.arduino.sirenofshame.frontend.javafx.resources.UIImage;
 import app.arduino.sirenofshame.frontend.javafx.resources.UIMessage;
-import app.arduino.sirenofshame.frontend.javafx.stage.PropertiesDialogStage;
 import app.arduino.sirenofshame.frontend.javafx.type.EConnectionState;
 import app.arduino.sirenofshame.singlestate.service.host.api.type.ESirenOfShameAlarmLevel;
+import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScannerConfig;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -25,20 +29,31 @@ public class SirenOfShameJavaFXApplication extends Application {
 
   // ... properties
 
+  private JenkinsApiJsonResourceScannerConfig config;
+
   private ToolBarComponent toolBarComponent;
   private ControlBoardComponent controlBoardComponent;
   private StatusLineComponent statusLineComponent;
-  private PropertiesDialogStage propertiesDialogStage;
+  private SettingsDialog propertiesDialogStage;
 
   private SirenOfShameJavaFXController sirenOfShameJavaFXController;
 
   // ... life cycle methods
+
+  public JenkinsApiJsonResourceScannerConfig getConfig() {
+    return config;
+  }
+
+  public void setConfig(JenkinsApiJsonResourceScannerConfig config) {
+    this.config = config;
+  }
 
   @Override
   public void init() throws Exception {
 
     super.init();
 
+    config = ConfigurationService.getInitialConfiguration();
     sirenOfShameJavaFXController = new SirenOfShameJavaFXController(this);
   }
 
@@ -47,7 +62,7 @@ public class SirenOfShameJavaFXApplication extends Application {
 
     // ...
 
-    propertiesDialogStage = new PropertiesDialogStage();
+    propertiesDialogStage = new SettingsDialog(config);
 
     // ...
 
@@ -85,13 +100,19 @@ public class SirenOfShameJavaFXApplication extends Application {
   @Override
   public void stop() throws Exception {
 
+    ConfigurationService.saveConfiguration(config);
     super.stop();
   }
 
   // ... GUI components management methods
 
   public void showPropertiesDialog() {
-    propertiesDialogStage.showAndWait();
+
+    final Optional<JenkinsApiJsonResourceScannerConfig> result = propertiesDialogStage.showAndWait();
+    if (result.isPresent()) {
+
+      setConfig(result.get());
+    }
   }
 
   private void resetApplicationState() {

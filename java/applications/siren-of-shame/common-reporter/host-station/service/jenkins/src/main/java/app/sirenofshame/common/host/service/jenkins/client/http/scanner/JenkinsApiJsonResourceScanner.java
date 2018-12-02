@@ -38,8 +38,8 @@ public class JenkinsApiJsonResourceScanner implements Runnable {
   @Override
   public void run() {
 
-    final String resourcePath = config.getResourcePath();
-    final long pollingTaktDurationInMs = config.getPollingTaktDurationInMs();
+    final String resourcePath = config.getJobsFolderPath();
+    final long pollingTaktDurationInMs = config.getPollingPeriodInSec();
 
     while (true) {
 

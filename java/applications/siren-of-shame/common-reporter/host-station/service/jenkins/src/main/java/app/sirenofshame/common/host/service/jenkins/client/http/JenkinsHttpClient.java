@@ -88,7 +88,7 @@ public class JenkinsHttpClient {
 
   private String buildJsonApiRequestURL(final String resourcePath) {
 
-    return config.getHostUrl() + resourcePath + JENKINS_URL_POSTFIX__API_JSON;
+    return config.getHostURL() + resourcePath + JENKINS_URL_POSTFIX__API_JSON;
   }
 
   // ... helper classes

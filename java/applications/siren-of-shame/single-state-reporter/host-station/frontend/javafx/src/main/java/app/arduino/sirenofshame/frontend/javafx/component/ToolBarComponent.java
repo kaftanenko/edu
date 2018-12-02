@@ -9,8 +9,10 @@ import app.arduino.sirenofshame.singlestate.service.host.api.type.ESirenOfShameA
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToolBar;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -33,7 +35,7 @@ public class ToolBarComponent extends ToolBar {
 
   public ToolBarComponent(final SirenOfShameJavaFXController sirenOfShameController) {
 
-    buttonConnect = newToolBarButton(UIMessage.EMPTY, UIImage.BUTTON_CONNECT_24, new Runnable() {
+    buttonConnect = newToolBarButton(UIMessage.EMPTY, UIImage.BUTTON_CONNECT_32, new Runnable() {
 
       @Override
       public void run() {
@@ -41,9 +43,10 @@ public class ToolBarComponent extends ToolBar {
         sirenOfShameController.connect();
       }
     });
-    // buttonConnect.setPadding(new Insets(5));
+    buttonConnect.setTooltip(new Tooltip(UIMessage.ACTION_COMMON_CONNECT.getText()));
+    buttonConnect.setPadding(new Insets(2));
 
-    buttonDisconnect = newToolBarButton(UIMessage.EMPTY, UIImage.BUTTON_DISCONNECT_24, new Runnable() {
+    buttonDisconnect = newToolBarButton(UIMessage.EMPTY, UIImage.BUTTON_DISCONNECT_32, new Runnable() {
 
       @Override
       public void run() {
@@ -51,9 +54,10 @@ public class ToolBarComponent extends ToolBar {
         sirenOfShameController.disconnect();
       }
     });
-    // buttonDisconnect.setPadding(new Insets(5));
+    buttonDisconnect.setTooltip(new Tooltip(UIMessage.ACTION_COMMON_DISCONNECT.getText()));
+    buttonDisconnect.setPadding(new Insets(2));
 
-    buttonConfiguration = newToolBarButton(UIMessage.EMPTY, UIImage.BUTTON_DISCONNECT_24, new Runnable() {
+    buttonConfiguration = newToolBarButton(UIMessage.EMPTY, UIImage.BUTTON_CONFIGURATION_32, new Runnable() {
 
       @Override
       public void run() {
@@ -61,7 +65,8 @@ public class ToolBarComponent extends ToolBar {
         sirenOfShameController.showPropertiesDialog();
       }
     });
-    // buttonConfiguration.setPadding(new Insets(5));
+    buttonConfiguration.setTooltip(new Tooltip(UIMessage.SETTINGS_TITLE.getText()));
+    buttonConfiguration.setPadding(new Insets(2));
 
     final Pane rightSpacer = new Pane();
     HBox.setHgrow(rightSpacer, Priority.SOMETIMES);
@@ -107,16 +112,18 @@ public class ToolBarComponent extends ToolBar {
   public void setConnectionState(final EConnectionState connectionState) {
 
     switch (connectionState) {
-      case CONNECTED:
-        buttonConnect.setDisable(true);
-        buttonDisconnect.setDisable(false);
-        break;
-      case DISCONNECTED:
-        buttonConnect.setDisable(false);
-        buttonDisconnect.setDisable(true);
-        break;
-      default:
-        throw ErrorHelper.handleValueIsNotSupportedYetException("connectionState", connectionState);
+    case CONNECTED:
+      buttonConnect.setDisable(true);
+      buttonDisconnect.setDisable(false);
+      buttonConfiguration.setDisable(true);
+      break;
+    case DISCONNECTED:
+      buttonConnect.setDisable(false);
+      buttonDisconnect.setDisable(true);
+      buttonConfiguration.setDisable(false);
+      break;
+    default:
+      throw ErrorHelper.handleValueIsNotSupportedYetException("connectionState", connectionState);
     }
   }
 
@@ -132,28 +139,28 @@ public class ToolBarComponent extends ToolBar {
     resetStateSelection();
 
     switch (alarmLevel) {
-      case RED:
-        imageViewAlarmLevelRed.setImage(new Image(UIImage.JENKINS_STATE_RED_32.getAsStream()));
-        break;
-      case RED_EXPECTING_UPDATE:
-        imageViewAlarmLevelRed.setImage(new Image(UIImage.JENKINS_STATE_RED_ANIME_32.getAsStream()));
-        break;
-      case YELLOW:
-        imageViewAlarmLevelYellow.setImage(new Image(UIImage.JENKINS_STATE_YELLOW_32.getAsStream()));
-        break;
-      case YELLOW_EXPECTING_UPDATE:
-        imageViewAlarmLevelYellow.setImage(new Image(UIImage.JENKINS_STATE_YELLOW_ANIME_32.getAsStream()));
-        break;
-      case GREENBLUE:
-        imageViewAlarmLevelGreenBlue.setImage(new Image(UIImage.JENKINS_STATE_BLUE_32.getAsStream()));
-        break;
-      case GREENBLUE_EXPECTING_UPDATE:
-        imageViewAlarmLevelGreenBlue.setImage(new Image(UIImage.JENKINS_STATE_BLUE_ANIME_32.getAsStream()));
-        break;
-      case UNDEFINED:
-        break;
-      default:
-        throw ErrorHelper.handleValueIsNotSupportedYetException("alarmLevel", alarmLevel);
+    case RED:
+      imageViewAlarmLevelRed.setImage(new Image(UIImage.JENKINS_STATE_RED_32.getAsStream()));
+      break;
+    case RED_EXPECTING_UPDATE:
+      imageViewAlarmLevelRed.setImage(new Image(UIImage.JENKINS_STATE_RED_ANIME_32.getAsStream()));
+      break;
+    case YELLOW:
+      imageViewAlarmLevelYellow.setImage(new Image(UIImage.JENKINS_STATE_YELLOW_32.getAsStream()));
+      break;
+    case YELLOW_EXPECTING_UPDATE:
+      imageViewAlarmLevelYellow.setImage(new Image(UIImage.JENKINS_STATE_YELLOW_ANIME_32.getAsStream()));
+      break;
+    case GREENBLUE:
+      imageViewAlarmLevelGreenBlue.setImage(new Image(UIImage.JENKINS_STATE_BLUE_32.getAsStream()));
+      break;
+    case GREENBLUE_EXPECTING_UPDATE:
+      imageViewAlarmLevelGreenBlue.setImage(new Image(UIImage.JENKINS_STATE_BLUE_ANIME_32.getAsStream()));
+      break;
+    case UNDEFINED:
+      break;
+    default:
+      throw ErrorHelper.handleValueIsNotSupportedYetException("alarmLevel", alarmLevel);
     }
   }
 

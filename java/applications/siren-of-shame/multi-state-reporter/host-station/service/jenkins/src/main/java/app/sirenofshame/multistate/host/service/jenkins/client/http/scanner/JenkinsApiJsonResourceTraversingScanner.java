@@ -51,7 +51,7 @@ public class JenkinsApiJsonResourceTraversingScanner extends JenkinsApiJsonResou
   private String getResourcePath(final Map<String, Object> node) {
 
     final String nodeUrl = JenkinsApiJsonParser.getNodeUrl(node);
-    final String hostUrl = config.getJenkinsHttpClientConfig().getHostUrl();
+    final String hostUrl = config.getJenkinsHttpClientConfig().getHostURL();
 
     final String resourcePath = StringUtils.substringAfter(nodeUrl, hostUrl);
     return resourcePath;

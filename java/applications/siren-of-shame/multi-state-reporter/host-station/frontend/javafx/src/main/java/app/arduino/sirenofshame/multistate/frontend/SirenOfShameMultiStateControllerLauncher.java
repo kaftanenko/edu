@@ -1,5 +1,12 @@
 package app.arduino.sirenofshame.multistate.frontend;
 
+import static app.arduino.sirenofshame.multistate.frontend.JenkinsHttpClientConstants.AUTH_PASSWORD;
+import static app.arduino.sirenofshame.multistate.frontend.JenkinsHttpClientConstants.AUTH_USERNAME;
+import static app.arduino.sirenofshame.multistate.frontend.JenkinsHttpClientConstants.HOST_URL;
+import static app.arduino.sirenofshame.multistate.frontend.JenkinsHttpClientConstants.JENKINS_JOB_NAMES_TO_MONITOR__REGEX;
+import static app.arduino.sirenofshame.multistate.frontend.JenkinsHttpClientConstants.JENKINS_POLLING_PERIOD__IN_SEC__15;
+import static app.arduino.sirenofshame.multistate.frontend.JenkinsHttpClientConstants.JENKINS_RESOURCE_PATH__MAIS__BUILD_JOBS;
+
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -25,17 +32,17 @@ public class SirenOfShameMultiStateControllerLauncher {
 
   public static void main(final String[] args) {
 
-    final String hostUrl = JenkinsHttpClientConstants.HOST_URL;
-    final String username = JenkinsHttpClientConstants.AUTH_USERNAME;
-    final String password = JenkinsHttpClientConstants.AUTH_PASSWORD;
+    final JenkinsApiJsonResourceScannerConfig config = JenkinsApiJsonResourceScannerConfig.of( //
 
-    final JenkinsHttpClientConfig jenkinsHttpClientConfig = JenkinsHttpClientConfig.of(hostUrl, username, password);
-
-    final long pollingTaktDurationInMs = 10000; // ... 10 sec.
-    final String resourcePath = "/";
-
-    final JenkinsApiJsonResourceScannerConfig config = JenkinsApiJsonResourceScannerConfig.of(jenkinsHttpClientConfig,
-        pollingTaktDurationInMs, resourcePath);
+        JenkinsHttpClientConfig.of( //
+            HOST_URL, //
+            AUTH_USERNAME, //
+            AUTH_PASSWORD //
+        ), //
+        JENKINS_POLLING_PERIOD__IN_SEC__15, //
+        JENKINS_RESOURCE_PATH__MAIS__BUILD_JOBS, //
+        JENKINS_JOB_NAMES_TO_MONITOR__REGEX //
+    );
 
     final SirenOfShameMultiStateSerialChannelHostController serialChannelController = new SirenOfShameMultiStateSerialChannelHostController();
     serialChannelController.connect("COM9");

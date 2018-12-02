@@ -10,10 +10,21 @@ public enum UIMessage {
 
   EMPTY("sirenofshame.common.empty"),
 
-  ACTION_COMMON_CONNECT("sirenofshame.common.connect"),
-  ACTION_COMMON_DISCONNECT("sirenofshame.common.disconnect"),
+  ACTION_COMMON_CONNECT("sirenofshame.common.connect"), //
+  ACTION_COMMON_DISCONNECT("sirenofshame.common.disconnect"), //
 
-  STATUS_CONNECTED_TO("sirenofshame.common.status.connected-to"),
+  COMMON_BUTTON_OK("sirenofshame.common.button.ok"), //
+  COMMON_BUTTON_CANCEL("sirenofshame.common.button.cancel"), //
+
+  SETTINGS_TITLE("sirenofshame.dialog.settings.title"), //
+  SETTINGS_LABEL_HOST_URL("sirenofshame.dialog.settings.label.host-url"), //
+  SETTINGS_LABEL_USERNAME("sirenofshame.dialog.settings.label.username"), //
+  SETTINGS_LABEL_PASSWORD("sirenofshame.dialog.settings.label.password"), //
+  SETTINGS_LABEL_POLLING_PERIOD_IN_SEC("sirenofshame.dialog.settings.label.polling-period-in-sec"), //
+  SETTINGS_LABEL_JOBS_FOLDER_PATH("sirenofshame.dialog.settings.label.jobs-folder-path"), //
+  SETTINGS_LABEL_JOBS_NAME_REGEX_PATTERN("sirenofshame.dialog.settings.label.jobs-name-regex-pattern"), //
+
+  STATUS_CONNECTED_TO("sirenofshame.common.status.connected-to"), //
   STATUS_DISCONNECTED("sirenofshame.common.status.disconnected"), //
 
   BUTTON_SET_TO_ALARM_LEVEL("sirenofshame.common.button.set-to-alarm-level."),//

@@ -1,18 +1,26 @@
 package app.sirenofshame.common.host.service.jenkins.client.http;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class JenkinsHttpClientConfig {
 
   // ... properties
 
-  private String hostUrl;
+  private String hostURL;
   private String username;
   private String password;
 
   // ... constructors
 
+  public JenkinsHttpClientConfig() {
+
+    super();
+  }
+
   private JenkinsHttpClientConfig(final String hostUrl, final String username, final String password) {
 
-    this.hostUrl = hostUrl;
+    this.hostURL = hostUrl;
     this.username = username;
     this.password = password;
   }
@@ -24,12 +32,12 @@ public class JenkinsHttpClientConfig {
 
   // ... getter/setter methods
 
-  public String getHostUrl() {
-    return hostUrl;
+  public String getHostURL() {
+    return hostURL;
   }
 
-  public void setHostUrl(final String hostUrl) {
-    this.hostUrl = hostUrl;
+  public void setHostURL(final String hostUrl) {
+    this.hostURL = hostUrl;
   }
 
   public String getUsername() {
@@ -46,6 +54,14 @@ public class JenkinsHttpClientConfig {
 
   public void setPassword(final String password) {
     this.password = password;
+  }
+
+  // ... helper methods
+
+  @Override
+  public String toString() {
+
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
   }
 
 }

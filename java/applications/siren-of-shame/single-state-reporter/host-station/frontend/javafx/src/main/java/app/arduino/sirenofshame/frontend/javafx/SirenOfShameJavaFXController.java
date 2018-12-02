@@ -1,30 +1,18 @@
 package app.arduino.sirenofshame.frontend.javafx;
 
-import static app.arduino.sirenofshame.frontend.javafx.JenkinsHttpClientConstants.AUTH_PASSWORD;
-import static app.arduino.sirenofshame.frontend.javafx.JenkinsHttpClientConstants.AUTH_USERNAME;
-import static app.arduino.sirenofshame.frontend.javafx.JenkinsHttpClientConstants.HOST_URL;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import app.arduino.sirenofshame.singlestate.service.host.api.SirenOfShameSingleStateHostControllerEventsListener;
 import app.arduino.sirenofshame.singlestate.service.host.api.type.ESirenOfShameAlarmLevel;
 import app.arduino.sirenofshame.singlestate.service.host.impl.serialchannel.SirenOfShameSingleStateHostSerialChannelController;
-import app.sirenofshame.common.host.service.jenkins.client.http.JenkinsHttpClientConfig;
 import app.sirenofshame.common.host.service.jenkins.client.http.parser.JenkinsApiJsonParser;
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScanner;
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScannerConfig;
 import app.sirenofshame.common.host.service.jenkins.client.http.scanner.JenkinsApiJsonResourceScannerEventsListener;
 
 public class SirenOfShameJavaFXController implements AutoCloseable {
-
-  // ... constants
-
-  private static final String JENKINS_RESOURCE_PATH__MAIS__BUILD_JOBS = "/job/mais/job/build-jobs/job/inte-b/";
-  private static final Pattern JENKINS_JOB_NAMES_TO_MONITOR__REGEX = Pattern.compile(".+integration");
-  protected static final long JENKINS_POLLING_PERIOD__IN_SEC__15 = 15;
 
   // ... properties
 
@@ -41,8 +29,7 @@ public class SirenOfShameJavaFXController implements AutoCloseable {
     this.gui = gui;
 
     this.sirenOfShameController = initSirenOfShameController(gui);
-
-    jenkinsApiJsonScanner = initJenkinsApiJsonresourceScanner(this);
+    this.jenkinsApiJsonScanner = initJenkinsApiJsonresourceScanner(this, gui.getConfig());
   }
 
   private static SirenOfShameSingleStateHostSerialChannelController initSirenOfShameController(
@@ -62,13 +49,10 @@ public class SirenOfShameJavaFXController implements AutoCloseable {
   }
 
   private static JenkinsApiJsonResourceScanner initJenkinsApiJsonresourceScanner(
-      final SirenOfShameJavaFXController sirenOfShameJavaFXController) {
+      final SirenOfShameJavaFXController sirenOfShameJavaFXController,
+      final JenkinsApiJsonResourceScannerConfig config) {
 
-    final JenkinsHttpClientConfig config = JenkinsHttpClientConfig.of(HOST_URL, AUTH_USERNAME, AUTH_PASSWORD);
-    final JenkinsApiJsonResourceScannerConfig jenkinsJobsStateScannerConfig = JenkinsApiJsonResourceScannerConfig
-        .of(config, JENKINS_POLLING_PERIOD__IN_SEC__15 * 1000, JENKINS_RESOURCE_PATH__MAIS__BUILD_JOBS);
-    final JenkinsApiJsonResourceScanner jenkinsApiJsonScanner = new JenkinsApiJsonResourceScanner(
-        jenkinsJobsStateScannerConfig);
+    final JenkinsApiJsonResourceScanner jenkinsApiJsonScanner = new JenkinsApiJsonResourceScanner(config);
 
     final JenkinsApiJsonResourceScannerEventsListener scannerEventsListener = new JenkinsApiJsonResourceScannerEventsListener() {
 
@@ -81,7 +65,7 @@ public class SirenOfShameJavaFXController implements AutoCloseable {
 
         final Collection<Map<String, Object>> jsonJobNodes = JenkinsApiJsonParser.extractJobNodes(jsonRootNode);
         final Set<String> jobsStatesSummary = JenkinsApiJsonParser.collectJobsStates(jsonJobNodes,
-            JENKINS_JOB_NAMES_TO_MONITOR__REGEX);
+            config.getJobsNameRegExPattern());
 
         final ESirenOfShameAlarmLevel highestState;
         if (jobsStatesSummary.contains("red")) {
