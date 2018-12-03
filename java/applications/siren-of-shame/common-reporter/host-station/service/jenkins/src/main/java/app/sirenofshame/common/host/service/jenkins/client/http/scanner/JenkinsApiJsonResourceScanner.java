@@ -39,7 +39,7 @@ public class JenkinsApiJsonResourceScanner implements Runnable {
   public void run() {
 
     final String resourcePath = config.getJobsFolderPath();
-    final long pollingTaktDurationInMs = config.getPollingPeriodInSec();
+    final long pollingTaktDurationInMs = config.getPollingPeriodInSec() * 1000;
 
     while (true) {
 

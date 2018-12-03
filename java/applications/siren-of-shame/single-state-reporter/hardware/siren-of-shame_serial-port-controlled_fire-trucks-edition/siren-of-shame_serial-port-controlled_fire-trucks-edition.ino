@@ -116,7 +116,7 @@ AlarmLevelConfig::AlarmLevelConfig(AlarmLevel alarmLevel, String alarmLevelName,
 const int CONTROL_PINS[] = { 2, 3, 4, 5, 6, 7 };
 const int CONTROL_PINS_COUNT = 6;
 
-const ControlPinState controlPinsState_For_Red[] = {
+ControlPinState controlPinsState_For_Red[] = {
 
   ControlPinState(2, LOW),
   ControlPinState(3, LOW),
@@ -126,7 +126,7 @@ const ControlPinState controlPinsState_For_Red[] = {
   ControlPinState(7, HIGH),
 };
 
-const ControlPinState controlPinsState_For_Yellow[] = {
+ControlPinState controlPinsState_For_Yellow[] = {
 
   ControlPinState(2, LOW),
   ControlPinState(3, LOW),
@@ -136,7 +136,7 @@ const ControlPinState controlPinsState_For_Yellow[] = {
   ControlPinState(7, LOW),
 };
 
-const ControlPinState controlPinsState_For_GreenBlue[] = {
+ControlPinState controlPinsState_For_GreenBlue[] = {
 
   ControlPinState(2, HIGH),
   ControlPinState(3, HIGH),
@@ -352,14 +352,11 @@ void playSoundEffect_Any_Within_Folder(int folderName) {
 
   int soundEffectsCount = myDFPlayer.readFileCountsInFolder(folderName);
 
-  int soundEffectToPlay;
-  if (soundEffectsCount <= 2) {
-    soundEffectToPlay = 1;
-  } else {
-    soundEffectToPlay = random(soundEffectsCount - 2) / 2 + 1;
+  if (soundEffectsCount > 0) {
+    
+    int soundEffectToPlay = random(1, soundEffectsCount);
+    playSoundEffect_Within_Folder(folderName, soundEffectToPlay);
   }
-
-  playSoundEffect_Within_Folder(folderName, soundEffectToPlay);
 }
 
 void playSoundEffect_Within_Folder(int folderName, int soundEffectToPlay) {
@@ -424,3 +421,4 @@ void printDFPlayerDetails(uint8_t type, int value) {
       break;
   }
 }
+

@@ -22,7 +22,7 @@ public class SerialChannelUtils {
   // ... constants
 
   private static final SerialConfig DEFAULT__SERIAL_PORT_CONFIG = new SerialConfig( //
-      BaudRate.B115200, //
+      BaudRate.B9600, //
       Parity.NONE, //
       StopBits.ONE, //
       DataBits.D8 //
@@ -69,8 +69,8 @@ public class SerialChannelUtils {
 
   public static String detectSerialPortName(final String expectingWellcomeMessage) {
 
-    final long maxReadAttemptsCount = 1;
-    final long delayBetweenReadAttempts = 0;
+    final long maxReadAttemptsCount = 3;
+    final long delayBetweenReadAttempts = 10;
 
     return detectSerialPortName(expectingWellcomeMessage, maxReadAttemptsCount, delayBetweenReadAttempts);
   }
@@ -87,13 +87,11 @@ public class SerialChannelUtils {
 
     for (final String portName : portNames) {
 
-      for (int attemptIndex = 0; attemptIndex < maxReadAttemptsCount; attemptIndex++) {
+      try (final SerialChannel serialChannel = openSerialChannel(portName)) {
 
-        try {
+        for (int attemptIndex = 0; attemptIndex < maxReadAttemptsCount; attemptIndex++) {
 
-          final SerialChannel serialChannel = openSerialChannel(portName);
           final String wellcomeMessage = readMessage(serialChannel);
-          serialChannel.close();
 
           if (wellcomeMessage.startsWith(expectingWellcomeMessage)) {
 
@@ -103,9 +101,9 @@ public class SerialChannelUtils {
             LOG.info(String.format("... the port didn't respond with expected wellcome message (#%d).", attemptIndex));
             Thread.sleep(delayBetweenReadAttempts);
           }
-        } catch (final Exception ex) {
-          LOG.error("... " + ex.getMessage(), ex);
         }
+      } catch (final Exception ex) {
+        LOG.error("... " + ex.getMessage(), ex);
       }
     }
 

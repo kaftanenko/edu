@@ -125,7 +125,7 @@ public class SirenOfShameJavaFXController implements AutoCloseable {
     final ESirenOfShameAlarmLevel currentState = sirenOfShameController.getCurrentAlarmLevel();
     if (currentState != newAlarmLevel) {
 
-      // sirenOfShameController.setAlarmLevelTo(newAlarmLevel);
+      sirenOfShameController.setAlarmLevelTo(newAlarmLevel);
       gui.onAlarmLevelChanged(newAlarmLevel);
     }
   }
