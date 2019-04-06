@@ -1,0 +1,10 @@
+{
+	"jenkinsHttpClientConfig": {
+		"hostURL": "http://jenkins:80",
+		"username": "username",
+		"password": "password"
+	},
+	"pollingPeriodInSec": 15,
+	"jobsFolderPath": "/job/mais/job/build-jobs/job/inte-b/",
+	"jobsNameRegExPattern": ".+integration"
+}
