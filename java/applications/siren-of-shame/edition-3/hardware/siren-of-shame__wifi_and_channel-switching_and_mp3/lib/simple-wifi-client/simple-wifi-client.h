@@ -8,41 +8,41 @@
 #include <WiFiUdp.h>
 #include <SPI.h>
 
-class SimpleWiFiClient {
-
-  bool _debugModeOn = false;
-
-  const char* _wiFiSSID;
-  const char* _wiFiPSK;
+class SimpleWiFiClient
+{
+  const char *_wiFiSSID;
+  const char *_wiFiPSK;
 
   int _wiFiConnectiontimeoutInSec = 30;
+  int _httpRequestTimeoutInMs = 3000;
 
-  int _httpRequestTimeoutInMs = 1000;
+public:
+  SimpleWiFiClient(
+      const char *wiFiSSID,    //
+      const char *wiFiPSK      //
+      ) : _wiFiSSID(wiFiSSID), //
+          _wiFiPSK(wiFiPSK)    //
+          {};
+  SimpleWiFiClient(                          //
+      ) : SimpleWiFiClient(nullptr, nullptr) //
+          {};
 
-  WiFiClient _client;
+  void begin(const char *ssid, const char *password);
 
-  public:
+  bool connectWiFi();
+  bool isConnectedWiFi(const long timeOutSec);
 
-    SimpleWiFiClient(
-      const char* wiFiSSID,
-      const char* wiFiPSK
-    ) : _wiFiSSID(wiFiSSID), _wiFiPSK(wiFiPSK) {};
+  String get(              //
+      const char *host,    //
+      const char *resource //
+  );
 
-    bool connectWiFi();
-    bool isConnectedWiFi(long timeOutSec);
-
-    String get(const char* host, const char* resource);
-	
-    void setDebugMode(bool doDebugModeOn) {
-      _debugModeOn = doDebugModeOn;
-    }
-
-  private:
-    bool _connectHost(const char* hostName);
-    void _disconnectHost();
-    bool _skipHostResponseHeaders();
-
-    void _logDebug(const String &value);
+  String gets(                        //
+      const char *host,               //
+      const char *resource,           //
+      const char *fingerprint,        //
+      const char *headerAuthorization //
+  );
 };
 
 #endif

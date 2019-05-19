@@ -1,12 +1,13 @@
 #include "simple-inc-dec-counter.h"
 
-void SimplePlusMinusCounter::incValue() {
-  
-  if (!_updateStop) {
+void SimplePlusMinusCounter::incValue()
+{
+  if (!_updateStop)
+  {
+    _updateStop = true;
 
-    _updateStop = true;    
-    if (millis() - _lastStateChangeOnInMs >= _minStateChangeDelayInMs) {
-
+    if (millis() - _lastStateChangeOnInMs >= _minStateChangeDelayInMs)
+    {
       _lastStateChangeOnInMs = millis();
       _currentValue = _normalize(_currentValue + _stepValue);
 
@@ -16,13 +17,14 @@ void SimplePlusMinusCounter::incValue() {
   }
 }
 
-void SimplePlusMinusCounter::decValue() {
+void SimplePlusMinusCounter::decValue()
+{
+  if (!_updateStop)
+  {
+    _updateStop = true;
+    if (millis() - _lastStateChangeOnInMs >= _minStateChangeDelayInMs)
+    {
 
-  if (!_updateStop) {
-
-    _updateStop = true;    
-    if (millis() - _lastStateChangeOnInMs >= _minStateChangeDelayInMs) {
-      
       _lastStateChangeOnInMs = millis();
       _currentValue = _normalize(_currentValue - _stepValue);
 
@@ -32,16 +34,16 @@ void SimplePlusMinusCounter::decValue() {
   }
 }
 
-uint SimplePlusMinusCounter::getValue() {
-
+uint8_t SimplePlusMinusCounter::getValue()
+{
   return _currentValue;
 }
 
-void SimplePlusMinusCounter::setValue(uint value) {
-
-  if (!_updateStop) {
-
-    _updateStop = true;    
+void SimplePlusMinusCounter::setValue(uint8_t value)
+{
+  if (!_updateStop)
+  {
+    _updateStop = true;
 
     _currentValue = _normalize(value);
     _logDebug("=: " + _currentValue);
@@ -50,22 +52,40 @@ void SimplePlusMinusCounter::setValue(uint value) {
   }
 }
 
-int SimplePlusMinusCounter::_normalize(uint value) {
+void SimplePlusMinusCounter::setRange(uint8_t min, uint8_t max, uint8_t step)
+{
+  _minValue = min;
+  _maxValue = max;
+  _stepValue = step;
 
-  if (value < _minValue) {
+  _currentValue = min;
+}
 
+void SimplePlusMinusCounter::setStateChangeDelayInMs(uint8_t delayInMs)
+{
+  _minStateChangeDelayInMs = delayInMs;
+}
+
+int SimplePlusMinusCounter::_normalize(uint8_t value)
+{
+  if (value < _minValue)
+  {
     return _maxValue;
-  } else if (value > _maxValue) {
+  }
+  else if (value > _maxValue)
+  {
     return _minValue;
-  } else {
+  }
+  else
+  {
     return value;
   }
 }
 
-void SimplePlusMinusCounter::_logDebug(const String &value) {
-
-  if (_debugModeOn) {
-
+void SimplePlusMinusCounter::_logDebug(const String &value)
+{
+  if (_debugModeOn)
+  {
     Serial.println(value);
   }
 }

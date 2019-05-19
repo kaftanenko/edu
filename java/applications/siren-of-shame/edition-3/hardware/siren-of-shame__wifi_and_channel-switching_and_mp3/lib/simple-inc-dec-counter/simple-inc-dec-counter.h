@@ -18,20 +18,20 @@ class SimplePlusMinusCounter {
 
   bool _debugModeOn = false;
 
-  uint _minValue;
-  uint _maxValue; 
-  uint _stepValue;
+  uint8_t _minValue;
+  uint8_t _maxValue; 
+  uint8_t _stepValue;
 
-  unsigned long _minStateChangeDelayInMs;
+  uint8_t _minStateChangeDelayInMs;
 
-  uint _currentValue;
+  uint8_t _currentValue;
 
   volatile bool _updateStop = false;
   unsigned long _lastStateChangeOnInMs = 0;
 
   public:
 
-    SimplePlusMinusCounter(uint min, uint max, uint step): 
+    SimplePlusMinusCounter(uint8_t min, uint8_t max, uint8_t step): 
       _minValue(min), 
       _maxValue(max), 
       _stepValue(step),
@@ -48,15 +48,18 @@ class SimplePlusMinusCounter {
     void incValue();
     void decValue();
 
-    uint getValue();
-    void setValue(uint value);
+    uint8_t getValue();
+    void setValue(uint8_t value);
+
+    void setRange(uint8_t min, uint8_t max, uint8_t step);
+    void setStateChangeDelayInMs(uint8_t delayInMs);
 
     void setDebugMode(bool doDebugModeOn) {
       _debugModeOn = doDebugModeOn;
     }
 
   private:
-    int _normalize(uint value);
+    int _normalize(uint8_t value);
     void _logDebug(const String &value);
 };
 

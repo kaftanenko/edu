@@ -1,250 +1,189 @@
 #include <Arduino.h>
+#include <Adafruit_MCP23017.h>
 
 #include "arduino-extension.h"
 
-#include "data_alarm-level.h"
+#include "data_alarm-level.hpp"
 
-#include "setup_mcp.h"
-#include "setup_channel_display.h"
-#include "setup_channel_switch.h"
-#include "setup_inout_serial.h"
-#include "setup_input_wifi.h"
-#include "setup_output_mp3-player.h"
-#include "setup_output_traffic-light.h"
+#include "config/config_alarm-levels-control.hpp"
+#include "config/config_channels-state-resource.hpp"
+#include "config/config_wlan.hpp"
+
+#include "setup_channel-number-display.hpp"
+#include "setup_channel-state-exposer_embeded.hpp"
+#include "setup_channel-state-exposer_external.hpp"
+#include "setup_channel-state-exposer_mp3.hpp"
+#include "setup_channel-state-observer_wifi.hpp"
+#include "setup_channel_switch.hpp"
+#include "setup_inout_serial.hpp"
 
 // ... constants
 
-const String COMMAND_GET_CURRENT_ALARM_LEVEL = "GET_CURRENT_ALARM_LEVEL";
-
-const String COMMAND_SET_ALARM_LEVEL_TO_RED = "SET_ALARM_LEVEL_TO RED";
-const String COMMAND_SET_ALARM_LEVEL_TO_RED_EXPECTING_UPDATE = "SET_ALARM_LEVEL_TO RED_EXPECTING_UPDATE";
-const String COMMAND_SET_ALARM_LEVEL_TO_YELLOW = "SET_ALARM_LEVEL_TO YELLOW";
-const String COMMAND_SET_ALARM_LEVEL_TO_YELLOW_EXPECTING_UPDATE = "SET_ALARM_LEVEL_TO YELLOW_EXPECTING_UPDATE";
-const String COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE = "SET_ALARM_LEVEL_TO GREENBLUE";
-const String COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE_EXPECTING_UPDATE = "SET_ALARM_LEVEL_TO GREENBLUE_EXPECTING_UPDATE";
-
-const String COMMAND_PING = "PING";
-const String COMMAND_PING_RESPONSE_SUCCEEDED = "SUCCEEDED";
-
-const String CONFIG_GREETING_MESSAGE = "Wellcome to the \"Siren Of Shame\"!";
-const String CONFIG_COMMANDS_MESSAGE = "I understand following commands: '"
-                                       + COMMAND_SET_ALARM_LEVEL_TO_RED + "', '"
-                                       + COMMAND_SET_ALARM_LEVEL_TO_RED_EXPECTING_UPDATE + "', '"
-                                       + COMMAND_SET_ALARM_LEVEL_TO_YELLOW + "', '"
-                                       + COMMAND_SET_ALARM_LEVEL_TO_YELLOW_EXPECTING_UPDATE + "', '"
-                                       + COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE + "', '"
-                                       + COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE_EXPECTING_UPDATE + "', '"
-                                       + COMMAND_GET_CURRENT_ALARM_LEVEL
-                                       + "'.";
+const String CONFIG_WELLCOME_MESSAGE = "Wellcome to the \"Siren Of Shame\"!";
 
 const int CONFIG_SERIAL_PORT_BAUD_RATE__9600 = 9600;
-const int CONFIG_CHANNEL_LIGHTS_TAKT_DURATION_IN_MS__600 = 600;
 
-enum LightEffectsState {
+// ... configuration
 
-  LIGHT_EFFECTS_ON,
-  LIGHT_EFFECTS_OFF,
-};
+AlarmLevelsConfig alarmLevelsConfig;
+ChannelsConfig channelsConfig;
+WlanConfig wlanConfig;
 
-enum SoundEffectsState {
+AlarmLevelConfig *getAlarmLevelConfigBy(AlarmLevel alarmLevel)
+{
+  for (int i = 0; i < 7; i++)
+  {
+    AlarmLevelConfig *alarmLevelConfig = &(alarmLevelsConfig.alarmLevels[i]);
+    if (alarmLevel == alarmLevelConfig->alarmLevel)
+    {
+      return alarmLevelConfig;
+    }
+  }
+}
 
-  SOUND_EFFECTS_ON,
-  SOUND_EFFECTS_OFF,
-};
+AlarmLevelConfig *currentAlarmLevelConfig = getAlarmLevelConfigBy(ALARM_LEVEL_NONE);
 
-class AlarmLevelConfig {
+// ... installed devices
 
-  public:
+Adafruit_MCP23017 mcp;
 
-    AlarmLevel _alarmLevel;
-    String _alarmLevelName;
+ChannelNumberDisplay channelNumberDisplay(&mcp, 2);
 
-    LightEffectsState _lightEffectsState;
+ChannelStateExposerEmbeded channelStateExposer_Embeded(&mcp);
+ChannelStateExposerExternal channelStateExposer_External;
+ChannelStateExposerMp3 channelStateExposer_Mp3;
 
-    long _rememberingTaktInMs;
-    SoundEffectsState _rememberingSoundEffectsState;
-
-    AlarmLevelConfig(
-      AlarmLevel alarmLevel, 
-      String alarmLevelName, 
-      LightEffectsState lightEffectsState, 
-      SoundEffectsState rememberingSoundEffectsState, 
-      long rememberingTaktInSec
-    );
-};
-
-AlarmLevelConfig::AlarmLevelConfig( 
-  AlarmLevel alarmLevel, 
-  String alarmLevelName, 
-  LightEffectsState lightEffectsState, 
-  SoundEffectsState rememberingSoundEffectsState, 
-  long rememberingTaktInSec
-) {
-
-  _alarmLevel = alarmLevel;
-  _alarmLevelName = alarmLevelName;
-
-  _lightEffectsState = lightEffectsState;
-
-  _rememberingTaktInMs = rememberingTaktInSec * 1000;
-  _rememberingSoundEffectsState = rememberingSoundEffectsState;
-};
-
-// ...
-
-AlarmLevelConfig alarmLevelConfigs[] = {
-
-  AlarmLevelConfig(
-    ALARM_LEVEL_RED, "RED", 
-    LIGHT_EFFECTS_ON, SOUND_EFFECTS_ON, 120
-  ),
-  AlarmLevelConfig(
-    ALARM_LEVEL_YELLOW, "YELLOW", 
-    LIGHT_EFFECTS_ON, SOUND_EFFECTS_ON, 180
-  ),
-  AlarmLevelConfig(
-    ALARM_LEVEL_GREENBLUE,  "GREENBLUE", 
-    LIGHT_EFFECTS_OFF, SOUND_EFFECTS_ON, 300
-  ),
-
-  AlarmLevelConfig(
-    ALARM_LEVEL_RED_EXPECTING_UPDATE,  "RED_EXPECTING_UPDATE", 
-    LIGHT_EFFECTS_ON, SOUND_EFFECTS_OFF, 300
-  ),
-  AlarmLevelConfig(
-    ALARM_LEVEL_YELLOW_EXPECTING_UPDATE, "YELLOW_EXPECTING_UPDATE", 
-    LIGHT_EFFECTS_ON, SOUND_EFFECTS_OFF, 300
-  ),
-  AlarmLevelConfig(
-    ALARM_LEVEL_GREENBLUE_EXPECTING_UPDATE, "GREENBLUE_EXPECTING_UPDATE", 
-    LIGHT_EFFECTS_ON, SOUND_EFFECTS_OFF, 300
-  ),
-};
-
-// ...
-
-AlarmLevelConfig *currentAlarmLevelConfig = &(alarmLevelConfigs[ALARM_LEVEL_RED]); // RED, YELLOW, GREENBLUE
-
-String lastCommand = "";
+ChannelsStateObserverWifi channelsStateWifiObserver;
 
 // ... business methods
 
 void setup()
 {
+  // ... setup serial port
 
-  // ... setup subsystems
   serialPort_Setup(CONFIG_SERIAL_PORT_BAUD_RATE__9600);
-  
-  mcp_Setup();
+  serialPort_Println(CONFIG_WELLCOME_MESSAGE);
 
-  channelDisplay_Setup();
-  channelSwitch_Setup();
+  // ... setup configuration
 
-  inputWiFi_Setup();
+  loadAlarmLevelsConfig(alarmLevelsConfig);
+  loadChannelsConfig(channelsConfig);
+  loadWlanConfig(wlanConfig);
 
-  outputTrafficLight_Setup();
+  // ... setup installed devices
 
-  outputMp3Player_Setup();
+  mcp.begin();
 
-  // ... play wellcome melody
-  outputMp3Player.playAnyMp3WithinFolder(31);
+  channelNumberDisplay.setup();
 
-  // ... send wellcome message
-  serialPort_Println(CONFIG_GREETING_MESSAGE);
-  serialPort_Println("");
+  channelSwitch_Setup(           //
+      channelsConfig.bounds.min, //
+      channelsConfig.bounds.max, //
+      channelsConfig.bounds.step //
+  );
 
-  serialPort_Println(CONFIG_COMMANDS_MESSAGE);
-  serialPort_Println("");
+  channelStateExposer_Embeded.setup();
+  channelStateExposer_External.setup();
+
+  channelStateExposer_Mp3.setup();
+  channelStateExposer_Mp3.playWellcomeMelody();
+
+  channelsStateWifiObserver.setup(        //
+      wlanConfig.ssid,                    //
+      wlanConfig.password,                //
+      channelsConfig.host,                //
+      channelsConfig.path,                //
+      channelsConfig.fingerprint,         //
+      channelsConfig.headerAuthorization, //
+      15                                  // sec.
+  );
+  channelsStateWifiObserver.tryToUpdateChannelsStateData();
 }
 
-void doSetState(AlarmLevel newAlarmLevel);
-void verify_Condition_SoundEffects_And_Replay_IfNeeded();
-void verify_Condition_LightEffects_And_Replay_IfNeeded();
+void doChangeChannelNumberTo(uint8_t newChannelNumber);
+
+void doSetChannelStateTo(AlarmLevel newAlarmLevel);
+void doChangeChannelStateTo(AlarmLevel newAlarmLevel);
+
+void doPlayChannelStateRememberingEffects();
 
 void loop()
 {
-  uint channelSwitchValue = channelSwitch_GetCurrentValue();
+  channelsStateWifiObserver.playChannelsStateUpdate();
 
-  uint channelDisplayValue = channelDisplay_GetCurrentValue();
-  if (channelDisplayValue != channelSwitchValue) {
+  const uint8_t updatedChannelNumber = channelSwitch_GetCurrentValue();
+  doChangeChannelNumberTo(updatedChannelNumber);
 
-    channelDisplay_DisplayValue(channelSwitchValue);
-  }
-  
-  AlarmLevel newAlarmLevel = inputWiFi_GetAlarmLevel(channelSwitchValue);
-  doSetState(newAlarmLevel);
+  const AlarmLevel updatedAlarmLevel = channelsStateWifiObserver.getAlarmLevel(updatedChannelNumber);
+  doChangeChannelStateTo(updatedAlarmLevel);
 
-  if (serialPort_IsAvailable()) {
-
-    lastCommand = serialPort_ReadString();
-    // Serial.println("Command received: '" + lastCommand + "'.");
-
-    if (lastCommand == COMMAND_GET_CURRENT_ALARM_LEVEL) {
-      Serial.println(currentAlarmLevelConfig->_alarmLevelName);
-    } else if (lastCommand == COMMAND_PING) {
-      Serial.println(COMMAND_PING_RESPONSE_SUCCEEDED);
-    } else if (lastCommand == COMMAND_SET_ALARM_LEVEL_TO_RED) {
-      doSetState(ALARM_LEVEL_RED);
-    } else if (lastCommand == COMMAND_SET_ALARM_LEVEL_TO_YELLOW) {
-      doSetState(ALARM_LEVEL_YELLOW);
-    } else if (lastCommand == COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE) {
-      doSetState(ALARM_LEVEL_GREENBLUE);
-    } else if (lastCommand == COMMAND_SET_ALARM_LEVEL_TO_RED_EXPECTING_UPDATE) {
-      doSetState(ALARM_LEVEL_RED_EXPECTING_UPDATE);
-    } else if (lastCommand == COMMAND_SET_ALARM_LEVEL_TO_YELLOW_EXPECTING_UPDATE) {
-      doSetState(ALARM_LEVEL_YELLOW_EXPECTING_UPDATE);
-    } else if (lastCommand == COMMAND_SET_ALARM_LEVEL_TO_GREENBLUE_EXPECTING_UPDATE) {
-      doSetState(ALARM_LEVEL_GREENBLUE_EXPECTING_UPDATE);
-    } else {
-      // serialPort_Println("Command '" + lastCommand + "' is not supported.");
-    }
-  }
-
-  inputWiFi_PlayStateUpdate();
-
-  verify_Condition_SoundEffects_And_Replay_IfNeeded();
-  verify_Condition_LightEffects_And_Replay_IfNeeded();
-
-  delay(1);
+  doPlayChannelStateRememberingEffects();
 }
 
-void doSetState(AlarmLevel newAlarmLevel) {
+// ... helper methods
 
-  AlarmLevel oldAlarmLevel = currentAlarmLevelConfig->_alarmLevel;
-  if (newAlarmLevel != oldAlarmLevel) {
+void doChangeChannelNumberTo(const uint8_t newChannelNumber)
+{
+  uint8_t currentChannelNumber = channelNumberDisplay.getDisplayValue();
+  if (newChannelNumber != currentChannelNumber)
+  {
+    Serial.printf("Channel number changed from '%d' to '%d'.\n",
+                  currentChannelNumber, newChannelNumber);
 
-    currentAlarmLevel_Remembering_Timer.reset();
-    currentAlarmLevelConfig = &(alarmLevelConfigs[newAlarmLevel]);
+    channelNumberDisplay.displayValue(newChannelNumber);
 
-    outputTrafficLight_OnChange_AlarmLevevel(
-      oldAlarmLevel, 
+    const AlarmLevel updatedAlarmLevel = channelsStateWifiObserver.getAlarmLevel(newChannelNumber);
+    doSetChannelStateTo(updatedAlarmLevel);
+  }
+}
+
+void doSetChannelStateTo(const AlarmLevel newAlarmLevel)
+{
+  currentAlarmLevelConfig = getAlarmLevelConfigBy(newAlarmLevel);
+
+  Serial.printf("AlarmLevel set to '%s'.\n",
+                currentAlarmLevelConfig->alarmLevelName);
+
+  channelStateExposer_Embeded.exposeAlarmLevel(
       newAlarmLevel,
-      currentAlarmLevelConfig->_lightEffectsState == LIGHT_EFFECTS_ON
-    );
+      currentAlarmLevelConfig->lightEffectsTaktRateInMs);
 
-    outputMp3Player_OnChange_AlarmLevevel(
-      oldAlarmLevel, 
-      newAlarmLevel
-    );
+  channelStateExposer_External.exposeAlarmLevel(
+      newAlarmLevel,
+      currentAlarmLevelConfig->lightEffectsTaktRateInMs);
+}
 
-    // Serial.println("AlarmLevel changed to: " + currentAlarmLevelConfig->_alarmLevelName);
-  } else {
-    // Serial.println("AlarmLevel is still the following: " + currentAlarmLevelConfig->_alarmLevelName);
+void doChangeChannelStateTo(const AlarmLevel newAlarmLevel)
+{
+  const AlarmLevel currentAlarmLevel = currentAlarmLevelConfig->alarmLevel;
+  if (newAlarmLevel != currentAlarmLevel)
+  {
+    currentAlarmLevelConfig = getAlarmLevelConfigBy(newAlarmLevel);
+
+    Serial.printf("AlarmLevel changed from '%d' to '%s'.\n",
+                  currentAlarmLevel,
+                  currentAlarmLevelConfig->alarmLevelName);
+
+    channelStateExposer_Embeded.exposeAlarmLevelChange(
+        currentAlarmLevel,
+        newAlarmLevel,
+        currentAlarmLevelConfig->lightEffectsTaktRateInMs);
+
+    channelStateExposer_External.exposeAlarmLevelChange(
+        currentAlarmLevel,
+        newAlarmLevel,
+        currentAlarmLevelConfig->lightEffectsTaktRateInMs);
+
+    channelStateExposer_Mp3.exposeAlarmLevelChange(
+        currentAlarmLevel,
+        newAlarmLevel,
+        currentAlarmLevelConfig->soundEffectsTaktRateInSec);
   }
 }
 
-void verify_Condition_LightEffects_And_Replay_IfNeeded() {
-
-  if (currentAlarmLevelConfig->_lightEffectsState == LIGHT_EFFECTS_ON) {
-
-    outputTrafficLight_PlayEffects();
-  }
-}
-
-void verify_Condition_SoundEffects_And_Replay_IfNeeded() {
-  
-  if (currentAlarmLevelConfig->_rememberingSoundEffectsState == SOUND_EFFECTS_ON) {
-
-    outputMp3Player_PlayEffects(currentAlarmLevelConfig->_alarmLevel, currentAlarmLevelConfig->_rememberingTaktInMs);
-  }
+void doPlayChannelStateRememberingEffects()
+{
+  channelStateExposer_Embeded.playEffects();
+  channelStateExposer_External.playEffects();
+  channelStateExposer_Mp3.playEffects();
 }

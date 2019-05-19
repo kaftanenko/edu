@@ -1,15 +1,30 @@
 #include "simple-7-seg-row-over-port-expander.h"
 
+void Simple7SegRowOverPortsExpander::begin() {
+
+    _shiftRegister74HC595.begin();
+}
+
+void Simple7SegRowOverPortsExpander::displayNone() {
+
+    uint8_t pinValues[_numberOfDigits];
+
+    for (int i = 0; i < _numberOfDigits; i++) {
+        pinValues[i] = _NONE;
+    }
+    _shiftRegister74HC595.setAll(pinValues);
+}
+
 void Simple7SegRowOverPortsExpander::displayNumber(long value) {
 
-    uint8_t pinValues[_numberOfShiftRegisters];
+    uint8_t pinValues[_numberOfDigits];
 
     int rest = value;
-    for (int i = 0; i < _numberOfShiftRegisters; i++) {
+    for (int i = 0; i < _numberOfDigits; i++) {
         pinValues[i] = digits[rest % 10];
         rest = rest / 10;
     }
-    shiftRegister74HC595.setAll(pinValues);
+    _shiftRegister74HC595.setAll(pinValues);
 }
 
 /*
@@ -33,23 +48,10 @@ ShiftRegister74HC595::ShiftRegister74HC595(
     _serialDataPin = serialDataPin;
     _latchPin = latchPin;
 
-    // define pins as outputs
-    _mcp->pinMode(clockPin, OUTPUT);
-    _mcp->pinMode(serialDataPin, OUTPUT);
-    _mcp->pinMode(latchPin, OUTPUT);
-
-    // set pins low
-    _mcp->digitalWrite(clockPin, LOW);
-    _mcp->digitalWrite(serialDataPin, LOW);
-    _mcp->digitalWrite(latchPin, LOW);
-
     // allocates the specified number of bytes and initializes them to zero
     _digitalValues = (uint8_t *)malloc(numberOfShiftRegisters * sizeof(uint8_t));
     memset(_digitalValues, 0, numberOfShiftRegisters * sizeof(uint8_t));
-
-    updateRegisters();       // reset shift register
 }
-
 
 // ShiftRegister74HC595 destructor
 // The memory allocated in the constructor is also released.
@@ -58,6 +60,20 @@ ShiftRegister74HC595::~ShiftRegister74HC595()
     free(_digitalValues);
 }
 
+void ShiftRegister74HC595::begin()
+{
+    // define pins as outputs
+    _mcp->pinMode(_clockPin, OUTPUT);
+    _mcp->pinMode(_serialDataPin, OUTPUT);
+    _mcp->pinMode(_latchPin, OUTPUT);
+
+    // set pins low
+    _mcp->digitalWrite(_clockPin, LOW);
+    _mcp->digitalWrite(_serialDataPin, LOW);
+    _mcp->digitalWrite(_latchPin, LOW);
+
+    updateRegisters();       // reset shift register
+}
 
 // Set all pins of the shift registers at once.
 // digitalVAlues is a uint8_t array where the length is equal to the number of shift registers.

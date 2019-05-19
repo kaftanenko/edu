@@ -9,30 +9,41 @@
 
 #define DEFAULT_PLAYER_PIN_RX__D4 D4
 #define DEFAULT_PLAYER_PIN_TX__D3 D3
-#define DEFAULT_PLAYER_VOLUME__15 15 // ... 0 to 30
+#define DEFAULT_PLAYER_VOLUME__10 10 // ... 0 to 30
 
-class SimpleMp3Player {
-
-  bool _muteStateOn;
-  SoftwareSerial* _softwareSerial;
+class SimpleMp3Player
+{
+private:
+  SoftwareSerial *_softwareSerial;
   DFRobotDFPlayerMini _dfPlayer;
 
-  public:
+  bool _muteStateOn = false;
 
-    SimpleMp3Player(int pinRX, int pinTX);
-    SimpleMp3Player() : 
-      SimpleMp3Player(DEFAULT_PLAYER_PIN_RX__D4, DEFAULT_PLAYER_PIN_TX__D3) {}
-    ~SimpleMp3Player();
+public:
+  SimpleMp3Player(   //
+      uint8_t pinRX, //
+      uint8_t pinTX  //
+  );
+  SimpleMp3Player(                       //
+      ) : SimpleMp3Player(               //
+              DEFAULT_PLAYER_PIN_RX__D4, //
+              DEFAULT_PLAYER_PIN_TX__D3  //
+          )
+  {
+  }
+  ~SimpleMp3Player();
 
-    void mute();
-    void unmute();
-    void setVolume(int volume);
+  void begin();
 
-    void playAnyMp3WithinFolder(int folderIdx);
-    void playMp3WithinFolder(int folderIdx, int mp3FileIdx);
+  void mute();
+  void unmute();
+  void setVolume(uint8_t volume);
 
-  private:
-    void printDetailInfo(uint8_t type, int value);
+  void playAnyMp3WithinFolder(uint8_t folderIdx);
+  void playMp3WithinFolder(uint8_t folderIdx, uint8_t mp3FileIdx);
+
+private:
+  void _printDetailInfo(uint8_t type, int value);
 };
 
 #endif

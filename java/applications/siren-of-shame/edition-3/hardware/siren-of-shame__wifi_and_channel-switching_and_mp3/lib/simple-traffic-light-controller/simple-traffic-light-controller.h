@@ -6,76 +6,71 @@
 
 #include "simple-timer.h"
 
-enum LightState {
+enum LightState
+{
 
   LIGHT_ON,
   LIGHT_OFF,
 };
 
-enum TrafficLightState {
+enum TrafficLightState
+{
 
   TRAFFIC_LIGHT_OFF,
-  
+
   TRAFFIC_LIGHT_RED,
   TRAFFIC_LIGHT_YELLOW,
-  TRAFFIC_LIGHT_GREEN,
-  
-  TRAFFIC_LIGHT_RED_CHANGING,
-  TRAFFIC_LIGHT_YELLOW_CHANGING,
-  TRAFFIC_LIGHT_GREEN_CHANGING,
+  TRAFFIC_LIGHT_GREEN
 };
 
-class SimpleTrafficLightController {
-  
-  Adafruit_MCP23017 * _mcp;
+class SimpleTrafficLightController
+{
+  Adafruit_MCP23017 *_mcp;
 
-  uint8_t _controlPinRed;
-  uint8_t _controlPinYellow;
-  uint8_t _controlPinGreen;
-    
-  int _lightEffects_TickRate_InMs;
-  
-  SimpleTimer _lightEffects_Timer;
-  LightState _lightEffects_CurrentState = LIGHT_OFF;
+  uint16_t _controlPinRed;
+  uint16_t _controlPinYellow;
+  uint16_t _controlPinGreen;
+
+  SimpleTimer _currentRememberingTimer;
+  uint16_t _currentRememberingTaktInMs = 0;
+  LightState _currentLightState = LIGHT_ON;
 
   TrafficLightState _currentState = TRAFFIC_LIGHT_OFF;
-  
-  public:
-    SimpleTrafficLightController(
-      Adafruit_MCP23017 * mcp,
-      uint8_t controlPinRed,
-      uint8_t controlPinYellow,
-      uint8_t controlPinGreen,
-      int lightEffects_TickRate_InMs
-    ) : 
-      _mcp(mcp),
-      _controlPinRed(controlPinRed),
-      _controlPinYellow(controlPinYellow),
-      _controlPinGreen(controlPinGreen),
-      _lightEffects_TickRate_InMs(lightEffects_TickRate_InMs)
-    {}
-    SimpleTrafficLightController(
-      uint8_t controlPinRed,
-      uint8_t controlPinYellow,
-      uint8_t controlPinGreen,
-      int lightEffects_TickRate_InMs
-    ) : SimpleTrafficLightController(
-      nullptr,
-      controlPinRed,
-      controlPinYellow,
-      controlPinGreen,
-      lightEffects_TickRate_InMs
-    ) {}
-  
-    void begin();
-  
-    void playEffects();
-  
-    TrafficLightState getState();
-    void switchTo(TrafficLightState state);
-  
-  private:
-    void _showCurrentState();
+
+public:
+  SimpleTrafficLightController(                //
+      Adafruit_MCP23017 *mcp,                  //
+      uint16_t controlPinRed,                  //
+      uint16_t controlPinYellow,               //
+      uint16_t controlPinGreen                 //
+      ) : _mcp(mcp),                           //
+          _controlPinRed(controlPinRed),       //
+          _controlPinYellow(controlPinYellow), //
+          _controlPinGreen(controlPinGreen)    //
+  {
+  }
+  SimpleTrafficLightController(         //
+      uint16_t controlPinRed,           //
+      uint16_t controlPinYellow,        //
+      uint16_t controlPinGreen          //
+      ) : SimpleTrafficLightController( //
+              nullptr,                  //
+              controlPinRed,            //
+              controlPinYellow,         //
+              controlPinGreen           //
+          )
+  {
+  }
+
+  void begin();
+
+  TrafficLightState getCurrentState();
+  void switchToState(TrafficLightState state, uint16_t rememberingTaktInMs);
+
+  void playEffects();
+
+private:
+  void _showCurrentState();
 };
 
 #endif
