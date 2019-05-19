@@ -1,0 +1,15 @@
+#ifndef data_alarm_level_h
+#define data_alarm_level_h
+
+enum AlarmLevel {
+
+  ALARM_LEVEL_RED,
+  ALARM_LEVEL_YELLOW,
+  ALARM_LEVEL_GREENBLUE,
+
+  ALARM_LEVEL_RED_EXPECTING_UPDATE,
+  ALARM_LEVEL_YELLOW_EXPECTING_UPDATE,
+  ALARM_LEVEL_GREENBLUE_EXPECTING_UPDATE,
+};
+
+#endif
