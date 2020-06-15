@@ -19,7 +19,7 @@
 		<lib.h2.version>1.4.191</lib.h2.version>
 		<lib.hibernate.version>4.3.11.Final</lib.hibernate.version>
 		<lib.hibernate.jpa.version>1.0.0.Final</lib.hibernate.jpa.version>
-		<lib.hibernate.validation.version>4.2.0.Final</lib.hibernate.validation.version>
+		<lib.hibernate.validation.version>5.3.5.Final</lib.hibernate.validation.version>
 
 		<lib.test.assertj.version>3.6.2</lib.test.assertj.version>
 		<lib.test.testng.version>6.9.10</lib.test.testng.version>
